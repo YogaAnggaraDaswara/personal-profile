@@ -59,14 +59,15 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, errors: result.errors }, { status: 422 })
   }
 
+  // Honeypot: bots get a generic success with no contact data and no notification.
+  // Checked before rate-limiting so honeypot traffic never consumes the shared IP quota.
+  if (result.value.website) {
+    return NextResponse.json({ ok: true })
+  }
+
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
   if (isRateLimited(ip)) {
     return NextResponse.json({ ok: false, errors: { form: 'rate_limited' } }, { status: 429 })
-  }
-
-  // Honeypot: bots get a generic success with no contact data and no notification.
-  if (result.value.website) {
-    return NextResponse.json({ ok: true })
   }
 
   await notify(result.value)

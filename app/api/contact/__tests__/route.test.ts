@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { POST } from '@/app/api/contact/route'
 
 function req(body: unknown, ip: string) {
@@ -65,5 +65,37 @@ describe('POST /api/contact', () => {
       }),
     )
     expect(res.status).toBe(400)
+  })
+
+  it('honeypot still returns generic success even after IP has exhausted rate limit', async () => {
+    const ip = '10.0.0.6'
+    // Exhaust the rate limit with 5 legitimate submissions.
+    for (let i = 0; i < 5; i++) {
+      const res = await POST(req(valid, ip))
+      expect(res.status).toBe(200)
+    }
+    // 6th request from the same IP would normally be rate-limited, but honeypot
+    // should short-circuit before the rate-limit check and still return 200.
+    const res = await POST(req({ ...valid, website: 'http://bot.example' }, ip))
+    expect(res.status).toBe(200)
+    const json = await res.json()
+    expect(json.ok).toBe(true)
+    expect(json.contact).toBeUndefined()
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it('still returns contact info when the Resend notification call fails', async () => {
+    process.env.RESEND_API_KEY = 'dummy-resend-key'
+    process.env.NOTIF_TO_EMAIL = 'dummy-notify@example.com'
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('network down')))
+
+    const res = await POST(req(valid, '10.0.0.7'))
+    expect(res.status).toBe(200)
+    const json = await res.json()
+    expect(json.ok).toBe(true)
+    expect(json.contact.email).toBe('dummy-contact@example.com')
   })
 })
