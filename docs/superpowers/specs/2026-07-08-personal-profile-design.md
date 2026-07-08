@@ -1,17 +1,17 @@
-# Personal Profile Web — Yoga Daswara — Design Spec
+# Personal Profile Web - Yoga Daswara - Design Spec
 
 Date: 2026-07-08
 Status: Approved by user (visual style, layout, stack, contact flow, i18n, content strategy)
 
 ## Goal
 
-Personal profile / portfolio web app for Yoga Daswara (IT — Bank Sahabat Sampoerna). Visitors can browse experience, projects, and AI use cases freely, but contact details (email, WhatsApp) are gated behind a form. Gen Z "dark neon" visual style, heavily animated, fully responsive, content editable via data files.
+Personal profile / portfolio web app for Yoga Daswara (IT - Bank Sahabat Sampoerna). Visitors can browse experience, projects, and AI use cases freely, but contact details (email, WhatsApp) are gated behind a form. Gen Z "dark neon" visual style, heavily animated, fully responsive, content editable via data files.
 
 ## Decisions (user-approved)
 
 | Area | Decision |
 |------|----------|
-| Visual style | Dark Neon / Futuristic — dark bg `#0a0a14`-family, violet–cyan gradient accents, glassmorphism cards, particle canvas, glow effects |
+| Visual style | Dark Neon / Futuristic - dark bg `#0a0a14`-family, violet–cyan gradient accents, glassmorphism cards, particle canvas, glow effects |
 | Layout | One-page scroll story; project detail via modal/overlay |
 | Stack | Next.js (App Router) + Tailwind CSS + Framer Motion |
 | Hosting | Vercel free tier, auto-deploy from GitHub push |
@@ -24,19 +24,19 @@ Personal profile / portfolio web app for Yoga Daswara (IT — Bank Sahabat Sampo
 ## Architecture
 
 - **Next.js App Router**, mostly static/client components; one server API route.
-- **`POST /api/contact`**: validates payload (name, email, purpose required), honeypot check, sends notification email via Resend (best-effort — failure does NOT block reveal), returns contact details `{ email, whatsapp }` read from server env vars.
+- **`POST /api/contact`**: validates payload (name, email, purpose required), honeypot check, sends notification email via Resend (best-effort - failure does NOT block reveal), returns contact details `{ email, whatsapp }` read from server env vars.
 - **Secrets/env (server-only, never in client bundle):** `CONTACT_EMAIL`, `CONTACT_WA`, `RESEND_API_KEY`, `NOTIF_TO_EMAIL`. Placeholders in `.env.example`; real values only in Vercel env settings.
-- **Content layer:** `content/` folder — `profile.ts`, `experience.ts`, `projects.ts`, `skills.ts`, `aiUseCases.ts`. Each display string is `{ id: string, en: string }`. A small `useLang()` context provides current language + `t()` helper.
+- **Content layer:** `content/` folder - `profile.ts`, `experience.ts`, `projects.ts`, `skills.ts`, `aiUseCases.ts`. Each display string is `{ id: string, en: string }`. A small `useLang()` context provides current language + `t()` helper.
 
 ## Page Sections (single page, scroll order)
 
-1. **Hero** — large gradient name, rotating typing effect (roles), particle canvas background, profile photo in glowing gradient ring with hover tilt, scroll CTA.
-2. **About** — summary from CV, small photo, animated stat counters (years experience, projects, AI use cases).
-3. **Skills** — glass chips grouped by category + scrolling marquee of tech names.
-4. **Experience** — vertical timeline from CV data, scroll-reveal per item.
-5. **Projects** — responsive card grid, category filter (AI / Banking / Web / All). Card click opens modal: problem, solution, architecture summary, tech stack, impact/result. 6 placeholder entries marked clearly as examples.
-6. **AI Use Cases** — dedicated showcase section (distinct visual treatment) for implemented AI use cases.
-7. **Contact Gate** — form fields:
+1. **Hero** - large gradient name, rotating typing effect (roles), particle canvas background, profile photo in glowing gradient ring with hover tilt, scroll CTA.
+2. **About** - summary from CV, small photo, animated stat counters (years experience, projects, AI use cases).
+3. **Skills** - glass chips grouped by category + scrolling marquee of tech names.
+4. **Experience** - vertical timeline from CV data, scroll-reveal per item.
+5. **Projects** - responsive card grid, category filter (AI / Banking / Web / All). Card click opens modal: problem, solution, architecture summary, tech stack, impact/result. 6 placeholder entries marked clearly as examples.
+6. **AI Use Cases** - dedicated showcase section (distinct visual treatment) for implemented AI use cases.
+7. **Contact Gate** - form fields:
    - Nama / Name (required)
    - Email (required, validated)
    - Perusahaan/Instansi / Company (optional)
@@ -44,11 +44,11 @@ Personal profile / portfolio web app for Yoga Daswara (IT — Bank Sahabat Sampo
    - Pesan / Message (optional, short)
    - Hidden honeypot field
    On success: contact card animates open (email + `wa.me` button), celebration animation. On API failure (network/server): clear error message + retry; rate-limited responses show a polite wait message.
-8. **Footer** — minimal, language toggle also in navbar.
+8. **Footer** - minimal, language toggle also in navbar.
 
 ## Animation Spec
 
-Framer Motion throughout: staggered scroll reveals, hover glow/lift on cards, magnetic buttons, smooth scroll navigation, page-load intro sequence, animated counters, particle canvas in hero. Must respect `prefers-reduced-motion` (disable/simplify all non-essential motion). Target 60fps — transform/opacity animations only.
+Framer Motion throughout: staggered scroll reveals, hover glow/lift on cards, magnetic buttons, smooth scroll navigation, page-load intro sequence, animated counters, particle canvas in hero. Must respect `prefers-reduced-motion` (disable/simplify all non-essential motion). Target 60fps - transform/opacity animations only.
 
 ## Responsive
 
@@ -74,7 +74,7 @@ Admin panel, database, analytics, blog, CMS integration, multi-page routing, aut
 
 ## Content placeholders
 
-6 example projects (chatbot/RAG internal assistant, document OCR pipeline, transaction API service, monitoring dashboard, AI report automation, internal portal) written generically — **no real BSS internal system names, no network topology, no production identifiers**. User replaces with real, sanitized descriptions later.
+6 example projects (chatbot/RAG internal assistant, document OCR pipeline, transaction API service, monitoring dashboard, AI report automation, internal portal) written generically - **no real BSS internal system names, no network topology, no production identifiers**. User replaces with real, sanitized descriptions later.
 
 ## Deployment (guided later, user actions)
 

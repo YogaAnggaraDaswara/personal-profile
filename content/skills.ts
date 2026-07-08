@@ -26,6 +26,16 @@ export const skillGroups: SkillGroup[] = [
     title: { id: 'Metodologi & Tools', en: 'Methodology & Tools' },
     items: ['Agile (Scrum/Kanban)', 'Azure DevOps', 'GitHub', 'Jira', 'Sonarqube', 'Postman', 'Swagger', 'Figma', 'Notion'],
   },
+  {
+    title: { id: 'Kepemimpinan & Soft Skill', en: 'Leadership & Soft Skills' },
+    items: [
+      'Leadership & People Management',
+      'Strategic Thinking',
+      'Communication & Collaboration',
+      'Mentoring & Coaching',
+      'System Analysis & Architecture Design',
+    ],
+  },
 ]
 
 export const marqueeTech = [

@@ -5,6 +5,7 @@ import { profile } from '@/content/profile'
 import { projects } from '@/content/projects'
 import { aiUseCases } from '@/content/aiUseCases'
 import { testimonials } from '@/content/testimonials'
+import { education } from '@/content/education'
 import type { Stat } from '@/content/types'
 import Reveal from './Reveal'
 import RevealText from './RevealText'
@@ -61,11 +62,33 @@ export default function About() {
                 </p>
                 <footer className="mt-3 text-sm font-semibold text-white">
                   {tst.name}{' '}
-                  <span className="font-normal text-[var(--muted)]">— {t(tst.role)}</span>
+                  <span className="font-normal text-[var(--muted)]">- {t(tst.role)}</span>
                 </footer>
               </blockquote>
             </Reveal>
           ))}
+        </div>
+      )}
+
+      {education.length > 0 && (
+        <div className="mt-10">
+          <Reveal>
+            <h3 className="text-lg font-bold text-white">
+              {t({ id: 'Pendidikan', en: 'Education' })}
+            </h3>
+          </Reveal>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {education.map((e, i) => (
+              <Reveal key={i} delay={0.05 * i}>
+                <div className="glass p-4">
+                  <p className="text-sm font-semibold text-white">{e.school}</p>
+                  <p className="mt-1 text-xs text-[var(--muted)]">
+                    {e.degree} · {e.period}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       )}
     </div>

@@ -11,12 +11,12 @@
 ## Global Constraints
 
 - Spec: `docs/superpowers/specs/2026-07-08-personal-profile-design.md`
-- Contact email/WA NEVER appear in client code or content files — only `process.env` on the server.
+- Contact email/WA NEVER appear in client code or content files - only `process.env` on the server.
 - Env vars: `CONTACT_EMAIL`, `CONTACT_WA`, `RESEND_API_KEY`, `NOTIF_TO_EMAIL`. `.env.example` uses explicit placeholders (`<GANTI_...>`), never real values.
 - Every display string is `Bi = { id: string; en: string }`.
 - All motion respects `prefers-reduced-motion` (Framer Motion `useReducedMotion` / static fallback).
 - Animations use transform/opacity only (60fps target).
-- Placeholder content: generic descriptions only — no real internal system names, hosts, or topology.
+- Placeholder content: generic descriptions only - no real internal system names, hosts, or topology.
 - No stack traces to clients; API returns structured JSON errors.
 - Commit after every task. Working dir `D:\Pribadi\Profile` is the repo root (git already initialized).
 
@@ -171,7 +171,7 @@ git commit -m "feat: scaffold Next.js app with dark-neon theme and vitest"
 **Interfaces:**
 - Produces: `type Lang = 'id' | 'en'`, `type Bi = { id: string; en: string }`, `pick(b: Bi, lang: Lang): string` (from `@/lib/i18n-core`); `LanguageProvider`, `useLang(): { lang: Lang; setLang(l: Lang): void; t(b: Bi): string }` (from `@/lib/i18n`). Every later UI task consumes `useLang`.
 
-- [ ] **Step 1: Write the failing test — `lib/__tests__/i18n-core.test.ts`**
+- [ ] **Step 1: Write the failing test - `lib/__tests__/i18n-core.test.ts`**
 
 ```ts
 import { describe, it, expect } from 'vitest'
@@ -195,7 +195,7 @@ describe('pick', () => {
 - [ ] **Step 2: Run test to verify it fails**
 
 Run: `npm test`
-Expected: FAIL — cannot resolve `@/lib/i18n-core`.
+Expected: FAIL - cannot resolve `@/lib/i18n-core`.
 
 - [ ] **Step 3: Implement `lib/i18n-core.ts`**
 
@@ -213,7 +213,7 @@ export function pick(b: Bi, lang: Lang): string {
 Run: `npm test`
 Expected: PASS (3 tests).
 
-- [ ] **Step 5: Implement `lib/i18n.tsx` (provider — verified via build; DOM tests out of scope)**
+- [ ] **Step 5: Implement `lib/i18n.tsx` (provider - verified via build; DOM tests out of scope)**
 
 ```tsx
 'use client'
@@ -324,8 +324,8 @@ export const profile = {
     en: 'Building technology solutions & AI use cases in the banking industry.',
   } satisfies Bi,
   about: {
-    id: 'Engineer IT di industri perbankan Indonesia. Fokus pada pengembangan aplikasi, integrasi sistem, dan implementasi use case AI untuk mendukung proses bisnis — dari otomasi dokumen sampai asisten internal berbasis LLM.',
-    en: 'IT engineer in the Indonesian banking industry. Focused on application development, system integration, and implementing AI use cases that support business processes — from document automation to LLM-based internal assistants.',
+    id: 'Engineer IT di industri perbankan Indonesia. Fokus pada pengembangan aplikasi, integrasi sistem, dan implementasi use case AI untuk mendukung proses bisnis - dari otomasi dokumen sampai asisten internal berbasis LLM.',
+    en: 'IT engineer in the Indonesian banking industry. Focused on application development, system integration, and implementing AI use cases that support business processes - from document automation to LLM-based internal assistants.',
   } satisfies Bi,
   stats: [
     { value: 5, suffix: '+', label: { id: 'Tahun Pengalaman', en: 'Years of Experience' } },
@@ -372,7 +372,7 @@ export const experiences: ExperienceItem[] = [
   {
     company: 'Bank Sahabat Sampoerna',
     role: { id: 'IT Engineer', en: 'IT Engineer' },
-    period: '2021 — Sekarang / Present',
+    period: '2021 - Sekarang / Present',
     points: [
       {
         id: 'Mengembangkan dan memelihara aplikasi internal pendukung operasional perbankan.',
@@ -391,7 +391,7 @@ export const experiences: ExperienceItem[] = [
   {
     company: 'Perusahaan Sebelumnya',
     role: { id: 'Software Developer', en: 'Software Developer' },
-    period: '2019 — 2021',
+    period: '2019 - 2021',
     points: [
       {
         id: 'Pengembangan aplikasi web end-to-end dari kebutuhan bisnis sampai rilis.',
@@ -634,7 +634,7 @@ git commit -m "feat: add editable bilingual content data files"
   - `POST /api/contact` responses: `422 { ok:false, errors }`, `429 { ok:false, errors:{form:'rate_limited'} }`, `200 { ok:true }` (honeypot), `200 { ok:true, contact:{ email, whatsapp } }` (success; `whatsapp` digits-only).
 - Task 9 (ContactGate UI) consumes these response shapes exactly.
 
-- [ ] **Step 1: Write failing validation tests — `lib/__tests__/contact-validation.test.ts`**
+- [ ] **Step 1: Write failing validation tests - `lib/__tests__/contact-validation.test.ts`**
 
 ```ts
 import { describe, it, expect } from 'vitest'
@@ -696,7 +696,7 @@ describe('validateContact', () => {
 - [ ] **Step 2: Run tests to verify failure**
 
 Run: `npm test`
-Expected: FAIL — cannot resolve `@/lib/contact-validation`.
+Expected: FAIL - cannot resolve `@/lib/contact-validation`.
 
 - [ ] **Step 3: Implement `lib/contact-validation.ts`**
 
@@ -747,7 +747,7 @@ export function validateContact(raw: unknown): ValidationResult {
 Run: `npm test`
 Expected: PASS.
 
-- [ ] **Step 5: Write failing route tests — `app/api/contact/__tests__/route.test.ts`**
+- [ ] **Step 5: Write failing route tests - `app/api/contact/__tests__/route.test.ts`**
 
 Each test uses a unique `x-forwarded-for` so the in-memory rate limiter never cross-contaminates.
 
@@ -826,7 +826,7 @@ describe('POST /api/contact', () => {
 - [ ] **Step 6: Run route tests to verify failure**
 
 Run: `npm test`
-Expected: FAIL — cannot resolve `@/app/api/contact/route`.
+Expected: FAIL - cannot resolve `@/app/api/contact/route`.
 
 - [ ] **Step 7: Implement `app/api/contact/route.ts`**
 
@@ -863,7 +863,7 @@ async function notify(value: ContactPayload): Promise<void> {
       body: JSON.stringify({
         from: 'Profile Site <onboarding@resend.dev>',
         to: [to],
-        subject: `[Profile] ${value.purpose} — ${value.name}`,
+        subject: `[Profile] ${value.purpose} - ${value.name}`,
         text: [
           `Nama    : ${value.name}`,
           `Email   : ${value.email}`,
@@ -928,7 +928,7 @@ git commit -m "feat: add gated contact API with validation, honeypot, rate limit
 
 ---
 
-### Task 5: App shell — layout, navbar, footer, reveal helper
+### Task 5: App shell - layout, navbar, footer, reveal helper
 
 **Files:**
 - Modify: `app/layout.tsx`
@@ -953,7 +953,7 @@ const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
 const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Yoga Daswara — IT Engineer & AI Builder',
+  title: 'Yoga Daswara - IT Engineer & AI Builder',
   description:
     'Portfolio Yoga Daswara: IT engineer di industri perbankan, membangun aplikasi dan use case AI.',
 }
@@ -1462,12 +1462,12 @@ import About from '@/components/About'
 <section id="about" className="section-shell"><About /></section>
 ```
 
-(Hero section drops `section-shell` — it manages its own full-viewport layout.)
+(Hero section drops `section-shell` - it manages its own full-viewport layout.)
 
 - [ ] **Step 7: Verify**
 
 Run: `npm run build`
-Expected: PASS. Then `npm run dev`, open http://localhost:3000 — hero shows particles, typing effect, placeholder photo in gradient ring; about shows animated counters on scroll.
+Expected: PASS. Then `npm run dev`, open http://localhost:3000 - hero shows particles, typing effect, placeholder photo in gradient ring; about shows animated counters on scroll.
 
 - [ ] **Step 8: Commit**
 
@@ -1594,7 +1594,7 @@ import Experience from '@/components/Experience'
 
 - [ ] **Step 4: Verify**
 
-Run: `npm run build` — PASS. Dev check: chips render grouped, marquee scrolls, timeline dots glow and reveal on scroll.
+Run: `npm run build` - PASS. Dev check: chips render grouped, marquee scrolls, timeline dots glow and reveal on scroll.
 
 - [ ] **Step 5: Commit**
 
@@ -1816,8 +1816,8 @@ export default function AiUseCases() {
         </h2>
         <p className="mt-2 max-w-2xl text-sm text-[var(--muted)]">
           {t({
-            id: 'Implementasi AI yang saya bangun dan jalankan — selalu dengan manusia dalam proses.',
-            en: 'AI implementations I build and run — always with a human in the loop.',
+            id: 'Implementasi AI yang saya bangun dan jalankan - selalu dengan manusia dalam proses.',
+            en: 'AI implementations I build and run - always with a human in the loop.',
           })}
         </p>
       </Reveal>
@@ -1859,7 +1859,7 @@ import AiUseCases from '@/components/AiUseCases'
 
 - [ ] **Step 5: Verify**
 
-Run: `npm run build` — PASS. Dev check: filter buttons work, card click opens modal, Escape closes, AI cards render.
+Run: `npm run build` - PASS. Dev check: filter buttons work, card click opens modal, Escape closes, AI cards render.
 
 - [ ] **Step 6: Commit**
 
@@ -1965,8 +1965,8 @@ export default function ContactGate() {
         </h2>
         <p className="mt-2 max-w-xl text-sm text-[var(--muted)]">
           {t({
-            id: 'Isi form singkat ini — setelah terkirim, email & WhatsApp saya langsung terbuka untukmu.',
-            en: 'Fill this short form — once submitted, my email & WhatsApp unlock instantly.',
+            id: 'Isi form singkat ini - setelah terkirim, email & WhatsApp saya langsung terbuka untukmu.',
+            en: 'Fill this short form - once submitted, my email & WhatsApp unlock instantly.',
           })}
         </p>
       </Reveal>
@@ -2178,12 +2178,12 @@ git commit -m "feat: add gated contact form with reveal card and celebration"
 
 ---
 
-### Task 10: Polish — SEO, env example, README, final verification
+### Task 10: Polish - SEO, env example, README, final verification
 
 **Files:**
 - Create: `.env.example`
 - Modify: `README.md`
-- Modify: `app/layout.tsx` (metadata already set in Task 5 — verify only)
+- Modify: `app/layout.tsx` (metadata already set in Task 5 - verify only)
 
 **Interfaces:**
 - Consumes: everything prior.
@@ -2195,7 +2195,7 @@ git commit -m "feat: add gated contact form with reveal card and celebration"
 CONTACT_EMAIL=<GANTI_DENGAN_EMAIL_KAMU>
 CONTACT_WA=<GANTI_DENGAN_NOMOR_WA_KAMU_FORMAT_62>
 
-# Notifikasi email via Resend (opsional — tanpa ini notif dilewati, kontak tetap terbuka)
+# Notifikasi email via Resend (opsional - tanpa ini notif dilewati, kontak tetap terbuka)
 RESEND_API_KEY=<GANTI_DENGAN_API_KEY_RESEND>
 NOTIF_TO_EMAIL=<GANTI_DENGAN_EMAIL_PENERIMA_NOTIF>
 ```
@@ -2203,7 +2203,7 @@ NOTIF_TO_EMAIL=<GANTI_DENGAN_EMAIL_PENERIMA_NOTIF>
 - [ ] **Step 2: Replace `README.md`**
 
 ```markdown
-# Personal Profile — Yoga Daswara
+# Personal Profile - Yoga Daswara
 
 Portfolio one-page (Next.js + Tailwind + Framer Motion). Kontak digerbang form; konten dua bahasa (ID/EN) dari file data.
 
@@ -2215,7 +2215,7 @@ Portfolio one-page (Next.js + Tailwind + Framer Motion). Kontak digerbang form; 
 
 ## Update konten
 
-Semua konten di folder `content/` — edit lalu push, Vercel deploy otomatis:
+Semua konten di folder `content/` - edit lalu push, Vercel deploy otomatis:
 
 | File | Isi |
 |------|-----|
@@ -2234,7 +2234,7 @@ Foto profil: ganti `public/profile.jpg` (rasio 1:1 disarankan). Tanpa file itu, 
 1. Push repo ke GitHub.
 2. Import di vercel.com → framework terdeteksi otomatis.
 3. Set Environment Variables sesuai `.env.example` (nilai asli hanya di Vercel, jangan di repo).
-4. Deploy. Selesai — tiap push ke branch utama = deploy ulang.
+4. Deploy. Selesai - tiap push ke branch utama = deploy ulang.
 
 ## Keamanan
 

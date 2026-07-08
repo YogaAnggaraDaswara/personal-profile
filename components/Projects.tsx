@@ -8,6 +8,12 @@ import Reveal from './Reveal'
 import RevealText from './RevealText'
 import ProjectModal from './ProjectModal'
 
+const COVER_STYLES: Record<ProjectCategory, string> = {
+  ai: 'from-fuchsia-600/40 to-cyan-500/30',
+  banking: 'from-violet-600/40 to-blue-500/30',
+  web: 'from-cyan-500/40 to-emerald-500/30',
+}
+
 function ProjectCard({ p, onOpen }: { p: Project; onOpen: (p: Project) => void }) {
   const { t } = useLang()
   const reduce = useReducedMotion()
@@ -35,8 +41,13 @@ function ProjectCard({ p, onOpen }: { p: Project; onOpen: (p: Project) => void }
       onMouseLeave={handleMouseLeave}
       whileHover={{ y: -6 }}
       onClick={() => onOpen(p)}
-      className="glass block h-full w-full p-6 text-left transition-shadow hover:shadow-[0_0_30px_rgba(124,58,237,0.35)]"
+      className="glass block h-full w-full overflow-hidden p-6 text-left transition-shadow hover:shadow-[0_0_30px_rgba(124,58,237,0.35)]"
     >
+      <div
+        className={`-mx-6 -mt-6 mb-4 flex h-24 items-center justify-center bg-gradient-to-br ${COVER_STYLES[p.category]} text-3xl font-black tracking-widest text-white/25 uppercase`}
+      >
+        {p.category}
+      </div>
       <span className="text-xs font-bold tracking-widest text-[var(--cyan)] uppercase">
         {p.category}
       </span>

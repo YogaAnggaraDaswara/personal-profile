@@ -15,8 +15,8 @@ export default function AiUseCases() {
         </h2>
         <p className="mt-2 max-w-2xl text-sm text-[var(--muted)]">
           {t({
-            id: 'Implementasi AI yang saya bangun dan jalankan — selalu dengan manusia dalam proses.',
-            en: 'AI implementations I build and run — always with a human in the loop.',
+            id: 'Implementasi AI yang saya bangun dan jalankan - selalu dengan manusia dalam proses.',
+            en: 'AI implementations I build and run - always with a human in the loop.',
           })}
         </p>
       </Reveal>

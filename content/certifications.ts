@@ -11,7 +11,7 @@ export const certifications: Certification[] = [
     year: '2020',
   },
   {
-    title: 'IBM Certified System Administrator — WebSphere ND V8.5.5 & Liberty Profile',
+    title: 'IBM Certified System Administrator - WebSphere ND V8.5.5 & Liberty Profile',
     issuer: 'IBM',
     year: '2016',
   },

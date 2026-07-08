@@ -1,161 +1,135 @@
 import type { Project } from './types'
 
-// ===== EDIT ME: ganti placeholder ini dengan project nyata (tanpa nama sistem internal) =====
+// ===== EDIT ME: project nyata dari karier (sumber: CV yoga-daswara-cv.pdf) =====
 export const projects: Project[] = [
   {
-    slug: 'ai-knowledge-assistant',
-    title: 'Internal AI Knowledge Assistant',
-    category: 'ai',
-    summary: {
-      id: 'Chatbot internal berbasis RAG untuk menjawab pertanyaan kebijakan & prosedur.',
-      en: 'Internal RAG-based chatbot answering policy & procedure questions.',
-    },
-    problem: {
-      id: 'Karyawan menghabiskan waktu mencari jawaban di ratusan dokumen kebijakan.',
-      en: 'Employees spent significant time searching hundreds of policy documents.',
-    },
-    solution: {
-      id: 'Chatbot dengan retrieval-augmented generation di atas basis dokumen internal, lengkap dengan sitasi sumber.',
-      en: 'A retrieval-augmented generation chatbot over the internal document base, with source citations.',
-    },
-    architecture: {
-      id: 'Pipeline ingest dokumen → vector store → LLM API dengan guardrail; frontend chat internal.',
-      en: 'Document ingest pipeline → vector store → LLM API with guardrails; internal chat frontend.',
-    },
-    tech: ['Python', 'LLM API', 'Vector DB', 'FastAPI'],
-    impact: {
-      id: 'Waktu pencarian informasi turun drastis; jawaban konsisten dengan sumber tervalidasi.',
-      en: 'Information lookup time dropped sharply; answers stay consistent with validated sources.',
-    },
-  },
-  {
-    slug: 'document-ocr-pipeline',
-    title: 'Document OCR & Extraction Pipeline',
-    category: 'ai',
-    summary: {
-      id: 'Pipeline OCR untuk ekstraksi data dokumen nasabah secara otomatis.',
-      en: 'OCR pipeline for automatic data extraction from customer documents.',
-    },
-    problem: {
-      id: 'Input data dari dokumen fisik dilakukan manual, lambat dan rawan salah ketik.',
-      en: 'Data entry from physical documents was manual, slow, and typo-prone.',
-    },
-    solution: {
-      id: 'OCR + validasi terstruktur mengubah scan dokumen menjadi data siap proses dengan review manusia untuk kasus ambigu.',
-      en: 'OCR + structured validation turns document scans into process-ready data, with human review for ambiguous cases.',
-    },
-    architecture: {
-      id: 'Antrian pemrosesan → OCR engine → validasi aturan → API integrasi ke sistem tujuan.',
-      en: 'Processing queue → OCR engine → rule validation → integration API to target systems.',
-    },
-    tech: ['Python', 'OCR', 'Cloud Storage', 'REST API'],
-    impact: {
-      id: 'Proses input berkali lipat lebih cepat dengan tingkat akurasi lebih tinggi.',
-      en: 'Multiple times faster intake with higher accuracy.',
-    },
-  },
-  {
-    slug: 'transaction-notification-service',
-    title: 'Transaction Notification Service',
+    slug: 'enterprise-architecture-modernization',
+    title: 'Enterprise IT Architecture Modernization',
     category: 'banking',
     summary: {
-      id: 'Layanan notifikasi transaksi multi-kanal yang andal dan idempotent.',
-      en: 'Reliable, idempotent multi-channel transaction notification service.',
+      id: 'Modernisasi arsitektur IT dari monolith ke microservices untuk transformasi digital banking.',
+      en: 'Modernizing IT architecture from monolith to microservices for digital banking transformation.',
     },
     problem: {
-      id: 'Notifikasi transaksi harus terkirim tepat sekali meski sistem hulu retry.',
-      en: 'Transaction notifications must be delivered exactly once even when upstream systems retry.',
+      id: 'Sistem legacy monolitik menghambat kecepatan rilis, skalabilitas, dan observability.',
+      en: 'A legacy monolithic system was slowing release velocity, scalability, and observability.',
     },
     solution: {
-      id: 'Service dengan idempotency key, antrian, dan audit log untuk setiap event notifikasi.',
-      en: 'A service with idempotency keys, queues, and an audit log for every notification event.',
+      id: 'Menerapkan arsitektur microservices (.NET Core, Golang, Python) dengan CI/CD pipeline di GCP & AWS.',
+      en: 'Implemented a microservices architecture (.NET Core, Golang, Python) with CI/CD pipelines on GCP & AWS.',
     },
     architecture: {
-      id: 'Event masuk → deduplikasi idempotency key → antrian → pengirim per kanal → audit log.',
-      en: 'Incoming events → idempotency-key dedup → queue → per-channel sender → audit log.',
+      id: 'API gateway (Ocelot) → microservices per domain bisnis → observability stack (Grafana/Prometheus).',
+      en: 'API gateway (Ocelot) → microservices per business domain → observability stack (Grafana/Prometheus).',
     },
-    tech: ['Java', 'Message Queue', 'SQL', 'REST API'],
+    tech: ['.NET Core', 'Golang', 'Python', 'GCP', 'AWS', 'Kubernetes'],
     impact: {
-      id: 'Duplikasi notifikasi hilang; jejak audit lengkap untuk kebutuhan compliance.',
-      en: 'Duplicate notifications eliminated; complete audit trail for compliance.',
+      id: 'Siklus deployment turun 70%, waktu resolusi insiden turun 30%, SLA terjaga di atas 95%.',
+      en: 'Deployment cycles cut by 70%, incident resolution time down 30%, SLA maintained above 95%.',
     },
   },
   {
-    slug: 'service-monitoring-dashboard',
-    title: 'Service Monitoring Dashboard',
+    slug: 'observability-monitoring-platform',
+    title: 'Observability & Monitoring Platform',
     category: 'web',
     summary: {
-      id: 'Dashboard pemantauan kesehatan layanan dan integrasi antar sistem.',
-      en: 'Dashboard monitoring service health and cross-system integrations.',
+      id: 'Platform observability real-time untuk seluruh layanan perbankan.',
+      en: 'Real-time observability platform across banking services.',
     },
     problem: {
-      id: 'Gangguan integrasi baru diketahui setelah ada laporan pengguna.',
-      en: 'Integration issues were only discovered after user reports.',
+      id: 'Insiden produksi baru diketahui setelah eskalasi manual atau laporan pengguna, respons lambat.',
+      en: 'Production incidents were only discovered after manual escalation or user reports, causing slow response.',
     },
     solution: {
-      id: 'Dashboard real-time dengan health check berkala dan alert saat anomali.',
-      en: 'Real-time dashboard with periodic health checks and alerts on anomalies.',
+      id: 'Menerapkan Grafana + Prometheus untuk monitoring real-time dan alerting proaktif lintas layanan.',
+      en: 'Deployed Grafana + Prometheus for real-time monitoring and proactive alerting across services.',
     },
     architecture: {
-      id: 'Kolektor metrik → penyimpanan time-series → dashboard web + alerting.',
-      en: 'Metric collectors → time-series storage → web dashboard + alerting.',
+      id: 'Metric exporter di tiap layanan → Prometheus → dashboard Grafana + alerting otomatis.',
+      en: 'Metric exporters per service → Prometheus → Grafana dashboards + automated alerting.',
     },
-    tech: ['Node.js', 'Grafana', 'Prometheus', 'Docker'],
+    tech: ['Grafana', 'Prometheus', 'Kubernetes'],
     impact: {
-      id: 'Deteksi gangguan bergeser dari reaktif ke proaktif.',
-      en: 'Issue detection shifted from reactive to proactive.',
+      id: 'Waktu resolusi insiden turun 30%, deteksi masalah bergeser dari reaktif ke proaktif.',
+      en: 'Incident resolution time down 30%, issue detection shifted from reactive to proactive.',
     },
   },
   {
-    slug: 'ai-report-automation',
-    title: 'AI Report Automation',
-    category: 'ai',
+    slug: 'loan-origination-collection-system',
+    title: 'Loan Origination & Collection System',
+    category: 'banking',
     summary: {
-      id: 'Otomasi penyusunan draf laporan berkala dengan bantuan LLM.',
-      en: 'LLM-assisted automation of recurring report drafting.',
+      id: 'Sistem loan origination & collection untuk Bank Mandiri Taspen.',
+      en: 'Loan origination & collection system for Bank Mandiri Taspen.',
     },
     problem: {
-      id: 'Penyusunan laporan berkala menyita jam kerja tim setiap periode.',
-      en: 'Recurring report drafting consumed team hours every cycle.',
+      id: 'Proses pengajuan dan penagihan pinjaman dilakukan manual, lambat dan sulit dilacak.',
+      en: 'Loan application and collection processes were manual, slow, and hard to track.',
     },
     solution: {
-      id: 'Pipeline yang mengambil data terstruktur lalu menghasilkan draf naratif untuk direview manusia.',
-      en: 'A pipeline that pulls structured data and produces narrative drafts for human review.',
+      id: 'Membangun sistem end-to-end dari pengajuan sampai penagihan, memimpin tim 5 developer.',
+      en: 'Built an end-to-end system from application to collection, leading a team of 5 developers.',
     },
     architecture: {
-      id: 'Sumber data → agregasi → template + LLM → draf → review & approval manusia.',
-      en: 'Data sources → aggregation → template + LLM → draft → human review & approval.',
+      id: 'Backend .NET terintegrasi langsung dengan core banking system Bank Mandiri Taspen.',
+      en: '.NET backend directly integrated with Bank Mandiri Taspen\'s core banking system.',
     },
-    tech: ['Python', 'LLM API', 'SQL', 'Scheduler'],
+    tech: ['.NET', 'ASP.NET', 'MSSQL'],
     impact: {
-      id: 'Waktu penyusunan draf turun signifikan; kualitas konsisten antar periode.',
-      en: 'Draft time dropped significantly; quality stays consistent across cycles.',
+      id: 'Waktu proses pinjaman berkurang 30%.',
+      en: 'Loan processing time reduced by 30%.',
     },
   },
   {
-    slug: 'internal-portal',
-    title: 'Company Internal Portal',
+    slug: 'legacy-migration-ibm-bpm',
+    title: 'Legacy Migration to IBM BPM',
+    category: 'banking',
+    summary: {
+      id: 'Migrasi aplikasi perbankan legacy dari .NET ke IBM BPM untuk Bank Negara Indonesia.',
+      en: 'Migrating a legacy banking application from .NET to IBM BPM for Bank Negara Indonesia.',
+    },
+    problem: {
+      id: 'Aplikasi legacy sulit di-scale dan minim otomasi proses bisnis.',
+      en: 'The legacy application was hard to scale and had minimal business process automation.',
+    },
+    solution: {
+      id: 'Migrasi ke platform IBM BPM dengan orkestrasi proses bisnis otomatis.',
+      en: 'Migrated to the IBM BPM platform with automated business process orchestration.',
+    },
+    architecture: {
+      id: 'IBM BPM sebagai process engine, terintegrasi dengan sistem existing Bank Negara Indonesia.',
+      en: 'IBM BPM as the process engine, integrated with Bank Negara Indonesia\'s existing systems.',
+    },
+    tech: ['IBM BPM', '.NET', 'Process Automation'],
+    impact: {
+      id: 'Otomasi proses bisnis meningkat signifikan, performa sistem membaik.',
+      en: 'Business process automation improved significantly, system performance increased.',
+    },
+  },
+  {
+    slug: 'loan-origination-appraisal-system',
+    title: 'Loan Origination & Appraisal System',
     category: 'web',
     summary: {
-      id: 'Portal internal satu pintu untuk informasi dan layanan karyawan.',
-      en: 'Single internal portal for employee information and services.',
+      id: 'Sistem loan origination & appraisal multi-klien perbankan (OCBC NISP, Indosurya, Bank Mandiri).',
+      en: 'Multi-client loan origination & appraisal system (OCBC NISP, Indosurya, Bank Mandiri).',
     },
     problem: {
-      id: 'Informasi internal tersebar di banyak kanal dan sulit dicari.',
-      en: 'Internal information was scattered across channels and hard to find.',
+      id: 'Proses appraisal dan pengajuan kredit dilakukan manual lintas cabang untuk beberapa klien bank.',
+      en: 'Credit appraisal and application were manual, cross-branch processes for multiple bank clients.',
     },
     solution: {
-      id: 'Portal web responsif dengan pencarian terpusat dan integrasi layanan internal.',
-      en: 'Responsive web portal with centralized search and internal service integrations.',
+      id: 'Aplikasi web (.NET/ASP.NET) dan Android terintegrasi API untuk mendukung operasional multi-bank.',
+      en: 'A web app (.NET/ASP.NET) and Android app integrated via API to support multi-bank operations.',
     },
     architecture: {
-      id: 'Frontend web → API gateway → layanan internal; SSO untuk autentikasi.',
-      en: 'Web frontend → API gateway → internal services; SSO for authentication.',
+      id: 'ASP.NET web app + aplikasi Android, terintegrasi API ke sistem masing-masing bank klien.',
+      en: 'ASP.NET web app + Android app, integrated via API to each client bank\'s system.',
     },
-    tech: ['Next.js', 'Node.js', 'SSO', 'REST API'],
+    tech: ['.NET', 'ASP.NET', 'Android'],
     impact: {
-      id: 'Satu titik akses; adopsi layanan internal meningkat.',
-      en: 'One access point; internal service adoption increased.',
+      id: 'Interoperabilitas antar sistem meningkat, proses appraisal lebih cepat.',
+      en: 'Cross-system interoperability improved, appraisal process became faster.',
     },
   },
 ]

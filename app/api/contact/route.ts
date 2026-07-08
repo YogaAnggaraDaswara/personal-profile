@@ -30,7 +30,7 @@ async function notify(value: ContactPayload): Promise<void> {
       body: JSON.stringify({
         from: 'Profile Site <onboarding@resend.dev>',
         to: [to],
-        subject: `[Profile] ${value.purpose} — ${value.name}`,
+        subject: `[Profile] ${value.purpose} - ${value.name}`,
         text: [
           `Nama    : ${value.name}`,
           `Email   : ${value.email}`,

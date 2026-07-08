@@ -83,8 +83,8 @@ export default function ContactGate() {
         </h2>
         <p className="mt-2 max-w-xl text-sm text-[var(--muted)]">
           {t({
-            id: 'Isi form singkat ini — setelah terkirim, email & WhatsApp saya langsung terbuka untukmu.',
-            en: 'Fill this short form — once submitted, my email & WhatsApp unlock instantly.',
+            id: 'Isi form singkat ini - setelah terkirim, email & WhatsApp saya langsung terbuka untukmu.',
+            en: 'Fill this short form - once submitted, my email & WhatsApp unlock instantly.',
           })}
         </p>
       </Reveal>

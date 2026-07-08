@@ -8,7 +8,7 @@ export const experiences: ExperienceItem[] = [
       id: 'Head of IT Architecture & Systems Engineering',
       en: 'Head of IT Architecture & Systems Engineering',
     },
-    period: 'Mar 2023 — Sekarang / Present',
+    period: 'Mar 2023 - Sekarang / Present',
     points: [
       {
         id: 'Memimpin inisiatif arsitektur IT enterprise untuk mendukung transformasi digital banking.',
@@ -35,7 +35,7 @@ export const experiences: ExperienceItem[] = [
   {
     company: 'Bank Sahabat Sampoerna',
     role: { id: 'Head of IT System Analyst', en: 'Head of IT System Analyst' },
-    period: 'Okt 2020 — Mar 2023',
+    period: 'Okt 2020 - Mar 2023',
     points: [
       {
         id: 'Memimpin tim lintas fungsi (system analyst & developer) dalam menghadirkan sistem operasional & lending perbankan.',
@@ -58,7 +58,7 @@ export const experiences: ExperienceItem[] = [
   {
     company: 'Bank Sahabat Sampoerna',
     role: { id: 'IT System Analyst Officer', en: 'IT System Analyst Officer' },
-    period: 'Sep 2018 — Okt 2020',
+    period: 'Sep 2018 - Okt 2020',
     points: [
       {
         id: 'Melakukan analisis sistem & pengumpulan requirement untuk sistem operasional perbankan dan aplikasi lending.',
@@ -81,7 +81,7 @@ export const experiences: ExperienceItem[] = [
   {
     company: 'Bank Mandiri Taspen',
     role: { id: 'IT Staff (Professional Development Program)', en: 'IT Staff (Professional Development Program)' },
-    period: 'Sep 2017 — Sep 2018',
+    period: 'Sep 2017 - Sep 2018',
     points: [
       {
         id: 'Mengembangkan aplikasi perbankan internal untuk mendukung proses operasional.',
@@ -95,8 +95,8 @@ export const experiences: ExperienceItem[] = [
   },
   {
     company: 'PT Digital Mind System (Vendor Projects)',
-    role: { id: 'Lead Software Engineer — Banking Projects', en: 'Lead Software Engineer — Banking Projects' },
-    period: 'Apr 2016 — Sep 2017',
+    role: { id: 'Lead Software Engineer - Banking Projects', en: 'Lead Software Engineer - Banking Projects' },
+    period: 'Apr 2016 - Sep 2017',
     points: [
       {
         id: 'Memimpin pengembangan sistem Loan Origination & Collection untuk Bank Mandiri Taspen bersama tim 5 developer, memangkas waktu proses pinjaman 30%.',
@@ -110,8 +110,8 @@ export const experiences: ExperienceItem[] = [
   },
   {
     company: 'PT Digital Mind System (Vendor Projects)',
-    role: { id: 'Software Engineer — Banking Projects', en: 'Software Engineer — Banking Projects' },
-    period: 'Sep 2015 — Apr 2016',
+    role: { id: 'Software Engineer - Banking Projects', en: 'Software Engineer - Banking Projects' },
+    period: 'Sep 2015 - Apr 2016',
     points: [
       {
         id: 'Mengembangkan sistem Loan Origination & Appraisal menggunakan .NET, ASP.NET, dan Android. (Klien: OCBC NISP, Indosurya, Bank Mandiri)',
