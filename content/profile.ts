@@ -18,4 +18,12 @@ export const profile = {
     { value: 6, suffix: '+', label: { id: 'Project Dikembangkan', en: 'Projects Delivered' } },
     { value: 3, suffix: '+', label: { id: 'Use Case AI', en: 'AI Use Cases' } },
   ] satisfies Stat[],
+  cvFile: '/cv/yoga-daswara-cv.pdf',
 }
+
+// ===== EDIT ME: ganti URL dengan akun asli =====
+export const socials: { label: string; url: string; icon: 'linkedin' | 'github' | 'instagram' }[] = [
+  { label: 'LinkedIn', url: 'https://linkedin.com/in/yoga-daswara', icon: 'linkedin' },
+  { label: 'GitHub', url: 'https://github.com/yoga-daswara', icon: 'github' },
+  { label: 'Instagram', url: 'https://instagram.com/yoga.daswara', icon: 'instagram' },
+]

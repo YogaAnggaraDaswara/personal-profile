@@ -5,6 +5,8 @@ import { useLang } from '@/lib/i18n'
 import { profile } from '@/content/profile'
 import Particles from './Particles'
 import Magnetic from './Magnetic'
+import CvGate from './CvGate'
+import SocialLinks from './SocialLinks'
 
 function useTypewriter(words: string[], enabled: boolean) {
   const [text, setText] = useState(enabled ? '' : words[0])
@@ -39,7 +41,7 @@ export default function Hero() {
   const { t } = useLang()
   const reduce = useReducedMotion()
   const typed = useTypewriter(profile.typingRoles, !reduce)
-  const [src, setSrc] = useState('/profile.jpg')
+  const [src, setSrc] = useState('/profile.png')
 
   return (
     <div className="relative flex min-h-[92vh] items-center overflow-hidden">
@@ -55,7 +57,21 @@ export default function Hero() {
         transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
       />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col-reverse items-center gap-10 px-5 md:flex-row md:justify-between">
+      <motion.div
+        initial={reduce ? false : { opacity: 0, x: 40 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.9, ease: 'easeOut' }}
+        className="pointer-events-none absolute inset-y-0 right-0 z-[1] hidden w-[46%] md:block"
+      >
+        <img
+          src={src}
+          onError={() => setSrc('/profile-placeholder.svg')}
+          alt="Foto Yoga Daswara"
+          className="h-full w-full object-cover object-top [mask-image:linear-gradient(to_right,transparent,black_20%)]"
+        />
+      </motion.div>
+
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-10 px-5 md:flex-row md:items-center md:justify-start">
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -90,21 +106,22 @@ export default function Hero() {
                 {t({ id: 'Hubungi Saya', en: 'Contact Me' })}
               </a>
             </Magnetic>
+            <CvGate />
           </div>
+          <SocialLinks className="mt-6 flex justify-center gap-3 md:justify-start" />
         </motion.div>
 
         <motion.div
           initial={reduce ? false : { opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-          whileHover={reduce ? undefined : { rotate: 1, scale: 1.02 }}
-          className="glow-frame shadow-[0_0_60px_rgba(124,58,237,0.45)]"
+          className="md:hidden"
         >
           <img
             src={src}
             onError={() => setSrc('/profile-placeholder.svg')}
             alt="Foto Yoga Daswara"
-            className="h-72 w-56 rounded-[1.6rem] bg-[var(--bg-soft)] object-cover object-top md:h-[26rem] md:w-80"
+            className="h-72 w-56 rounded-3xl bg-[var(--bg-soft)] object-cover object-top"
           />
         </motion.div>
       </div>

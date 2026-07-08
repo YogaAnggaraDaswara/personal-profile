@@ -22,7 +22,11 @@ Semua konten di folder `content/` — edit lalu push, Vercel deploy otomatis:
 
 Format teks dua bahasa: `{ id: 'Teks Indonesia', en: 'English text' }`.
 
-Foto profil: ganti `public/profile.jpg` (rasio 1:1 disarankan). Tanpa file itu, placeholder tampil.
+Foto profil: ganti `public/profile.png` (potret setengah/full badan, background gelap paling nyatu ke tema). Tanpa file itu, placeholder tampil.
+
+Sosial media: edit array `socials` di `content/profile.ts` (LinkedIn, GitHub, Instagram — ganti URL ke akun asli).
+
+CV: taruh file PDF di `public/cv/yoga-daswara-cv.pdf`. Tombol "Download CV" minta nama, email, No. HP dulu (masuk ke notifikasi email jika `RESEND_API_KEY`+`NOTIF_TO_EMAIL` diisi) baru link unduh muncul. Nama file bisa diganti — cukup ubah `cvFile` di `content/profile.ts` dan path di `app/api/cv-lead/route.ts`.
 
 ## Deploy (Vercel)
 
@@ -34,5 +38,6 @@ Foto profil: ganti `public/profile.jpg` (rasio 1:1 disarankan). Tanpa file itu, 
 ## Keamanan
 
 - Email/WA hanya di env var server, tidak pernah ada di bundle client.
-- Form: honeypot + rate limit 5 request / 10 menit / IP.
+- Form kontak & form unduh CV: honeypot + rate limit 5 request / 10 menit / IP.
+- File CV di `public/` bisa diakses langsung kalau URL ditebak — form ini gerbang soft (capture lead), bukan proteksi keamanan berkas.
 - Notifikasi Resend best-effort: gagal kirim tidak memblokir reveal.

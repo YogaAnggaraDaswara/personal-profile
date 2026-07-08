@@ -8,7 +8,7 @@ import Counter from './Counter'
 
 export default function About() {
   const { t } = useLang()
-  const [src, setSrc] = useState('/profile.jpg')
+  const [src, setSrc] = useState('/profile.png')
 
   return (
     <div>
