@@ -1,7 +1,14 @@
 import { describe, it, expect } from 'vitest'
 import { validateCvLead } from '@/lib/cv-validation'
 
-const valid = { name: 'Budi Santoso', email: 'budi@example.com', phone: '+62 812-3456-7890', website: '' }
+const valid = {
+  name: 'Budi Santoso',
+  email: 'budi@example.com',
+  phone: '+62 812-3456-7890',
+  company: 'PT Contoh',
+  purpose: 'recruitment',
+  website: '',
+}
 
 describe('validateCvLead', () => {
   it('accepts a valid payload', () => {
@@ -32,6 +39,18 @@ describe('validateCvLead', () => {
     const r = validateCvLead({ ...valid, phone: 'abc' })
     expect(r.ok).toBe(false)
     if (!r.ok) expect(r.errors.phone).toBeDefined()
+  })
+
+  it('rejects empty company', () => {
+    const r = validateCvLead({ ...valid, company: '' })
+    expect(r.ok).toBe(false)
+    if (!r.ok) expect(r.errors.company).toBeDefined()
+  })
+
+  it('rejects unknown purpose', () => {
+    const r = validateCvLead({ ...valid, purpose: 'spam' })
+    expect(r.ok).toBe(false)
+    if (!r.ok) expect(r.errors.purpose).toBeDefined()
   })
 
   it('rejects non-object input', () => {

@@ -35,6 +35,18 @@ describe('validateContact', () => {
     if (!r.ok) expect(r.errors.email).toBeDefined()
   })
 
+  it('rejects empty company', () => {
+    const r = validateContact({ ...valid, company: '' })
+    expect(r.ok).toBe(false)
+    if (!r.ok) expect(r.errors.company).toBeDefined()
+  })
+
+  it('rejects empty message', () => {
+    const r = validateContact({ ...valid, message: '' })
+    expect(r.ok).toBe(false)
+    if (!r.ok) expect(r.errors.message).toBeDefined()
+  })
+
   it('rejects unknown purpose', () => {
     const r = validateContact({ ...valid, purpose: 'spam' })
     expect(r.ok).toBe(false)

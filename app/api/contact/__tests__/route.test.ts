@@ -12,9 +12,9 @@ function req(body: unknown, ip: string) {
 const valid = {
   name: 'Budi Santoso',
   email: 'budi@example.com',
-  company: '',
+  company: 'PT Contoh',
   purpose: 'collaboration',
-  message: '',
+  message: 'Halo, tertarik diskusi.',
   website: '',
 }
 

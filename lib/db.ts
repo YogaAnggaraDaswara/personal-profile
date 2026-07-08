@@ -41,9 +41,14 @@ async function ensureTables(): Promise<void> {
       name TEXT NOT NULL,
       email TEXT NOT NULL,
       phone TEXT NOT NULL,
+      company TEXT,
+      purpose TEXT,
       created_at TIMESTAMPTZ NOT NULL DEFAULT now()
     )
   `
+  // Self-heal older deployments where cv_leads already existed without these columns.
+  await sql`ALTER TABLE cv_leads ADD COLUMN IF NOT EXISTS company TEXT`
+  await sql`ALTER TABLE cv_leads ADD COLUMN IF NOT EXISTS purpose TEXT`
   tablesReady = true
 }
 
@@ -69,7 +74,13 @@ export async function saveContactSubmission(v: {
   }
 }
 
-export async function saveCvLead(v: { name: string; email: string; phone: string }): Promise<void> {
+export async function saveCvLead(v: {
+  name: string
+  email: string
+  phone: string
+  company: string
+  purpose: string
+}): Promise<void> {
   if (!isConfigured()) {
     console.log('[db] skipped saving cv lead (no Postgres connection string configured)')
     return
@@ -77,8 +88,8 @@ export async function saveCvLead(v: { name: string; email: string; phone: string
   try {
     await ensureTables()
     await sql`
-      INSERT INTO cv_leads (name, email, phone)
-      VALUES (${v.name}, ${v.email}, ${v.phone})
+      INSERT INTO cv_leads (name, email, phone, company, purpose)
+      VALUES (${v.name}, ${v.email}, ${v.phone}, ${v.company}, ${v.purpose})
     `
   } catch (err) {
     console.error('[db] failed to save cv lead', err)

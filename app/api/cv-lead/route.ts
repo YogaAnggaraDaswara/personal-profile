@@ -31,8 +31,14 @@ async function notify(value: CvLeadPayload): Promise<void> {
       body: JSON.stringify({
         from: 'Profile Site <onboarding@resend.dev>',
         to: [to],
-        subject: `[CV Download] ${value.name}`,
-        text: [`Nama  : ${value.name}`, `Email : ${value.email}`, `HP    : ${value.phone}`].join('\n'),
+        subject: `[CV Download] ${value.purpose} - ${value.name}`,
+        text: [
+          `Nama      : ${value.name}`,
+          `Email     : ${value.email}`,
+          `HP        : ${value.phone}`,
+          `Perusahaan: ${value.company}`,
+          `Keperluan : ${value.purpose}`,
+        ].join('\n'),
       }),
     })
     if (!res.ok) console.error('[cv-lead] notification failed', res.status)

@@ -9,7 +9,14 @@ function req(body: unknown, ip: string) {
   })
 }
 
-const valid = { name: 'Budi Santoso', email: 'budi@example.com', phone: '+62 812-3456-7890', website: '' }
+const valid = {
+  name: 'Budi Santoso',
+  email: 'budi@example.com',
+  phone: '+62 812-3456-7890',
+  company: 'PT Contoh',
+  purpose: 'recruitment',
+  website: '',
+}
 
 beforeEach(() => {
   delete process.env.RESEND_API_KEY

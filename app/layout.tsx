@@ -19,7 +19,7 @@ const siteUrl =
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Yoga Daswara - IT Engineer & AI Builder",
+  title: "Yoga Daswara",
   description:
     "Portfolio Yoga Daswara: IT engineer di industri perbankan, membangun aplikasi dan use case AI.",
 };

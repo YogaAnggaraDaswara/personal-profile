@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/lib/i18n'
+import { PURPOSE_OPTIONS } from '@/lib/contact-validation'
 import { profile } from '@/content/profile'
 import Magnetic from './Magnetic'
 
@@ -10,15 +11,17 @@ type Status = 'idle' | 'submitting' | 'ready' | 'error' | 'rate_limited'
 const inputCls =
   'w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/30 outline-none transition-colors focus:border-[var(--violet)]'
 
+const INITIAL_FORM = { name: '', email: '', phone: '', company: '', purpose: 'recruitment', website: '' }
+
 export default function CvGate() {
   const { t } = useLang()
   const [open, setOpen] = useState(false)
   const [status, setStatus] = useState<Status>('idle')
   const [downloadUrl, setDownloadUrl] = useState('')
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
-  const [form, setForm] = useState({ name: '', email: '', phone: '', website: '' })
+  const [form, setForm] = useState(INITIAL_FORM)
 
-  const set = (k: string) => (e: React.ChangeEvent<HTMLInputElement>) =>
+  const set = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }))
 
   function close() {
@@ -26,7 +29,7 @@ export default function CvGate() {
     setStatus('idle')
     setDownloadUrl('')
     setFieldErrors({})
-    setForm({ name: '', email: '', phone: '', website: '' })
+    setForm(INITIAL_FORM)
   }
 
   async function submit(e: React.FormEvent) {
@@ -127,8 +130,8 @@ export default function CvGate() {
                 <form onSubmit={submit} className="mt-6 space-y-4">
                   <p className="text-xs text-[var(--muted)]">
                     {t({
-                      id: 'Isi data singkat untuk mengunduh CV saya.',
-                      en: 'Fill in a few details to download my CV.',
+                      id: 'Isi data berikut untuk mengunduh CV saya.',
+                      en: 'Fill in the details below to download my CV.',
                     })}
                   </p>
                   <div>
@@ -166,6 +169,27 @@ export default function CvGate() {
                       maxLength={20}
                     />
                     {err('phone')}
+                  </div>
+                  <div>
+                    <input
+                      className={inputCls}
+                      placeholder={t({ id: 'Perusahaan / instansi *', en: 'Company / organization *' })}
+                      value={form.company}
+                      onChange={set('company')}
+                      required
+                      maxLength={150}
+                    />
+                    {err('company')}
+                  </div>
+                  <div>
+                    <select className={inputCls} value={form.purpose} onChange={set('purpose')} required>
+                      {PURPOSE_OPTIONS.map((o) => (
+                        <option key={o.value} value={o.value} className="bg-[var(--bg-soft)]">
+                          {t(o.label)}
+                        </option>
+                      ))}
+                    </select>
+                    {err('purpose')}
                   </div>
 
                   <input

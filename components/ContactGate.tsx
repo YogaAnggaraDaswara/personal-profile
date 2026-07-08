@@ -2,19 +2,13 @@
 import { useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { useLang } from '@/lib/i18n'
+import { PURPOSE_OPTIONS } from '@/lib/contact-validation'
 import Reveal from './Reveal'
 import RevealText from './RevealText'
 import Magnetic from './Magnetic'
 
 type Status = 'idle' | 'submitting' | 'revealed' | 'thanks' | 'error' | 'rate_limited'
 type Contact = { email: string; whatsapp: string }
-
-const PURPOSE_OPTIONS = [
-  { value: 'recruitment', label: { id: 'Rekrutmen', en: 'Recruitment' } },
-  { value: 'collaboration', label: { id: 'Kolaborasi Project', en: 'Project Collaboration' } },
-  { value: 'consultation', label: { id: 'Konsultasi', en: 'Consultation' } },
-  { value: 'other', label: { id: 'Lainnya', en: 'Other' } },
-]
 
 const inputCls =
   'w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/30 outline-none transition-colors focus:border-[var(--violet)]'
@@ -183,9 +177,10 @@ export default function ContactGate() {
               <div>
                 <input
                   className={inputCls}
-                  placeholder={t({ id: 'Perusahaan / instansi (opsional)', en: 'Company / organization (optional)' })}
+                  placeholder={t({ id: 'Perusahaan / instansi *', en: 'Company / organization *' })}
                   value={form.company}
                   onChange={set('company')}
+                  required
                   maxLength={150}
                 />
                 {err('company')}
@@ -205,9 +200,10 @@ export default function ContactGate() {
                   className={inputCls}
                   rows={3}
                   maxLength={1000}
-                  placeholder={t({ id: 'Pesan singkat (opsional)', en: 'Short message (optional)' })}
+                  placeholder={t({ id: 'Pesan singkat *', en: 'Short message *' })}
                   value={form.message}
                   onChange={set('message')}
+                  required
                 />
                 {err('message')}
               </div>

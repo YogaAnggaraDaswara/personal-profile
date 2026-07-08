@@ -34,7 +34,13 @@ describe('db helpers without any Postgres connection string configured', () => {
   it('saveCvLead resolves without throwing and logs a skip message', async () => {
     const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
     await expect(
-      saveCvLead({ name: 'Budi', email: 'budi@example.com', phone: '+6281234567890' }),
+      saveCvLead({
+        name: 'Budi',
+        email: 'budi@example.com',
+        phone: '+6281234567890',
+        company: 'PT Contoh',
+        purpose: 'recruitment',
+      }),
     ).resolves.toBeUndefined()
     expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('skipped saving cv lead'))
   })
