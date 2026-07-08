@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { useLang } from '@/lib/i18n'
 import { profile } from '@/content/profile'
 import Particles from './Particles'
+import Magnetic from './Magnetic'
 
 function useTypewriter(words: string[], enabled: boolean) {
   const [text, setText] = useState(enabled ? '' : words[0])
@@ -43,8 +44,16 @@ export default function Hero() {
   return (
     <div className="relative flex min-h-[92vh] items-center overflow-hidden">
       <Particles />
-      <div className="pointer-events-none absolute -top-32 right-0 h-96 w-96 rounded-full bg-[var(--violet)]/25 blur-[120px]" />
-      <div className="pointer-events-none absolute bottom-0 -left-32 h-96 w-96 rounded-full bg-[var(--cyan)]/20 blur-[120px]" />
+      <motion.div
+        className="pointer-events-none absolute -top-32 right-0 h-96 w-96 rounded-full bg-[var(--violet)]/25 blur-[120px]"
+        animate={reduce ? undefined : { scale: [1, 1.15, 1], opacity: [0.25, 0.4, 0.25] }}
+        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      <motion.div
+        className="pointer-events-none absolute bottom-0 -left-32 h-96 w-96 rounded-full bg-[var(--cyan)]/20 blur-[120px]"
+        animate={reduce ? undefined : { scale: [1, 1.2, 1], opacity: [0.2, 0.35, 0.2] }}
+        transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+      />
 
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col-reverse items-center gap-10 px-5 md:flex-row md:justify-between">
         <motion.div
@@ -65,18 +74,22 @@ export default function Hero() {
           </p>
           <p className="mt-4 text-[var(--muted)]">{t(profile.tagline)}</p>
           <div className="mt-8 flex justify-center gap-4 md:justify-start">
-            <a
-              href="#projects"
-              className="rounded-full bg-gradient-to-r from-[var(--violet)] to-[var(--cyan)] px-6 py-3 text-sm font-bold text-white transition-transform hover:scale-105"
-            >
-              {t({ id: 'Lihat Project', en: 'View Projects' })}
-            </a>
-            <a
-              href="#contact"
-              className="glass px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-white/10"
-            >
-              {t({ id: 'Hubungi Saya', en: 'Contact Me' })}
-            </a>
+            <Magnetic className="inline-block">
+              <a
+                href="#projects"
+                className="inline-block rounded-full bg-gradient-to-r from-[var(--violet)] to-[var(--cyan)] px-6 py-3 text-sm font-bold text-white transition-transform hover:scale-105"
+              >
+                {t({ id: 'Lihat Project', en: 'View Projects' })}
+              </a>
+            </Magnetic>
+            <Magnetic className="inline-block">
+              <a
+                href="#contact"
+                className="glass inline-block px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-white/10"
+              >
+                {t({ id: 'Hubungi Saya', en: 'Contact Me' })}
+              </a>
+            </Magnetic>
           </div>
         </motion.div>
 

@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useLang } from '@/lib/i18n'
 import { profile } from '@/content/profile'
 import Reveal from './Reveal'
+import RevealText from './RevealText'
 import Counter from './Counter'
 
 export default function About() {
@@ -13,7 +14,7 @@ export default function About() {
     <div>
       <Reveal>
         <h2 className="text-3xl font-extrabold md:text-4xl">
-          {t({ id: 'Tentang Saya', en: 'About Me' })} <span className="grad-text">.</span>
+          <RevealText text={t({ id: 'Tentang Saya', en: 'About Me' })} /> <span className="grad-text">.</span>
         </h2>
       </Reveal>
       <div className="mt-8 flex flex-col items-center gap-8 md:flex-row md:items-start">

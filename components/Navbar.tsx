@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/lib/i18n'
 
@@ -15,10 +15,21 @@ const LINKS = [
 export default function Navbar() {
   const { lang, setLang, t } = useLang()
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <nav className="glass mx-auto mt-3 flex max-w-5xl items-center justify-between px-4 py-2.5 md:px-6">
+      <nav
+        style={{ boxShadow: scrolled ? '0 8px 30px rgba(124,58,237,0.25)' : 'none' }}
+        className="glass mx-auto mt-3 flex max-w-5xl items-center justify-between px-4 py-2.5 transition-shadow duration-300 md:px-6"
+      >
         <a href="#top" className="grad-text text-lg font-extrabold tracking-tight">
           YD<span className="text-[var(--cyan)]">.</span>
         </a>

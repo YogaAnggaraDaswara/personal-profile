@@ -7,10 +7,16 @@ import Experience from '@/components/Experience'
 import Projects from '@/components/Projects'
 import AiUseCases from '@/components/AiUseCases'
 import ContactGate from '@/components/ContactGate'
+import Intro from '@/components/Intro'
+import ScrollProgress from '@/components/ScrollProgress'
+import CursorGlow from '@/components/CursorGlow'
 
 export default function Home() {
   return (
     <main id="top">
+      <Intro />
+      <ScrollProgress />
+      <CursorGlow />
       <Navbar />
       <section id="hero">
         <Hero />

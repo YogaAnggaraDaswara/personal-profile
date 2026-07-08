@@ -2,6 +2,7 @@
 import { useLang } from '@/lib/i18n'
 import { experiences } from '@/content/experience'
 import Reveal from './Reveal'
+import RevealText from './RevealText'
 
 export default function Experience() {
   const { t } = useLang()
@@ -9,7 +10,7 @@ export default function Experience() {
     <div>
       <Reveal>
         <h2 className="text-3xl font-extrabold md:text-4xl">
-          {t({ id: 'Pengalaman Kerja', en: 'Work Experience' })} <span className="grad-text">.</span>
+          <RevealText text={t({ id: 'Pengalaman Kerja', en: 'Work Experience' })} /> <span className="grad-text">.</span>
         </h2>
       </Reveal>
 

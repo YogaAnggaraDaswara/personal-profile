@@ -2,6 +2,7 @@
 import { useLang } from '@/lib/i18n'
 import { skillGroups, marqueeTech } from '@/content/skills'
 import Reveal from './Reveal'
+import RevealText from './RevealText'
 
 export default function Skills() {
   const { t } = useLang()
@@ -9,7 +10,7 @@ export default function Skills() {
     <div>
       <Reveal>
         <h2 className="text-3xl font-extrabold md:text-4xl">
-          {t({ id: 'Skill & Teknologi', en: 'Skills & Technologies' })}{' '}
+          <RevealText text={t({ id: 'Skill & Teknologi', en: 'Skills & Technologies' })} />{' '}
           <span className="grad-text">.</span>
         </h2>
       </Reveal>

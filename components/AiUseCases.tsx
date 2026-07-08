@@ -2,6 +2,7 @@
 import { aiUseCases } from '@/content/aiUseCases'
 import { useLang } from '@/lib/i18n'
 import Reveal from './Reveal'
+import RevealText from './RevealText'
 
 export default function AiUseCases() {
   const { t } = useLang()
@@ -10,7 +11,7 @@ export default function AiUseCases() {
       <div className="pointer-events-none absolute -top-20 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[var(--violet)]/20 blur-[100px]" />
       <Reveal>
         <h2 className="text-3xl font-extrabold md:text-4xl">
-          {t({ id: 'Use Case AI', en: 'AI Use Cases' })} <span className="grad-text">.</span>
+          <RevealText text={t({ id: 'Use Case AI', en: 'AI Use Cases' })} /> <span className="grad-text">.</span>
         </h2>
         <p className="mt-2 max-w-2xl text-sm text-[var(--muted)]">
           {t({

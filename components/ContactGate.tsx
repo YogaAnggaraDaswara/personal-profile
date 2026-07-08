@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { useLang } from '@/lib/i18n'
 import Reveal from './Reveal'
+import RevealText from './RevealText'
+import Magnetic from './Magnetic'
 
 type Status = 'idle' | 'submitting' | 'revealed' | 'thanks' | 'error' | 'rate_limited'
 type Contact = { email: string; whatsapp: string }
@@ -77,7 +79,7 @@ export default function ContactGate() {
     <div className="relative">
       <Reveal>
         <h2 className="text-3xl font-extrabold md:text-4xl">
-          {t({ id: 'Hubungi Saya', en: 'Get In Touch' })} <span className="grad-text">.</span>
+          <RevealText text={t({ id: 'Hubungi Saya', en: 'Get In Touch' })} /> <span className="grad-text">.</span>
         </h2>
         <p className="mt-2 max-w-xl text-sm text-[var(--muted)]">
           {t({
@@ -237,15 +239,17 @@ export default function ContactGate() {
                 </p>
               )}
 
-              <motion.button
-                whileTap={reduce ? undefined : { scale: 0.97 }}
-                disabled={status === 'submitting'}
-                className="w-full rounded-full bg-gradient-to-r from-[var(--violet)] to-[var(--cyan)] px-6 py-3 text-sm font-bold text-white transition-opacity disabled:opacity-50"
-              >
-                {status === 'submitting'
-                  ? t({ id: 'Mengirim…', en: 'Sending…' })
-                  : t({ id: '🔓 Buka Kontak Saya', en: '🔓 Unlock My Contact' })}
-              </motion.button>
+              <Magnetic className="block" strength={0.15}>
+                <motion.button
+                  whileTap={reduce ? undefined : { scale: 0.97 }}
+                  disabled={status === 'submitting'}
+                  className="w-full rounded-full bg-gradient-to-r from-[var(--violet)] to-[var(--cyan)] px-6 py-3 text-sm font-bold text-white transition-opacity disabled:opacity-50"
+                >
+                  {status === 'submitting'
+                    ? t({ id: 'Mengirim…', en: 'Sending…' })
+                    : t({ id: '🔓 Buka Kontak Saya', en: '🔓 Unlock My Contact' })}
+                </motion.button>
+              </Magnetic>
             </motion.form>
           )}
         </AnimatePresence>
