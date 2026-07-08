@@ -33,7 +33,8 @@ CV: taruh file PDF di `public/cv/yoga-daswara-cv.pdf`. Tombol "Download CV" mint
 1. Push repo ke GitHub.
 2. Import di vercel.com - framework terdeteksi otomatis.
 3. Set Environment Variables sesuai `.env.example` (nilai asli hanya di Vercel, jangan di repo).
-4. Deploy. Selesai - tiap push ke branch utama = deploy ulang.
+4. (Opsional) Simpan submission ke database: buka tab Storage di project Vercel > Create Database > pilih Postgres (Neon). Setelah connect, `POSTGRES_URL` otomatis ke-inject, tabel `contact_submissions` dan `cv_leads` dibuat otomatis saat submission pertama masuk. Lihat datanya lewat tab Storage > Data / Query.
+5. Deploy. Selesai - tiap push ke branch utama = deploy ulang.
 
 ## Keamanan
 
@@ -41,3 +42,4 @@ CV: taruh file PDF di `public/cv/yoga-daswara-cv.pdf`. Tombol "Download CV" mint
 - Form kontak & form unduh CV: honeypot + rate limit 5 request / 10 menit / IP.
 - File CV di `public/` bisa diakses langsung kalau URL ditebak - form ini gerbang soft (capture lead), bukan proteksi keamanan berkas.
 - Notifikasi Resend best-effort: gagal kirim tidak memblokir reveal.
+- Penyimpanan database (Postgres) juga best-effort: gagal simpan tidak memblokir reveal, cuma masuk log server.

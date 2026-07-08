@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { validateContact, type ContactPayload } from '@/lib/contact-validation'
+import { saveContactSubmission } from '@/lib/db'
 
 const WINDOW_MS = 10 * 60 * 1000
 const LIMIT = 5
@@ -70,7 +71,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, errors: { form: 'rate_limited' } }, { status: 429 })
   }
 
-  await notify(result.value)
+  await Promise.all([notify(result.value), saveContactSubmission(result.value)])
 
   return NextResponse.json({
     ok: true,

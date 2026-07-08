@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { validateCvLead, type CvLeadPayload } from '@/lib/cv-validation'
+import { saveCvLead } from '@/lib/db'
 
 const WINDOW_MS = 10 * 60 * 1000
 const LIMIT = 5
@@ -63,7 +64,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, errors: { form: 'rate_limited' } }, { status: 429 })
   }
 
-  await notify(result.value)
+  await Promise.all([notify(result.value), saveCvLead(result.value)])
 
   return NextResponse.json({ ok: true, downloadUrl: '/cv/yoga-daswara-cv.pdf' })
 }
