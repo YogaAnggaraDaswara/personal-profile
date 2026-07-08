@@ -76,7 +76,7 @@ export default function Hero() {
           initial={reduce ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="max-w-xl text-center md:text-left"
+          className="max-w-xl text-center md:max-w-[min(44%,36rem)] md:text-left"
         >
           <p className="text-sm tracking-[0.3em] text-[var(--cyan)] uppercase">
             {t({ id: 'Halo, saya', en: 'Hi, I am' })}
@@ -89,7 +89,7 @@ export default function Hero() {
             <span className="animate-pulse text-[var(--cyan)]">|</span>
           </p>
           <p className="mt-4 text-[var(--muted)]">{t(profile.tagline)}</p>
-          <div className="mt-8 flex justify-center gap-4 md:justify-start">
+          <div className="mt-8 flex flex-wrap justify-center gap-4 md:justify-start">
             <Magnetic className="inline-block">
               <a
                 href="#projects"
