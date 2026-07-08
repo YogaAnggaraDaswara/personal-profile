@@ -16,7 +16,7 @@ export const profile = {
   // Hanya "Tahun Pengalaman" yang diisi manual. Statistik Project & AI Use Case
   // dihitung otomatis dari jumlah entri di content/projects.ts & content/aiUseCases.ts.
   stats: [
-    { value: 7, suffix: '+', label: { id: 'Tahun Pengalaman', en: 'Years of Experience' } },
+    { value: 10, suffix: '+', label: { id: 'Tahun Pengalaman', en: 'Years of Experience' } },
   ] satisfies Stat[],
   cvFile: '/cv/yoga-daswara-cv.pdf',
 }
