@@ -1,34 +1,64 @@
 import type { ExperienceItem } from './types'
 
-// ===== EDIT ME: riwayat kerja (sesuaikan dengan CV) =====
+// ===== EDIT ME: riwayat kerja (sesuaikan dengan CV/LinkedIn) =====
 export const experiences: ExperienceItem[] = [
   {
     company: 'Bank Sahabat Sampoerna',
-    role: { id: 'IT Engineer', en: 'IT Engineer' },
-    period: '2021 — Sekarang / Present',
+    role: {
+      id: 'Head of IT Architecture & Systems Engineering',
+      en: 'Head of IT Architecture & Systems Engineering',
+    },
+    period: 'Mar 2023 — Sekarang / Present',
     points: [
       {
-        id: 'Mengembangkan dan memelihara aplikasi internal pendukung operasional perbankan.',
-        en: 'Develop and maintain internal applications supporting banking operations.',
+        id: 'Memimpin arsitektur IT & tim rekayasa sistem untuk mendukung transformasi digital bank.',
+        en: 'Lead IT architecture & systems engineering teams supporting the bank\'s digital transformation.',
       },
       {
-        id: 'Membangun use case AI internal: asisten pengetahuan, otomasi dokumen, dan pelaporan.',
-        en: 'Build internal AI use cases: knowledge assistant, document automation, and reporting.',
+        id: 'Menetapkan standar arsitektur yang scalable, aman, dan sesuai kepatuhan perbankan.',
+        en: 'Set scalable, secure architecture standards aligned with banking compliance.',
       },
       {
-        id: 'Integrasi antar sistem melalui REST API dengan standar keamanan perbankan.',
-        en: 'Integrate systems through REST APIs following banking security standards.',
+        id: 'Menyinkronkan strategi teknologi lintas departemen dengan tujuan bisnis organisasi.',
+        en: 'Align technology strategy across departments with organizational business goals.',
       },
     ],
   },
   {
-    company: 'Perusahaan Sebelumnya',
-    role: { id: 'Software Developer', en: 'Software Developer' },
-    period: '2019 — 2021',
+    company: 'Bank Sahabat Sampoerna',
+    role: { id: 'Head of IT System Analyst', en: 'Head of IT System Analyst' },
+    period: 'Okt 2020 — Mar 2023',
     points: [
       {
-        id: 'Pengembangan aplikasi web end-to-end dari kebutuhan bisnis sampai rilis.',
-        en: 'End-to-end web application development from business requirements to release.',
+        id: 'Memimpin tim analisa sistem untuk optimasi proses bisnis berbasis IT.',
+        en: 'Led the systems analysis team to optimize IT-driven business processes.',
+      },
+      {
+        id: 'Merancang solusi yang meningkatkan efisiensi operasional dan kualitas layanan.',
+        en: 'Designed solutions that improved operational efficiency and service quality.',
+      },
+      {
+        id: 'Mengelola requirement dan implementasi sistem lintas unit kerja.',
+        en: 'Managed requirements and system implementation across business units.',
+      },
+    ],
+  },
+  {
+    company: 'Bank Sahabat Sampoerna',
+    role: { id: 'IT System Analyst Officer', en: 'IT System Analyst Officer' },
+    period: 'Sep 2018 — Okt 2020',
+    points: [
+      {
+        id: 'Menganalisis kebutuhan bisnis dan menerjemahkannya menjadi solusi IT.',
+        en: 'Analyzed business requirements and translated them into IT solutions.',
+      },
+      {
+        id: 'Berkontribusi pada peningkatan proses bisnis dan sistem internal.',
+        en: 'Contributed to improving internal business processes and systems.',
+      },
+      {
+        id: 'Mendukung pengembangan dan implementasi sistem inti perbankan.',
+        en: 'Supported development and implementation of core banking systems.',
       },
     ],
   },

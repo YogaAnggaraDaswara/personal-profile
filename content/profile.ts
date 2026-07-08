@@ -4,19 +4,19 @@ import type { Bi } from '@/lib/i18n-core'
 // ===== EDIT ME: data diri =====
 export const profile = {
   name: 'Yoga Daswara',
-  typingRoles: ['IT Engineer', 'AI Builder', 'Banking Tech Enthusiast'],
+  typingRoles: ['Head of IT Architecture', 'System Architect', 'Banking Tech Leader'],
   tagline: {
-    id: 'Membangun solusi teknologi & use case AI di industri perbankan.',
-    en: 'Building technology solutions & AI use cases in the banking industry.',
+    id: 'Memimpin arsitektur & rekayasa sistem IT perbankan, mendorong transformasi digital yang scalable, aman, dan strategis.',
+    en: 'Leading IT architecture & systems engineering in banking, driving digital transformation that is scalable, secure, and strategic.',
   } satisfies Bi,
   about: {
-    id: 'Engineer IT di industri perbankan Indonesia. Fokus pada pengembangan aplikasi, integrasi sistem, dan implementasi use case AI untuk mendukung proses bisnis — dari otomasi dokumen sampai asisten internal berbasis LLM.',
-    en: 'IT engineer in the Indonesian banking industry. Focused on application development, system integration, and implementing AI use cases that support business processes — from document automation to LLM-based internal assistants.',
+    id: 'Profesional IT berpengalaman yang memimpin tim arsitektur dan rekayasa sistem di industri perbankan. Fokus pada skalabilitas, performa, dan kepatuhan, saya menggerakkan inisiatif transformasi digital yang menyelaraskan teknologi dengan pertumbuhan bisnis. Saat ini memimpin pengembangan IT di Bank Sahabat Sampoerna, mengawasi implementasi strategis teknologi baru di lingkungan perbankan yang kompleks — membangun tim yang solid, menjaga sinergi lintas departemen, dan menghadirkan solusi yang tangguh serta scalable untuk mendukung tujuan organisasi.',
+    en: 'Experienced IT professional leading architecture and engineering teams in the banking industry. Focused on scalability, performance, and compliance, I drive digital transformation initiatives that align technology with business growth. I currently lead IT development at Bank Sahabat Sampoerna, overseeing strategic implementation of emerging technologies in complex banking environments — building strong teams, ensuring cross-department synergy, and delivering robust, scalable solutions that support organizational goals.',
   } satisfies Bi,
+  // Hanya "Tahun Pengalaman" yang diisi manual. Statistik Project & AI Use Case
+  // dihitung otomatis dari jumlah entri di content/projects.ts & content/aiUseCases.ts.
   stats: [
-    { value: 5, suffix: '+', label: { id: 'Tahun Pengalaman', en: 'Years of Experience' } },
-    { value: 6, suffix: '+', label: { id: 'Project Dikembangkan', en: 'Projects Delivered' } },
-    { value: 3, suffix: '+', label: { id: 'Use Case AI', en: 'AI Use Cases' } },
+    { value: 7, suffix: '+', label: { id: 'Tahun Pengalaman', en: 'Years of Experience' } },
   ] satisfies Stat[],
   cvFile: '/cv/yoga-daswara-cv.pdf',
 }

@@ -1,6 +1,7 @@
 'use client'
 import { useLang } from '@/lib/i18n'
 import { skillGroups, marqueeTech } from '@/content/skills'
+import { certifications } from '@/content/certifications'
 import Reveal from './Reveal'
 import RevealText from './RevealText'
 
@@ -44,6 +45,29 @@ export default function Skills() {
           ))}
         </div>
       </div>
+
+      {certifications.length > 0 && (
+        <div className="mt-12">
+          <Reveal>
+            <h3 className="text-lg font-bold text-white">
+              {t({ id: 'Sertifikasi', en: 'Certifications' })}
+            </h3>
+          </Reveal>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {certifications.map((c, i) => (
+              <Reveal key={i} delay={0.05 * i}>
+                <div className="glass p-4">
+                  <p className="text-sm font-semibold text-white">{c.title}</p>
+                  <p className="mt-1 text-xs text-[var(--muted)]">
+                    {c.issuer}
+                    {c.year ? ` · ${c.year}` : ''}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
