@@ -88,7 +88,7 @@ export default function ContactGate() {
       </Reveal>
 
       <div className="mx-auto mt-10 max-w-xl">
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
           {status === 'revealed' && contact ? (
             <motion.div
               key="revealed"
