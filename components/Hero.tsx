@@ -97,14 +97,14 @@ export default function Hero() {
           initial={reduce ? false : { opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-          whileHover={reduce ? undefined : { rotate: 2, scale: 1.03 }}
-          className="glow-ring shadow-[0_0_60px_rgba(124,58,237,0.45)]"
+          whileHover={reduce ? undefined : { rotate: 1, scale: 1.02 }}
+          className="glow-frame shadow-[0_0_60px_rgba(124,58,237,0.45)]"
         >
           <img
             src={src}
             onError={() => setSrc('/profile-placeholder.svg')}
             alt="Foto Yoga Daswara"
-            className="h-48 w-48 rounded-full bg-[var(--bg-soft)] object-cover md:h-64 md:w-64"
+            className="h-72 w-56 rounded-[1.6rem] bg-[var(--bg-soft)] object-cover object-top md:h-[26rem] md:w-80"
           />
         </motion.div>
       </div>

@@ -50,6 +50,12 @@ body {
   border-radius: 9999px;
 }
 
+.glow-frame {
+  background: conic-gradient(from 180deg, var(--violet), var(--cyan), var(--violet));
+  padding: 4px;
+  border-radius: 1.75rem;
+}
+
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }

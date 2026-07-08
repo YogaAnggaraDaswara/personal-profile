@@ -23,7 +23,7 @@ export default function About() {
             src={src}
             onError={() => setSrc('/profile-placeholder.svg')}
             alt=""
-            className="glass h-28 w-28 rounded-2xl object-cover"
+            className="glass h-28 w-28 rounded-2xl object-cover object-top"
           />
         </Reveal>
         <Reveal delay={0.15}>
