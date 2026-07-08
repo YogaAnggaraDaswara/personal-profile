@@ -59,7 +59,7 @@ Mobile-first. Breakpoints: mobile (<640), tablet (640–1024), desktop (>1024). 
 - Client + server validation on form; field-level error messages (bilingual).
 - Notification email is best-effort: Resend failure logged server-side, contact still revealed.
 - API route returns structured errors; no stack traces to client.
-- Honeypot-filled submissions return fake success (no reveal data misuse — return success shape without contact? No: return success WITH contact omitted is detectable; instead: silently accept and skip notification, still return contact — bots gain nothing valuable beyond public-ish contact; primary goal is notification spam prevention). Decision: honeypot hit → 200 with generic success, contact NOT included, UI shows generic thanks.
+- Honeypot hit → HTTP 200 with generic success, contact NOT included in response, no notification sent; UI shows a generic thank-you. Bots get nothing; humans never see this path.
 
 ## Testing / Verification
 
