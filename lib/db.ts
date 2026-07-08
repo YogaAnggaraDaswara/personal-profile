@@ -1,5 +1,25 @@
 import { sql } from '@vercel/postgres'
 
+// Different Postgres integrations (Vercel Postgres, Neon marketplace, etc.) inject the
+// connection string under different env var names. @vercel/postgres only reads POSTGRES_URL,
+// so mirror whichever variant is present into it before the first query.
+function resolveConnectionString(): string | undefined {
+  return (
+    process.env.POSTGRES_URL ||
+    process.env.DATABASE_URL ||
+    process.env.POSTGRES_PRISMA_URL ||
+    process.env.POSTGRES_URL_NON_POOLING ||
+    process.env.DATABASE_URL_UNPOOLED
+  )
+}
+
+function isConfigured(): boolean {
+  const conn = resolveConnectionString()
+  if (!conn) return false
+  if (!process.env.POSTGRES_URL) process.env.POSTGRES_URL = conn
+  return true
+}
+
 let tablesReady = false
 
 async function ensureTables(): Promise<void> {
@@ -34,8 +54,8 @@ export async function saveContactSubmission(v: {
   purpose: string
   message: string
 }): Promise<void> {
-  if (!process.env.POSTGRES_URL) {
-    console.log('[db] skipped saving contact submission (POSTGRES_URL not set)')
+  if (!isConfigured()) {
+    console.log('[db] skipped saving contact submission (no Postgres connection string configured)')
     return
   }
   try {
@@ -50,8 +70,8 @@ export async function saveContactSubmission(v: {
 }
 
 export async function saveCvLead(v: { name: string; email: string; phone: string }): Promise<void> {
-  if (!process.env.POSTGRES_URL) {
-    console.log('[db] skipped saving cv lead (POSTGRES_URL not set)')
+  if (!isConfigured()) {
+    console.log('[db] skipped saving cv lead (no Postgres connection string configured)')
     return
   }
   try {
