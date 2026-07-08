@@ -10,8 +10,8 @@ export const profile = {
     en: 'Leading IT architecture & systems engineering in banking, driving digital transformation that is scalable, secure, and strategic.',
   } satisfies Bi,
   about: {
-    id: 'Profesional IT berpengalaman yang memimpin tim arsitektur dan rekayasa sistem di industri perbankan. Fokus pada skalabilitas, performa, dan kepatuhan, saya menggerakkan inisiatif transformasi digital yang menyelaraskan teknologi dengan pertumbuhan bisnis. Saat ini memimpin pengembangan IT di Bank Sahabat Sampoerna, mengawasi implementasi strategis teknologi baru di lingkungan perbankan yang kompleks — membangun tim yang solid, menjaga sinergi lintas departemen, dan menghadirkan solusi yang tangguh serta scalable untuk mendukung tujuan organisasi.',
-    en: 'Experienced IT professional leading architecture and engineering teams in the banking industry. Focused on scalability, performance, and compliance, I drive digital transformation initiatives that align technology with business growth. I currently lead IT development at Bank Sahabat Sampoerna, overseeing strategic implementation of emerging technologies in complex banking environments — building strong teams, ensuring cross-department synergy, and delivering robust, scalable solutions that support organizational goals.',
+    id: 'Pemimpin Arsitektur & Engineering IT dengan hampir 10 tahun pengalaman di industri perbankan dan teknologi finansial. Berpengalaman menggerakkan enterprise architecture dan kepemimpinan development untuk membangun platform digital yang scalable, aman, dan berperforma tinggi. Terbukti mampu memimpin tim engineering lintas fungsi, menyusun roadmap teknologi, dan menerapkan arsitektur modern di lingkungan cloud (GCP, AWS) maupun on-premise. Berhasil menghadirkan 30+ project dan lebih dari 100+ change request sambil menjaga SLA di atas 95%. Saat ini fokus mendorong AI-assisted development dan automation untuk meningkatkan system analysis, dokumentasi business requirement (BRD), automation testing, dan produktivitas software engineering.',
+    en: 'IT Architecture & Engineering Leader with nearly 10 years of experience in banking and financial technology industries. Experienced in driving enterprise architecture and development leadership to build scalable, secure, and high-performance digital platforms. Proven ability to lead cross-functional engineering teams, define technology roadmaps, and implement modern architectures across cloud (GCP, AWS) and on-premise environments. Successfully delivered 30+ projects and more than 100+ change requests while maintaining service level agreements above 95%. Currently driving AI-assisted development and automation to enhance system analysis, business requirement documentation (BRD), automation testing, and software engineering productivity.',
   } satisfies Bi,
   // Hanya "Tahun Pengalaman" yang diisi manual. Statistik Project & AI Use Case
   // dihitung otomatis dari jumlah entri di content/projects.ts & content/aiUseCases.ts.
@@ -23,7 +23,7 @@ export const profile = {
 
 // ===== EDIT ME: ganti URL dengan akun asli =====
 export const socials: { label: string; url: string; icon: 'linkedin' | 'github' | 'instagram' }[] = [
-  { label: 'LinkedIn', url: 'https://linkedin.com/in/yoga-daswara', icon: 'linkedin' },
-  { label: 'GitHub', url: 'https://github.com/yoga-daswara', icon: 'github' },
-  { label: 'Instagram', url: 'https://instagram.com/yoga.daswara', icon: 'instagram' },
+  { label: 'LinkedIn', url: 'https://www.linkedin.com/in/yogadaswara/', icon: 'linkedin' },
+  { label: 'GitHub', url: 'https://github.com/YogaAnggaraDaswara', icon: 'github' },
+  { label: 'Instagram', url: 'https://www.instagram.com/yoga.daswara/', icon: 'instagram' },
 ]

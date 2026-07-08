@@ -1,22 +1,35 @@
 import type { SkillGroup } from './types'
 
-// ===== EDIT ME: kelompok skill =====
+// ===== EDIT ME: kelompok skill (sumber: CV yoga-daswara-cv.pdf) =====
 export const skillGroups: SkillGroup[] = [
   {
     title: { id: 'Bahasa & Framework', en: 'Languages & Frameworks' },
-    items: ['Java', 'Python', 'Node.js', 'Next.js', 'Spring Boot'],
+    items: ['.NET Core', 'Golang', 'Python', 'Java', 'TypeScript', 'Flutter', 'React', 'Next.js', 'Angular', 'Node.js', 'Express.js'],
   },
   {
-    title: { id: 'AI & Data', en: 'AI & Data' },
-    items: ['LLM Integration', 'RAG', 'OCR', 'Prompt Engineering', 'SQL'],
+    title: { id: 'Backend & Arsitektur', en: 'Backend & Architecture' },
+    items: ['Microservices', 'MSSQL', 'MySQL', 'PostgreSQL', 'NoSQL', 'Kafka', 'Ocelot', 'gRPC', 'REST API', 'GraphQL', 'CI/CD'],
   },
   {
-    title: { id: 'Platform & Tools', en: 'Platforms & Tools' },
-    items: ['GCP', 'Docker', 'Git', 'REST API', 'CI/CD'],
+    title: { id: 'Cloud & Infrastruktur', en: 'Cloud & Infrastructure' },
+    items: ['GCP', 'AWS', 'Docker', 'Kubernetes', 'VMware', 'Linux Server', 'Terraform', 'Helm'],
+  },
+  {
+    title: { id: 'Observability & Monitoring', en: 'Observability & Monitoring' },
+    items: ['Grafana', 'Prometheus', 'Loki', 'Thanos','Mimir', 'Monitoring & Alerting', 'Logging & Tracing', 'SLO & SLA'],
+  },
+  {
+    title: { id: 'AI & Produktivitas', en: 'AI & Productivity' },
+    items: ['Google AI Studio', 'MyGPT', 'LM Studio', 'AI-assisted Development', 'AI-assisted Testing', 'AI-assisted Documentation', 'AI-assisted Design'],
+  },
+  {
+    title: { id: 'Metodologi & Tools', en: 'Methodology & Tools' },
+    items: ['Agile (Scrum/Kanban)', 'Azure DevOps', 'GitHub', 'Jira', 'Sonarqube', 'Postman', 'Swagger', 'Figma', 'Notion'],
   },
 ]
 
 export const marqueeTech = [
-  'Java', 'Python', 'Node.js', 'Next.js', 'GCP', 'Docker',
-  'LLM', 'RAG', 'OCR', 'SQL', 'REST API', 'Spring Boot',
+  '.NET Core', 'Golang', 'Python', 'Java', 'TypeScript',
+  'GCP', 'AWS', 'Docker', 'Kubernetes', 'Kafka',
+  'Grafana', 'Prometheus', 'Microservices', 'CI/CD',
 ]
