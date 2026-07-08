@@ -3,8 +3,8 @@ import type { Bi } from '@/lib/i18n-core'
 
 // ===== EDIT ME: data diri =====
 export const profile = {
-  name: 'Yoga Daswara',
-  typingRoles: ['Head of IT Architecture', 'System Architect', 'Banking Tech Leader'],
+  name: 'Yoga Anggara Daswara',
+  typingRoles: ['Head of IT Architecture', 'System Architect', 'System Engineer', 'Quality Assurance Engineer', 'Banking Tech Leader'],
   tagline: {
     id: 'Memimpin arsitektur & rekayasa sistem IT perbankan, mendorong transformasi digital yang scalable, aman, dan strategis.',
     en: 'Leading IT architecture & systems engineering in banking, driving digital transformation that is scalable, secure, and strategic.',

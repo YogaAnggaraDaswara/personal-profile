@@ -30,7 +30,7 @@ export default function Intro() {
             transition={{ duration: 0.7, ease: 'easeOut' }}
             className="grad-text text-4xl font-extrabold tracking-tight md:text-6xl"
           >
-            YD.
+            YAD
           </motion.h1>
         </motion.div>
       )}

@@ -31,7 +31,7 @@ export default function Navbar() {
         className="glass mx-auto mt-3 flex max-w-5xl items-center justify-between px-4 py-2.5 transition-shadow duration-300 md:px-6"
       >
         <a href="#top" className="grad-text text-lg font-extrabold tracking-tight">
-          YD<span className="text-[var(--cyan)]">.</span>
+          YAD<span className="text-[var(--cyan)]"></span>
         </a>
 
         <div className="hidden items-center gap-5 md:flex">

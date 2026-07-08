@@ -10,6 +10,7 @@ import ContactGate from '@/components/ContactGate'
 import Intro from '@/components/Intro'
 import ScrollProgress from '@/components/ScrollProgress'
 import CursorGlow from '@/components/CursorGlow'
+import ScrollTopButton from '@/components/ScrollTopButton'
 
 export default function Home() {
   return (
@@ -40,6 +41,7 @@ export default function Home() {
         <ContactGate />
       </section>
       <Footer />
+      <ScrollTopButton />
     </main>
   )
 }

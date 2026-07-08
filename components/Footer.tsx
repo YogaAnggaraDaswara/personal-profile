@@ -9,7 +9,7 @@ export default function Footer() {
       <SocialLinks className="mb-4 flex justify-center gap-3" />
       <p>
         © {new Date().getFullYear()} Yoga Daswara ·{' '}
-        {t({ id: 'Dibangun dengan Next.js', en: 'Built with Next.js' })}
+        {t({ id: 'Dibangun dengan Ai', en: 'Built with Ai' })}
       </p>
     </footer>
   )

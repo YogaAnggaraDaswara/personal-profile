@@ -1103,7 +1103,7 @@ export default function Footer() {
     <footer className="mt-24 border-t border-white/10 py-8 text-center text-xs text-[var(--muted)]">
       <p>
         © {new Date().getFullYear()} Yoga Daswara ·{' '}
-        {t({ id: 'Dibangun dengan Next.js', en: 'Built with Next.js' })}
+        {t({ id: 'Dibangun dengan Ai', en: 'Built with Ai' })}
       </p>
     </footer>
   )
