@@ -1,21 +1,8 @@
 import { NextResponse } from 'next/server'
 import { validateCvLead, type CvLeadPayload } from '@/lib/cv-validation'
 import { saveCvLead } from '@/lib/db'
-
-const WINDOW_MS = 10 * 60 * 1000
-const LIMIT = 5
-const hits = new Map<string, { count: number; ts: number }>()
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now()
-  const h = hits.get(ip)
-  if (!h || now - h.ts > WINDOW_MS) {
-    hits.set(ip, { count: 1, ts: now })
-    return false
-  }
-  h.count += 1
-  return h.count > LIMIT
-}
+import { isRateLimited } from '@/lib/rate-limit'
+import { verifyTurnstile } from '@/lib/turnstile'
 
 async function notify(value: CvLeadPayload): Promise<void> {
   const key = process.env.RESEND_API_KEY
@@ -66,7 +53,15 @@ export async function POST(req: Request) {
   }
 
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
-  if (isRateLimited(ip)) {
+
+  const token = typeof (raw as Record<string, unknown>).turnstileToken === 'string'
+    ? (raw as Record<string, unknown>).turnstileToken as string
+    : ''
+  if (!(await verifyTurnstile(token, ip))) {
+    return NextResponse.json({ ok: false, errors: { form: 'captcha_failed' } }, { status: 422 })
+  }
+
+  if (await isRateLimited('cv-lead', ip)) {
     return NextResponse.json({ ok: false, errors: { form: 'rate_limited' } }, { status: 429 })
   }
 

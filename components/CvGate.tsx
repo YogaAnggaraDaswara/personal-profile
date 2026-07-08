@@ -5,13 +5,24 @@ import { useLang } from '@/lib/i18n'
 import { PURPOSE_OPTIONS } from '@/lib/contact-validation'
 import { profile } from '@/content/profile'
 import Magnetic from './Magnetic'
+import Turnstile from './Turnstile'
+
+const TURNSTILE_ENABLED = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
 
 type Status = 'idle' | 'submitting' | 'ready' | 'error' | 'rate_limited'
 
 const inputCls =
   'w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/30 outline-none transition-colors focus:border-[var(--violet)]'
 
-const INITIAL_FORM = { name: '', email: '', phone: '', company: '', purpose: 'recruitment', website: '' }
+const INITIAL_FORM = {
+  name: '',
+  email: '',
+  phone: '',
+  company: '',
+  purpose: 'recruitment',
+  website: '',
+  turnstileToken: '',
+}
 
 export default function CvGate() {
   const { t } = useLang()
@@ -216,8 +227,12 @@ export default function CvGate() {
                     </p>
                   )}
 
+                  {TURNSTILE_ENABLED && (
+                    <Turnstile onToken={(token) => setForm((f) => ({ ...f, turnstileToken: token }))} />
+                  )}
+
                   <button
-                    disabled={status === 'submitting'}
+                    disabled={status === 'submitting' || (TURNSTILE_ENABLED && !form.turnstileToken)}
                     className="w-full rounded-full bg-gradient-to-r from-[var(--violet)] to-[var(--cyan)] px-6 py-3 text-sm font-bold text-white transition-opacity disabled:opacity-50"
                   >
                     {status === 'submitting'

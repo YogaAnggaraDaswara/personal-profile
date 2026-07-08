@@ -10,6 +10,8 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.0",
     "@vercel/postgres": "^0.10.0",
     "framer-motion": "^12.42.2",
     "next": "16.2.10",

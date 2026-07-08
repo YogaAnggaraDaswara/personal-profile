@@ -34,12 +34,14 @@ CV: taruh file PDF di `public/cv/yoga-daswara-cv.pdf`. Tombol "Download CV" mint
 2. Import di vercel.com - framework terdeteksi otomatis.
 3. Set Environment Variables sesuai `.env.example` (nilai asli hanya di Vercel, jangan di repo).
 4. (Opsional) Simpan submission ke database: buka tab Storage di project Vercel > Create Database > pilih Postgres (Neon). Setelah connect, `POSTGRES_URL` otomatis ke-inject, tabel `contact_submissions` dan `cv_leads` dibuat otomatis saat submission pertama masuk. Lihat datanya lewat tab Storage > Data / Query.
-5. Deploy. Selesai - tiap push ke branch utama = deploy ulang.
+5. (Opsional, anti-spam lebih kuat) Rate limit persisten: daftar gratis di upstash.com > Create Database (Redis) > copy `UPSTASH_REDIS_REST_URL` & `UPSTASH_REDIS_REST_TOKEN` ke Environment Variables.
+6. (Opsional, anti-bot) CAPTCHA: daftar gratis di Cloudflare Turnstile (dash.cloudflare.com > Turnstile > Add site) > copy Site Key & Secret Key ke `NEXT_PUBLIC_TURNSTILE_SITE_KEY` & `TURNSTILE_SECRET_KEY`.
+7. Deploy. Selesai - tiap push ke branch utama = deploy ulang.
 
 ## Keamanan
 
 - Email/WA hanya di env var server, tidak pernah ada di bundle client.
-- Form kontak & form unduh CV: honeypot + rate limit 5 request / 10 menit / IP.
+- Form kontak & form unduh CV: honeypot + rate limit 5 request / 10 menit / IP (persisten via Upstash Redis kalau di-setup, fallback in-memory kalau tidak) + CAPTCHA Turnstile (kalau di-setup).
 - File CV di `public/` bisa diakses langsung kalau URL ditebak - form ini gerbang soft (capture lead), bukan proteksi keamanan berkas.
 - Notifikasi Resend best-effort: gagal kirim tidak memblokir reveal.
 - Penyimpanan database (Postgres) juga best-effort: gagal simpan tidak memblokir reveal, cuma masuk log server.

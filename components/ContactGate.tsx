@@ -6,6 +6,9 @@ import { PURPOSE_OPTIONS } from '@/lib/contact-validation'
 import Reveal from './Reveal'
 import RevealText from './RevealText'
 import Magnetic from './Magnetic'
+import Turnstile from './Turnstile'
+
+const TURNSTILE_ENABLED = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
 
 type Status = 'idle' | 'submitting' | 'revealed' | 'thanks' | 'error' | 'rate_limited'
 type Contact = { email: string; whatsapp: string }
@@ -26,6 +29,7 @@ export default function ContactGate() {
     purpose: 'recruitment',
     message: '',
     website: '',
+    turnstileToken: '',
   })
 
   const set = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
@@ -235,10 +239,14 @@ export default function ContactGate() {
                 </p>
               )}
 
+              {TURNSTILE_ENABLED && (
+                <Turnstile onToken={(token) => setForm((f) => ({ ...f, turnstileToken: token }))} />
+              )}
+
               <Magnetic className="block" strength={0.15}>
                 <motion.button
                   whileTap={reduce ? undefined : { scale: 0.97 }}
-                  disabled={status === 'submitting'}
+                  disabled={status === 'submitting' || (TURNSTILE_ENABLED && !form.turnstileToken)}
                   className="w-full rounded-full bg-gradient-to-r from-[var(--violet)] to-[var(--cyan)] px-6 py-3 text-sm font-bold text-white transition-opacity disabled:opacity-50"
                 >
                   {status === 'submitting'
