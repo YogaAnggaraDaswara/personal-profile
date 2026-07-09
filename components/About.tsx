@@ -1,5 +1,4 @@
 'use client'
-import { useState } from 'react'
 import { useLang } from '@/lib/i18n'
 import { profile } from '@/content/profile'
 import { projects } from '@/content/projects'
@@ -20,7 +19,6 @@ const stats: Stat[] = [
 
 export default function About() {
   const { t } = useLang()
-  const [src, setSrc] = useState('/profile.png')
 
   return (
     <div>
@@ -29,19 +27,9 @@ export default function About() {
           <RevealText text={t({ id: 'Tentang Saya', en: 'About Me' })} /> <span className="grad-text">.</span>
         </h2>
       </Reveal>
-      <div className="mt-8 flex flex-col items-center gap-8 md:flex-row md:items-start">
-        <Reveal delay={0.1} className="shrink-0">
-          <img
-            src={src}
-            onError={() => setSrc('/profile-placeholder.svg')}
-            alt=""
-            className="glass h-28 w-28 rounded-2xl object-cover object-top"
-          />
-        </Reveal>
-        <Reveal delay={0.15}>
-          <p className="max-w-2xl leading-relaxed text-[var(--muted)]">{t(profile.about)}</p>
-        </Reveal>
-      </div>
+      <Reveal delay={0.1} className="mt-8">
+        <p className="max-w-3xl leading-relaxed text-[var(--muted)]">{t(profile.about)}</p>
+      </Reveal>
 
       <Reveal delay={0.2} className="mt-8">
         <div className="glass overflow-hidden">
