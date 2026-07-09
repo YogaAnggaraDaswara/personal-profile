@@ -27,25 +27,27 @@ export default function About() {
           <RevealText text={t({ id: 'Tentang Saya', en: 'About Me' })} /> <span className="grad-text">.</span>
         </h2>
       </Reveal>
-      <Reveal delay={0.1} className="mt-8">
-        <p className="max-w-3xl leading-relaxed text-[var(--muted)]">{t(profile.about)}</p>
-      </Reveal>
-
-      <Reveal delay={0.2} className="mt-8">
-        <div className="glass overflow-hidden">
-          <img
-            src="/photos/yoga-presentasi.jpeg"
-            alt="Yoga membawakan sesi internal Secure by Design"
-            className="h-56 w-full object-cover object-top md:h-72"
-          />
-          <p className="p-4 text-sm text-[var(--muted)]">
-            {t({
-              id: 'Membawakan sesi internal "Secure by Design" untuk tim engineering.',
-              en: 'Leading an internal "Secure by Design" session for the engineering team.',
-            })}
-          </p>
-        </div>
-      </Reveal>
+      <div className="mt-8 grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_1.2fr]">
+        <Reveal delay={0.1}>
+          <figure className="glass group relative overflow-hidden">
+            <img
+              src="/photos/yoga-presentasi.jpeg"
+              alt="Yoga membawakan sesi internal Secure by Design"
+              className="h-64 w-full object-cover object-top opacity-70 transition-opacity duration-500 group-hover:opacity-100 md:h-80"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-transparent" />
+            <figcaption className="absolute inset-x-0 bottom-0 p-4 text-xs text-[var(--muted)]">
+              {t({
+                id: 'Membawakan sesi internal "Secure by Design" untuk tim engineering.',
+                en: 'Leading an internal "Secure by Design" session for the engineering team.',
+              })}
+            </figcaption>
+          </figure>
+        </Reveal>
+        <Reveal delay={0.15}>
+          <p className="leading-relaxed text-[var(--muted)]">{t(profile.about)}</p>
+        </Reveal>
+      </div>
 
       <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
         {stats.map((s, i) => (
