@@ -29,7 +29,7 @@ function ProjectCard({ p }: { p: Project }) {
   // mousemove, so skip the transform and the springs entirely.
   const tilt = finePointer && !reduce
 
-  function handleMouseMove(e: React.MouseEvent<HTMLAnchorElement>) {
+  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     if (!tilt) return
     const rect = e.currentTarget.getBoundingClientRect()
     x.set(e.clientX - rect.left - rect.width / 2)
@@ -42,44 +42,51 @@ function ProjectCard({ p }: { p: Project }) {
   }
 
   return (
-    <motion.a
-      // The whole card is one link. It used to be a <button> with an
-      // <a> nested inside, which is invalid HTML and confuses screen
-      // readers and keyboard navigation.
+    /* next/link on the outside, motion.div on the inside.
+       A raw <a href="/projects/..."> would force a full page reload
+       instead of a client-side transition, and it trips the
+       @next/next/no-html-link-for-pages lint rule. Keeping Link as the
+       only interactive element also preserves valid HTML: this card was
+       previously a <button> with an <a> nested inside it. */
+    <Link
       href={`/projects/${p.slug}`}
       onClick={() => trackEvent({ name: 'project_click', properties: { slug: p.slug, title: p.title } })}
-      style={tilt ? { rotateX, rotateY, transformPerspective: 800 } : undefined}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      whileHover={reduce ? undefined : { y: -6 }}
-      className="glass flex h-full w-full flex-col overflow-hidden p-6 text-left transition-shadow hover:shadow-[0_0_30px_rgba(139,92,246,0.35)]"
+      className="block h-full"
     >
-      <div
-        className={`-mx-6 -mt-6 mb-4 flex h-24 shrink-0 items-center justify-center bg-gradient-to-br ${COVER_STYLES[p.category]} text-3xl font-black tracking-widest text-white/25 uppercase`}
+      <motion.div
+        style={tilt ? { rotateX, rotateY, transformPerspective: 800 } : undefined}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        whileHover={reduce ? undefined : { y: -6 }}
+        className="glass flex h-full w-full flex-col overflow-hidden p-6 text-left transition-shadow hover:shadow-[0_0_30px_rgba(139,92,246,0.35)]"
       >
-        {p.category}
-      </div>
-      <span className="text-xs font-bold tracking-widest text-[var(--cyan)] uppercase">
-        {p.category}
-      </span>
-      <h3 className="mt-2 text-lg font-bold text-white">{p.title}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{t(p.summary)}</p>
+        <div
+          className={`-mx-6 -mt-6 mb-4 flex h-24 shrink-0 items-center justify-center bg-gradient-to-br ${COVER_STYLES[p.category]} text-3xl font-black tracking-widest text-white/25 uppercase`}
+        >
+          {p.category}
+        </div>
+        <span className="text-xs font-bold tracking-widest text-[var(--cyan)] uppercase">
+          {p.category}
+        </span>
+        <h3 className="mt-2 text-lg font-bold text-white">{p.title}</h3>
+        <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{t(p.summary)}</p>
 
-      {/* Spacer keeps the footer row aligned across cards of differing text length */}
-      <div className="flex-1" />
+        {/* Spacer keeps the footer row aligned across cards of differing text length */}
+        <div className="flex-1" />
 
-      <div className="mt-4 flex flex-wrap gap-1.5">
-        {p.tech.slice(0, 3).map((tech) => (
-          <span key={tech} className="rounded-full bg-white/5 px-2.5 py-0.5 text-[10px]">
-            {tech}
-          </span>
-        ))}
-      </div>
-      <span className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-[var(--cyan)]">
-        {t({ id: 'Lihat Detail', en: 'View Details' })}
-        <span aria-hidden>→</span>
-      </span>
-    </motion.a>
+        <div className="mt-4 flex flex-wrap gap-1.5">
+          {p.tech.slice(0, 3).map((tech) => (
+            <span key={tech} className="rounded-full bg-white/5 px-2.5 py-0.5 text-[10px]">
+              {tech}
+            </span>
+          ))}
+        </div>
+        <span className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-[var(--cyan)]">
+          {t({ id: 'Lihat Detail', en: 'View Details' })}
+          <span aria-hidden>→</span>
+        </span>
+      </motion.div>
+    </Link>
   )
 }
 
