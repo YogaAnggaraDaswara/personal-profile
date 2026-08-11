@@ -56,6 +56,7 @@ Array `experiences`, urutan dari yang **terbaru ke terlama** (tampil sesuai urut
 ```ts
 {
   company: 'Nama Perusahaan',
+  logo: '/logos/nama-file.svg',        // opsional, lihat catatan di bawah
   role: { id: 'Jabatan (Indonesia)', en: 'Job Title (English)' },
   period: 'Mar 2023 - Sekarang / Present',
   points: [
@@ -64,6 +65,11 @@ Array `experiences`, urutan dari yang **terbaru ke terlama** (tampil sesuai urut
   ],
 },
 ```
+
+**Logo perusahaan (`logo`)** opsional. Kalau diisi, taruh file gambarnya di
+`public/logos/` dan tulis path-nya mulai dari `/logos/...`. Kalau dikosongkan
+(atau field-nya dihapus), timeline tetap tampil normal tanpa logo. Ukuran
+tampil kecil (36px), jadi SVG atau PNG persegi paling rapi.
 
 **Contoh tambah pengalaman baru** (taruh paling atas array kalau itu kerjaan terbaru):
 ```ts
@@ -83,24 +89,41 @@ Array `experiences`, urutan dari yang **terbaru ke terlama** (tampil sesuai urut
 
 Dua bagian: `skillGroups` (kartu skill dikelompokkan) dan `marqueeTech` (teks berjalan di bawahnya).
 
+Tiap skill butuh `name` dan `level`. `level` cuma boleh salah satu dari
+`'expert'`, `'advanced'`, `'intermediate'` - dipakai untuk warna badge dan
+legenda di atas kartu.
+
 ```ts
 export const skillGroups = [
   {
     title: { id: 'Bahasa & Framework', en: 'Languages & Frameworks' },
-    items: ['.NET Core', 'Golang', 'Python'], // daftar teks biasa, tanpa {id,en}
+    items: [
+      { name: '.NET Core', level: 'expert' },
+      { name: 'Golang', level: 'advanced' },
+      { name: 'Python', level: 'intermediate' },
+    ],
   },
 ]
 
 export const marqueeTech = ['.NET Core', 'Golang', 'GCP', 'Docker']
 ```
 
+Patokan level yang dipakai sekarang: `expert` = 5+ tahun pakai rutin,
+`advanced` = 3+ tahun, `intermediate` = 1-3 tahun.
+
 **Contoh tambah kelompok skill baru:**
 ```ts
 {
   title: { id: 'Keamanan', en: 'Security' },
-  items: ['OWASP', 'Penetration Testing', 'IAM'],
+  items: [
+    { name: 'OWASP', level: 'advanced' },
+    { name: 'IAM', level: 'expert' },
+  ],
 },
 ```
+
+`marqueeTech` tetap daftar teks biasa (tanpa `level`), isinya highlight
+pilihan untuk teks berjalan - tidak harus semua skill dimasukkan.
 
 ---
 
@@ -113,6 +136,18 @@ Tampil di bawah section Skills.
 ```
 
 `year` boleh dikosongkan `''` kalau tidak ingin tampilkan tahun.
+
+`url` opsional. Kalau diisi, judul sertifikasi jadi link (buka tab baru,
+ada penanda `↗`). Kalau dikosongkan, tampil sebagai teks biasa.
+
+```ts
+{
+  title: 'Google Cloud Fundamentals',
+  issuer: 'Google Cloud',
+  year: '2023',
+  url: 'https://cloud.google.com/training',   // opsional
+},
+```
 
 ---
 
@@ -134,21 +169,36 @@ Tambah entri baru langsung ke array `testimonials` - semua akan tampil berurutan
 
 ## 6. `content/projects.ts` - Project showcase
 
-Ini yang **paling penting diganti** dari placeholder ke project nyata kamu. Tiap project = 1 kartu di section Project + 1 modal detail saat diklik.
+Tiap project = 1 kartu di section Project + **1 halaman detail sendiri** di
+`/projects/<slug>`. Klik kartu langsung pindah ke halaman itu.
 
 ```ts
 {
-  slug: 'nama-unik-tanpa-spasi',      // untuk key internal, huruf kecil + strip
+  slug: 'nama-unik-tanpa-spasi',      // JADI URL PUBLIK, lihat catatan di bawah
   title: 'Nama Project',
   category: 'ai',                     // pilih salah satu: 'ai' | 'banking' | 'web'
   summary: { id: '...', en: '...' },       // 1 kalimat, tampil di kartu
-  problem: { id: '...', en: '...' },       // tampil di modal: masalah apa yang diselesaikan
+  problem: { id: '...', en: '...' },       // di halaman detail: masalah yang diselesaikan
   solution: { id: '...', en: '...' },      // solusi yang dibangun
   architecture: { id: '...', en: '...' },  // ringkasan arsitektur teknis
   tech: ['Python', 'GCP', 'Kafka'],        // daftar teknologi, tampil sebagai chip
   impact: { id: '...', en: '...' },        // hasil/dampak - pakai angka kalau ada
 },
 ```
+
+**Soal `slug` - ini bukan sekadar key internal.** Slug jadi alamat halaman
+(`/projects/loan-origination-system`) dan ikut masuk `sitemap.xml`. Jadi:
+
+- huruf kecil, pakai strip, tanpa spasi/karakter aneh
+- wajib unik antar project
+- kalau slug diganti setelah situs live, link lama yang sudah tersebar jadi
+  mati (404). Kalau bisa, jangan diubah lagi setelah dipublikasikan.
+
+**Kalau mau kategori baru** (misal `'mobile'`), tidak cukup tulis di sini -
+`category` tipenya terbatas 3 nilai, jadi TypeScript akan menolak. Perlu
+ubah 3 tempat: `ProjectCategory` di `content/types.ts`, `COVER_STYLES` di
+`components/Projects.tsx` (warna header kartu), dan array `FILTERS` di file
+yang sama (tombol filter). Bilang saja kalau perlu, saya tambahkan.
 
 **Contoh project nyata:**
 ```ts
@@ -180,7 +230,8 @@ Ini yang **paling penting diganti** dari placeholder ke project nyata kamu. Tiap
 },
 ```
 
-Hapus seluruh isi array lama (masih placeholder generic) dan ganti dengan project asli satu per satu - jumlah kartu akan otomatis mengikuti (dan ikut update angka stat "Project Dikembangkan" di About).
+Tambah/hapus entri langsung di array - jumlah kartu ikut menyesuaikan, dan
+angka stat "Project Dikembangkan" di About ikut berubah sendiri.
 
 ---
 
@@ -200,11 +251,45 @@ Jumlah entri di sini otomatis jadi angka stat "Use Case AI" di About.
 
 ---
 
-## 8. Foto profil
+## 8. `content/education.ts` - Riwayat pendidikan
 
-Ganti file `public/profile.png` (potret setengah/full badan, background gelap paling nyatu ke tema dark neon). Tidak perlu ubah kode - nama file harus tetap `profile.png`.
+Tampil di section About. Semua field teks biasa, tidak perlu `{ id, en }`.
 
-## 9. File CV
+```ts
+{ school: 'Nama Kampus - Kota', degree: 'S1 Information Systems', period: '2020 - 2022' },
+```
+
+---
+
+## 9. `content/moments.ts` - Foto momen/aktivitas
+
+Galeri kecil di section About. Taruh file fotonya di `public/photos/`, lalu
+tulis path-nya mulai dari `/photos/...`.
+
+```ts
+{
+  src: '/photos/nama-file.jpeg',
+  caption: { id: 'Keterangan foto', en: 'Photo caption' },
+},
+```
+
+---
+
+## 10. Foto profil
+
+Ganti file `public/profile.png`. Tidak perlu ubah kode - nama file harus tetap
+`profile.png`.
+
+Satu file ini dipakai dua tempat dengan potongan berbeda:
+
+- **Desktop:** potret besar di kanan Hero, jadi potret setengah/full badan cocok
+- **Mobile:** avatar bulat 112px, dipotong dari bagian **atas** gambar
+
+Karena versi mobile dipotong bulat dari atas, pastikan wajah ada di area atas
+foto. Foto full badan dengan wajah kecil di tengah akan terlihat aneh saat
+dipotong jadi bulat. Background gelap paling nyatu ke tema.
+
+## 11. File CV
 
 Ganti file `public/cv/yoga-daswara-cv.pdf` dengan CV versi terbaru. Nama file harus tetap sama persis (`yoga-daswara-cv.pdf`), karena direferensikan langsung di `content/profile.ts` (`cvFile`) dan `app/api/cv-lead/route.ts` (`downloadUrl`). Kalau mau ganti nama file, dua tempat itu juga harus diubah.
 
@@ -221,5 +306,30 @@ Ganti file `public/cv/yoga-daswara-cv.pdf` dengan CV versi terbaru. Nama file ha
 | Testimoni/rekomendasi | `content/testimonials.ts` |
 | Project showcase | `content/projects.ts` |
 | Use case AI | `content/aiUseCases.ts` |
+| Riwayat pendidikan | `content/education.ts` |
+| Foto momen/aktivitas | `content/moments.ts` |
 | Foto profil | `public/profile.png` |
+| Logo perusahaan | `public/logos/` |
+| Foto momen (file gambar) | `public/photos/` |
 | File CV | `public/cv/yoga-daswara-cv.pdf` |
+
+---
+
+## Kalau salah bentuk, ketahuan sebelum live
+
+File-file ini TypeScript (`.ts`), bukan JSON. Jadi kalau ada field yang kurang,
+salah nama, atau `level` diisi nilai yang tidak dikenal, **build Vercel gagal
+dan situs lama tetap jalan** - bukan deploy halaman rusak. Pesan errornya
+menyebut file dan barisnya.
+
+Mau cek dulu sebelum push, dari root project:
+
+```bash
+npx tsc --noEmit
+```
+
+Dua kesalahan yang paling sering:
+
+- **Lupa `en` atau `id`** pada field dua bahasa. Keduanya wajib ada.
+- **Skill ditulis sebagai teks biasa** (`items: ['Golang']`) padahal sekarang
+  harus objek (`items: [{ name: 'Golang', level: 'advanced' }]`).
