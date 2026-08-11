@@ -44,10 +44,10 @@ function ProjectCard({ p, onOpen }: { p: Project; onOpen: (p: Project) => void }
       whileHover={{ y: -6 }}
       onClick={() => onOpen(p)}
       onClickCapture={() => trackEvent({ name: 'project_click', properties: { slug: p.slug, title: p.title } })}
-      className="glass block h-full w-full overflow-hidden p-6 text-left transition-shadow hover:shadow-[0_0_30px_rgba(124,58,237,0.35)]"
+      className="glass flex h-full w-full flex-col overflow-hidden p-6 text-left transition-shadow hover:shadow-[0_0_30px_rgba(124,58,237,0.35)]"
     >
       <div
-        className={`-mx-6 -mt-6 mb-4 flex h-24 items-center justify-center bg-gradient-to-br ${COVER_STYLES[p.category]} text-3xl font-black tracking-widest text-white/25 uppercase`}
+        className={`-mx-6 -mt-6 mb-4 flex h-24 shrink-0 items-center justify-center bg-gradient-to-br ${COVER_STYLES[p.category]} text-3xl font-black tracking-widest text-white/25 uppercase`}
       >
         {p.category}
       </div>
@@ -56,6 +56,8 @@ function ProjectCard({ p, onOpen }: { p: Project; onOpen: (p: Project) => void }
       </span>
       <h3 className="mt-2 text-lg font-bold text-white">{p.title}</h3>
       <p className="mt-2 text-sm text-[var(--muted)]">{t(p.summary)}</p>
+      {/* Spacer pushes tech + link to the bottom so all cards align */}
+      <div className="flex-1" />
       <div className="mt-4 flex flex-wrap gap-1.5">
         {p.tech.slice(0, 3).map((tech) => (
           <span key={tech} className="rounded-full bg-white/5 px-2.5 py-0.5 text-[10px]">
@@ -120,7 +122,7 @@ export default function Projects() {
 
       <div className="mt-8 grid gap-5 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
         {shown.map((p, i) => (
-          <Reveal key={p.slug} delay={0.06 * i}>
+          <Reveal key={p.slug} delay={0.06 * i} className="h-full">
             <ProjectCard p={p} onOpen={setActive} />
           </Reveal>
         ))}

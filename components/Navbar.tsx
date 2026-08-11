@@ -30,7 +30,7 @@ export default function Navbar() {
       <nav
         aria-label="Main navigation"
         style={{ boxShadow: scrolled ? '0 8px 30px rgba(124,58,237,0.25)' : 'none' }}
-        className="glass mx-auto mt-3 flex max-w-5xl items-center justify-between px-4 py-2.5 transition-shadow duration-300 md:px-6"
+        className="glass-nav mx-auto mt-3 flex max-w-5xl items-center justify-between px-4 py-2.5 transition-shadow duration-300 md:px-6"
       >
         <a href="#top" className="grad-text text-lg font-extrabold tracking-tight">
           YAD<span className="text-[var(--cyan)]"></span>
@@ -87,7 +87,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            className="glass mx-3 mt-2 flex flex-col gap-1 p-3 md:hidden"
+            className="glass-nav mx-3 mt-2 flex flex-col gap-1 p-3 md:hidden"
           >
             {LINKS.map((l) => (
               <a

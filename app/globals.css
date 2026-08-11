@@ -30,6 +30,15 @@ body {
   border-radius: 1rem;
 }
 
+/* Navbar needs a much more opaque background so page content
+   does not bleed through and look broken while scrolling. */
+.glass-nav {
+  background: rgba(10, 10, 20, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px) saturate(160%);
+  border-radius: 1rem;
+}
+
 .grad-text {
   background: linear-gradient(90deg, var(--violet), var(--cyan));
   -webkit-background-clip: text;
