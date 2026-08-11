@@ -3,6 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { LanguageProvider } from "@/lib/i18n";
 import { profile, socials } from "@/content/profile";
+import { brand, seo, defaultLang } from "@/content/site";
+import { experiences } from "@/content/experience";
+import { skillGroups } from "@/content/skills";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,8 +22,6 @@ const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||
   (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
 
-/* Separate `viewport` export is the correct API in this Next version.
-   Putting themeColor inside `metadata` is deprecated and logs a warning. */
 export const viewport: Viewport = {
   themeColor: "#05050d",
   colorScheme: "dark",
@@ -29,40 +30,27 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Yoga Daswara | IT Architecture & Systems Engineering",
-    template: "%s | Yoga Daswara",
+    default: seo.titleDefault,
+    template: seo.titleTemplate,
   },
-  description:
-    "Portfolio Yoga Daswara: IT Architecture & Systems Engineering leader in banking, driving digital transformation with scalable and secure solutions.",
-  keywords: [
-    "Yoga Daswara",
-    "IT Architecture",
-    "Systems Engineering",
-    "Digital Banking",
-    "Microservices",
-    "Cloud Architecture",
-    "GCP",
-    "AWS",
-    "Portfolio",
-  ],
-  authors: [{ name: "Yoga Anggara Daswara", url: siteUrl }],
-  creator: "Yoga Anggara Daswara",
+  description: seo.description,
+  keywords: seo.keywords,
+  authors: [{ name: profile.name, url: siteUrl }],
+  creator: profile.name,
   openGraph: {
     type: "website",
-    locale: "id_ID",
-    alternateLocale: "en_US",
+    locale: seo.locale,
+    alternateLocale: seo.alternateLocale,
     url: siteUrl,
-    siteName: "Yoga Daswara Portfolio",
-    title: "Yoga Daswara | IT Architecture & Systems Engineering",
-    description:
-      "IT Architecture & Systems Engineering leader in banking, driving digital transformation with scalable and secure solutions.",
+    siteName: brand.siteName,
+    title: seo.titleDefault,
+    description: seo.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Yoga Daswara | IT Architecture & Systems Engineering",
-    description:
-      "IT Architecture & Systems Engineering leader in banking, driving digital transformation with scalable and secure solutions.",
-    creator: "@yogadaswara",
+    title: seo.titleDefault,
+    description: seo.description,
+    creator: seo.twitterHandle,
   },
   robots: {
     index: true,
@@ -80,6 +68,12 @@ export const metadata: Metadata = {
   },
 };
 
+// Derive knowsAbout from actual skill data instead of hardcoding
+const knowsAbout = skillGroups.flatMap((g) => g.items.filter((s) => s.level === 'expert').map((s) => s.name));
+
+// Derive worksFor from the first (most recent) experience entry
+const currentJob = experiences[0];
+
 const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -90,21 +84,15 @@ const personJsonLd = {
   sameAs: socials.map((s) => s.url),
   worksFor: {
     "@type": "Organization",
-    name: "Bank Sahabat Sampoerna",
+    name: currentJob.company,
   },
-  knowsAbout: [
-    "Enterprise Architecture",
-    "Microservices",
-    "Cloud Computing",
-    "Digital Banking",
-    "AI-assisted Development",
-  ],
+  knowsAbout,
 };
 
 const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Yoga Daswara Portfolio",
+  name: brand.siteName,
   url: siteUrl,
   description: profile.tagline.en,
   author: {
@@ -120,7 +108,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="id"
+      lang={defaultLang}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">

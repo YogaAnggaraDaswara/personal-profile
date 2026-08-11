@@ -3,15 +3,7 @@ import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/lib/i18n'
 import { trackEvent } from '@/lib/analytics'
-
-const LINKS = [
-  { href: '#about', label: { id: 'Tentang', en: 'About' } },
-  { href: '#skills', label: { id: 'Skill', en: 'Skills' } },
-  { href: '#experience', label: { id: 'Pengalaman', en: 'Experience' } },
-  { href: '#projects', label: { id: 'Project', en: 'Projects' } },
-  { href: '#ai', label: { id: 'AI', en: 'AI' } },
-  { href: '#contact', label: { id: 'Kontak', en: 'Contact' } },
-]
+import { brand, navLinks } from '@/content/site'
 
 export default function Navbar() {
   const { lang, setLang, t } = useLang()
@@ -44,20 +36,20 @@ export default function Navbar() {
       <nav
         aria-label="Main navigation"
         style={{ boxShadow: scrolled ? '0 8px 30px rgba(139,92,246,0.25)' : 'none' }}
-        className="glass-nav mx-3 mt-3 flex items-center justify-between px-3 py-2 transition-shadow duration-300 md:mx-auto md:max-w-5xl md:px-6"
+        className="glass-nav mx-3 mt-3 flex items-center justify-between px-3 py-2 transition-shadow duration-300 md:mx-auto md:max-w-6xl md:px-6"
       >
         <a
           href="#top"
           className="grad-text flex min-h-11 items-center px-1 text-lg font-extrabold tracking-tight"
         >
-          YAD
+          {brand.initials}
         </a>
 
         <div className="hidden items-center gap-1 md:flex">
-          {LINKS.map((l) => (
+          {navLinks.map((l) => (
             <a
-              key={l.href}
-              href={l.href}
+              key={l.id}
+              href={`#${l.id}`}
               className="flex min-h-11 items-center rounded-lg px-3 text-sm text-[var(--muted)] transition-colors hover:text-white"
             >
               {t(l.label)}
@@ -87,7 +79,7 @@ export default function Navbar() {
             aria-controls="mobile-menu"
             className="flex size-11 items-center justify-center rounded-lg text-2xl leading-none text-white transition-colors hover:bg-white/10"
           >
-            {open ? '✕' : '☰'}
+            {open ? '\u2715' : '\u2630'}
           </button>
         </div>
       </nav>
@@ -101,10 +93,10 @@ export default function Navbar() {
             exit={{ opacity: 0, y: -8 }}
             className="glass-nav mx-3 mt-2 flex flex-col gap-0.5 p-2 md:hidden"
           >
-            {LINKS.map((l) => (
+            {navLinks.map((l) => (
               <a
-                key={l.href}
-                href={l.href}
+                key={l.id}
+                href={`#${l.id}`}
                 onClick={() => setOpen(false)}
                 className="flex min-h-11 items-center rounded-lg px-3 text-sm text-[var(--muted)] transition-colors hover:bg-white/5 hover:text-white"
               >

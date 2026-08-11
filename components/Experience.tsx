@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { motion, useReducedMotion, useScroll, useSpring } from 'framer-motion'
 import { useLang } from '@/lib/i18n'
 import { experiences } from '@/content/experience'
+import { headings } from '@/content/site'
 import Reveal from './Reveal'
 import RevealText from './RevealText'
 
@@ -32,7 +33,7 @@ export default function Experience() {
     <div>
       <Reveal>
         <h2 className="text-3xl font-extrabold md:text-4xl" id="experience-heading">
-          <RevealText text={t({ id: 'Pengalaman Kerja', en: 'Work Experience' })} />{' '}
+          <RevealText text={t(headings.experience)} />{' '}
           <span className="grad-text">.</span>
         </h2>
       </Reveal>

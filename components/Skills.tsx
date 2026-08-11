@@ -2,21 +2,11 @@
 import { useLang } from '@/lib/i18n'
 import { skillGroups, marqueeTech } from '@/content/skills'
 import { certifications } from '@/content/certifications'
+import { skillLevels, headings } from '@/content/site'
+import type { SkillLevelKey } from '@/content/site'
 import Reveal from './Reveal'
 import RevealText from './RevealText'
 import VelocityMarquee from './VelocityMarquee'
-
-const LEVEL_COLORS: Record<string, string> = {
-  expert: 'border-[var(--cyan)] bg-[var(--cyan)]/10 text-[var(--cyan)]',
-  advanced: 'border-[var(--violet)] bg-[var(--violet)]/10 text-[#c4b5fd]',
-  intermediate: 'border-white/20 bg-white/5 text-[var(--muted)]',
-}
-
-const LEVEL_DOT: Record<string, string> = {
-  expert: 'bg-[var(--cyan)]',
-  advanced: 'bg-[var(--violet)]',
-  intermediate: 'bg-white/30',
-}
 
 export default function Skills() {
   const { t } = useLang()
@@ -24,22 +14,16 @@ export default function Skills() {
     <div>
       <Reveal>
         <h2 className="text-3xl font-extrabold md:text-4xl" id="skills-heading">
-          <RevealText text={t({ id: 'Skill & Teknologi', en: 'Skills & Technologies' })} />{' '}
+          <RevealText text={t(headings.skills)} />{' '}
           <span className="grad-text">.</span>
         </h2>
         <div className="mt-3 flex flex-wrap items-center gap-4 text-xs text-[var(--muted)]">
-          <span className="flex items-center gap-1.5">
-            <span className={`inline-block h-2 w-2 rounded-full ${LEVEL_DOT.expert}`} />
-            Expert
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className={`inline-block h-2 w-2 rounded-full ${LEVEL_DOT.advanced}`} />
-            Advanced
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className={`inline-block h-2 w-2 rounded-full ${LEVEL_DOT.intermediate}`} />
-            Intermediate
-          </span>
+          {(Object.keys(skillLevels) as SkillLevelKey[]).map((key) => (
+            <span key={key} className="flex items-center gap-1.5">
+              <span className={`inline-block h-2 w-2 rounded-full ${skillLevels[key].dotClass}`} />
+              {skillLevels[key].label}
+            </span>
+          ))}
         </div>
       </Reveal>
 
@@ -52,8 +36,8 @@ export default function Skills() {
                 {g.items.map((s) => (
                   <span
                     key={s.name}
-                    className={`rounded-full border px-2 py-0.5 text-[10px] transition-colors hover:border-[var(--cyan)] md:px-3 md:py-1 md:text-xs ${LEVEL_COLORS[s.level]}`}
-                    title={s.level}
+                    className={`rounded-full border px-2 py-0.5 text-[10px] transition-colors hover:border-[var(--cyan)] md:px-3 md:py-1 md:text-xs ${skillLevels[s.level].badgeClass}`}
+                    title={skillLevels[s.level].label}
                   >
                     {s.name}
                   </span>
@@ -64,9 +48,6 @@ export default function Skills() {
         ))}
       </div>
 
-      {/* The running tech text, restored and now scroll-reactive.
-          It replaced a badge row that just repeated the skill names
-          already listed in the cards above. */}
       <VelocityMarquee items={marqueeTech} className="mt-12" />
 
       {certifications.length > 0 && (
@@ -87,14 +68,14 @@ export default function Skills() {
                       rel="noopener noreferrer"
                       className="text-sm font-semibold text-white transition-colors hover:text-[var(--cyan)]"
                     >
-                      {c.title} <span className="text-[var(--cyan)]">↗</span>
+                      {c.title} <span className="text-[var(--cyan)]">&#x2197;</span>
                     </a>
                   ) : (
                     <p className="text-sm font-semibold text-white">{c.title}</p>
                   )}
                   <p className="mt-1 text-xs text-[var(--muted)]">
                     {c.issuer}
-                    {c.year ? ` · ${c.year}` : ''}
+                    {c.year ? ` \u00B7 ${c.year}` : ''}
                   </p>
                 </div>
               </Reveal>

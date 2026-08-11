@@ -1,10 +1,11 @@
 import type { Bi } from '@/lib/i18n-core'
+import type { ProjectCategoryKey, SkillLevelKey } from './site'
 
 export type Stat = { value: number; suffix?: string; label: Bi }
 
 export type SkillGroup = { title: Bi; items: SkillItem[] }
 
-export type SkillItem = { name: string; level: 'expert' | 'advanced' | 'intermediate' }
+export type SkillItem = { name: string; level: SkillLevelKey }
 
 export type ExperienceItem = {
   company: string
@@ -14,7 +15,7 @@ export type ExperienceItem = {
   points: Bi[]
 }
 
-export type ProjectCategory = 'ai' | 'banking' | 'web'
+export type ProjectCategory = ProjectCategoryKey
 
 export type Project = {
   slug: string
