@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import { motion, useReducedMotion } from 'framer-motion'
 import { useLang } from '@/lib/i18n'
 import { profile } from '@/content/profile'
@@ -44,7 +45,7 @@ export default function Hero() {
   const [src, setSrc] = useState('/profile.png')
 
   return (
-    <div className="relative flex min-h-[92vh] items-center overflow-hidden">
+    <div className="relative flex min-h-[85vh] items-center overflow-hidden pt-20 md:min-h-[92vh] md:pt-0">
       <Particles />
       <motion.div
         className="pointer-events-none absolute -top-32 right-0 h-96 w-96 rounded-full bg-[var(--violet)]/25 blur-[120px]"
@@ -63,15 +64,18 @@ export default function Hero() {
         transition={{ duration: 0.9, ease: 'easeOut' }}
         className="pointer-events-none absolute inset-y-0 right-0 z-[1] hidden w-[46%] md:block"
       >
-        <img
+        <Image
           src={src}
           onError={() => setSrc('/profile-placeholder.svg')}
           alt="Foto Yoga Daswara"
-          className="h-full w-full object-cover object-top [mask-image:linear-gradient(to_right,transparent,black_20%)]"
+          fill
+          priority
+          sizes="46vw"
+          className="object-cover object-top [mask-image:linear-gradient(to_right,transparent,black_20%)]"
         />
       </motion.div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-10 px-5 md:flex-row md:items-center md:justify-start">
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-6 px-5 md:flex-row md:items-center md:justify-start md:gap-10">
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -81,7 +85,7 @@ export default function Hero() {
           <p className="text-sm tracking-[0.3em] text-[var(--cyan)] uppercase">
             {t({ id: 'Halo, saya', en: 'Hi, I am' })}
           </p>
-          <h1 className="mt-3 text-5xl font-extrabold tracking-tight md:text-7xl">
+          <h1 className="mt-3 text-4xl font-extrabold tracking-tight md:text-7xl">
             <span className="grad-text">{profile.name}</span>
           </h1>
           <p className="mt-4 h-8 text-xl font-semibold text-white md:text-2xl">
@@ -117,11 +121,14 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
           className="md:hidden"
         >
-          <img
+          <Image
             src={src}
             onError={() => setSrc('/profile-placeholder.svg')}
             alt="Foto Yoga Daswara"
-            className="h-72 w-56 rounded-3xl bg-[var(--bg-soft)] object-cover object-top"
+            width={176}
+            height={220}
+            priority
+            className="h-[220px] w-[176px] rounded-3xl bg-[var(--bg-soft)] object-cover object-top"
           />
         </motion.div>
       </div>

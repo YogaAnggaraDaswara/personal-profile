@@ -11,33 +11,36 @@ import Intro from '@/components/Intro'
 import ScrollProgress from '@/components/ScrollProgress'
 import CursorGlow from '@/components/CursorGlow'
 import ScrollTopButton from '@/components/ScrollTopButton'
+import SkipToContent from '@/components/SkipToContent'
 
 export default function Home() {
   return (
-    <main id="top">
+    <main id="main-content" aria-label="Portfolio content">
+      <SkipToContent />
       <Intro />
       <ScrollProgress />
       <CursorGlow />
       <Navbar />
-      <section id="hero">
+      <section id="top" aria-hidden="true" />
+      <section id="hero" aria-label="Hero introduction">
         <Hero />
       </section>
-      <section id="about" className="section-shell">
+      <section id="about" className="section-shell" aria-labelledby="about-heading">
         <About />
       </section>
-      <section id="skills" className="section-shell">
+      <section id="skills" className="section-shell section-alt" aria-labelledby="skills-heading">
         <Skills />
       </section>
-      <section id="experience" className="section-shell">
+      <section id="experience" className="section-shell" aria-labelledby="experience-heading">
         <Experience />
       </section>
-      <section id="projects" className="section-shell">
+      <section id="projects" className="section-shell section-alt" aria-labelledby="projects-heading">
         <Projects />
       </section>
-      <section id="ai" className="section-shell">
+      <section id="ai" className="section-shell" aria-labelledby="ai-heading">
         <AiUseCases />
       </section>
-      <section id="contact" className="section-shell">
+      <section id="contact" className="section-shell section-alt" aria-labelledby="contact-heading">
         <ContactGate />
       </section>
       <Footer />

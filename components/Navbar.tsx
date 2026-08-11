@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/lib/i18n'
+import { trackEvent } from '@/lib/analytics'
 
 const LINKS = [
   { href: '#about', label: { id: 'Tentang', en: 'About' } },
@@ -25,8 +26,9 @@ export default function Navbar() {
   }, [])
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
+    <header className="fixed inset-x-0 top-0 z-50" role="banner">
       <nav
+        aria-label="Main navigation"
         style={{ boxShadow: scrolled ? '0 8px 30px rgba(124,58,237,0.25)' : 'none' }}
         className="glass mx-auto mt-3 flex max-w-5xl items-center justify-between px-4 py-2.5 transition-shadow duration-300 md:px-6"
       >
@@ -45,7 +47,11 @@ export default function Navbar() {
             </a>
           ))}
           <button
-            onClick={() => setLang(lang === 'id' ? 'en' : 'id')}
+            onClick={() => {
+              const newLang = lang === 'id' ? 'en' : 'id'
+              trackEvent({ name: 'language_switch', properties: { from: lang, to: newLang } })
+              setLang(newLang)
+            }}
             className="rounded-full border border-white/15 px-3 py-1 text-xs font-bold text-[var(--cyan)] transition-colors hover:bg-white/10"
             aria-label="Toggle language"
           >
@@ -55,7 +61,11 @@ export default function Navbar() {
 
         <div className="flex items-center gap-3 md:hidden">
           <button
-            onClick={() => setLang(lang === 'id' ? 'en' : 'id')}
+            onClick={() => {
+              const newLang = lang === 'id' ? 'en' : 'id'
+              trackEvent({ name: 'language_switch', properties: { from: lang, to: newLang } })
+              setLang(newLang)
+            }}
             className="rounded-full border border-white/15 px-3 py-1 text-xs font-bold text-[var(--cyan)]"
             aria-label="Toggle language"
           >

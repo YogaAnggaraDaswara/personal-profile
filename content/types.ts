@@ -2,10 +2,13 @@ import type { Bi } from '@/lib/i18n-core'
 
 export type Stat = { value: number; suffix?: string; label: Bi }
 
-export type SkillGroup = { title: Bi; items: string[] }
+export type SkillGroup = { title: Bi; items: SkillItem[] }
+
+export type SkillItem = { name: string; level: 'expert' | 'advanced' | 'intermediate' }
 
 export type ExperienceItem = {
   company: string
+  logo?: string
   role: Bi
   period: string
   points: Bi[]

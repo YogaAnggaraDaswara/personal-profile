@@ -1,9 +1,11 @@
 'use client'
 import { useState } from 'react'
+import Link from 'next/link'
 import { motion, useMotionValue, useTransform, useReducedMotion } from 'framer-motion'
 import { projects } from '@/content/projects'
 import type { Project, ProjectCategory } from '@/content/types'
 import { useLang } from '@/lib/i18n'
+import { trackEvent } from '@/lib/analytics'
 import Reveal from './Reveal'
 import RevealText from './RevealText'
 import ProjectModal from './ProjectModal'
@@ -41,6 +43,7 @@ function ProjectCard({ p, onOpen }: { p: Project; onOpen: (p: Project) => void }
       onMouseLeave={handleMouseLeave}
       whileHover={{ y: -6 }}
       onClick={() => onOpen(p)}
+      onClickCapture={() => trackEvent({ name: 'project_click', properties: { slug: p.slug, title: p.title } })}
       className="glass block h-full w-full overflow-hidden p-6 text-left transition-shadow hover:shadow-[0_0_30px_rgba(124,58,237,0.35)]"
     >
       <div
@@ -60,6 +63,13 @@ function ProjectCard({ p, onOpen }: { p: Project; onOpen: (p: Project) => void }
           </span>
         ))}
       </div>
+      <Link
+        href={`/projects/${p.slug}`}
+        onClick={(e) => e.stopPropagation()}
+        className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-[var(--cyan)] transition-colors hover:text-white"
+      >
+        {t({ id: 'Lihat Detail', en: 'View Details' })} →
+      </Link>
     </motion.button>
   )
 }
@@ -81,7 +91,7 @@ export default function Projects() {
   return (
     <div>
       <Reveal>
-        <h2 className="text-3xl font-extrabold md:text-4xl">
+        <h2 className="text-3xl font-extrabold md:text-4xl" id="projects-heading">
           <RevealText text={t({ id: 'Project', en: 'Projects' })} /> <span className="grad-text">.</span>
         </h2>
         <p className="mt-2 text-sm text-[var(--muted)]">

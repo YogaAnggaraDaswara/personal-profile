@@ -4,6 +4,7 @@ import type { ExperienceItem } from './types'
 export const experiences: ExperienceItem[] = [
   {
     company: 'Bank Sahabat Sampoerna',
+    logo: '/logos/sampoerna.svg',
     role: {
       id: 'Head of IT Architecture & Systems Engineering',
       en: 'Head of IT Architecture & Systems Engineering',
@@ -34,6 +35,7 @@ export const experiences: ExperienceItem[] = [
   },
   {
     company: 'Bank Sahabat Sampoerna',
+    logo: '/logos/sampoerna.svg',
     role: { id: 'Head of IT System Analyst', en: 'Head of IT System Analyst' },
     period: 'Okt 2020 - Mar 2023',
     points: [
@@ -57,6 +59,7 @@ export const experiences: ExperienceItem[] = [
   },
   {
     company: 'Bank Sahabat Sampoerna',
+    logo: '/logos/sampoerna.svg',
     role: { id: 'IT System Analyst Officer', en: 'IT System Analyst Officer' },
     period: 'Sep 2018 - Okt 2020',
     points: [
@@ -80,6 +83,7 @@ export const experiences: ExperienceItem[] = [
   },
   {
     company: 'Bank Mandiri Taspen',
+    logo: '/logos/mandiri-taspen.svg',
     role: { id: 'IT Staff (Professional Development Program)', en: 'IT Staff (Professional Development Program)' },
     period: 'Sep 2017 - Sep 2018',
     points: [
@@ -95,6 +99,7 @@ export const experiences: ExperienceItem[] = [
   },
   {
     company: 'PT Digital Mind System (Vendor Projects)',
+    logo: '/logos/dms.svg',
     role: { id: 'Lead Software Engineer - Banking Projects', en: 'Lead Software Engineer - Banking Projects' },
     period: 'Apr 2016 - Sep 2017',
     points: [
@@ -110,6 +115,7 @@ export const experiences: ExperienceItem[] = [
   },
   {
     company: 'PT Digital Mind System (Vendor Projects)',
+    logo: '/logos/dms.svg',
     role: { id: 'Software Engineer - Banking Projects', en: 'Software Engineer - Banking Projects' },
     period: 'Sep 2015 - Apr 2016',
     points: [

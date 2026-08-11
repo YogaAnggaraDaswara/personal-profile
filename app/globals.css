@@ -40,8 +40,46 @@ body {
 .section-shell {
   max-width: 72rem;
   margin: 0 auto;
-  padding: 6rem 1.25rem 0;
+  padding: 5rem 1.25rem 0;
   scroll-margin-top: 5rem;
+}
+
+@media (min-width: 768px) {
+  .section-shell {
+    padding-top: 6rem;
+  }
+}
+
+.section-shell + .section-shell {
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  margin-top: 3rem;
+}
+
+@media (min-width: 768px) {
+  .section-shell + .section-shell {
+    margin-top: 4rem;
+  }
+}
+
+/* Alternate soft background for even sections */
+.section-alt {
+  background: var(--bg-soft);
+  border-radius: 2rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-bottom: 3rem;
+  margin-left: -0.25rem;
+  margin-right: -0.25rem;
+}
+
+@media (min-width: 768px) {
+  .section-alt {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    padding-bottom: 4rem;
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 .glow-ring {

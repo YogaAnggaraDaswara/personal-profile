@@ -12,4 +12,8 @@ export const moments: Moment[] = [
     src: '/photos/yoga-google.jpeg',
     caption: { id: 'Kunjungan ke kantor Google', en: 'Visiting the Google office' },
   },
+  {
+    src: '/photos/yoga-presentasi.jpeg',
+    caption: { id: 'Membawakan sesi Secure by Design', en: 'Leading a Secure by Design session' },
+  },
 ]
