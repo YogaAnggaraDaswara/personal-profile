@@ -19,6 +19,15 @@ export const profile = {
     { value: 10, suffix: '+', label: { id: 'Tahun Pengalaman', en: 'Years of Experience' } },
   ] satisfies Stat[],
   cvFile: '/cv/yoga-daswara-cv.pdf',
+  /** Hero portrait (desktop full-bleed & mobile circle) */
+  photo: '/profile.png',
+  photoFallback: '/profile-placeholder.svg',
+  /** About section featured image */
+  featuredPhoto: '/photos/yoga-presentasi.jpeg',
+  featuredPhotoCaption: {
+    id: 'Membawakan sesi internal "Secure by Design" untuk tim engineering.',
+    en: 'Leading an internal "Secure by Design" session for the engineering team.',
+  } satisfies Bi,
 }
 
 // ===== EDIT ME: ganti URL dengan akun asli =====

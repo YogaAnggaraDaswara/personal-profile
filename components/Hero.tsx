@@ -42,13 +42,10 @@ export default function Hero() {
   const { t } = useLang()
   const reduce = useReducedMotion()
   const typed = useTypewriter(profile.typingRoles, !reduce)
-  const [src, setSrc] = useState('/profile.png')
+  const [src, setSrc] = useState(profile.photo)
 
   /* Parallax: the copy drifts up faster than the portrait, so the two
-     planes separate as you scroll away and the hero gains depth.
-     These drive `style`, while the entrance animations drive `animate`.
-     They are kept on different elements and different properties so the
-     two never fight over the same value. */
+     planes separate as you scroll away and the hero gains depth. */
   const { scrollY } = useScroll()
   const contentY = useTransform(scrollY, [0, 600], [0, 70])
   const contentOpacity = useTransform(scrollY, [120, 560], [1, 0])
@@ -56,8 +53,8 @@ export default function Hero() {
 
   return (
     /* svh instead of vh: on mobile Safari/Chrome, vh includes the area
-       under the address bar, so a vh-sized hero gets visually clipped
-       and jumps as the bar hides. svh measures the visible viewport. */
+       under the address bar, so a vh-sized hero gets visually clipped.
+       min-h-svh fills the full visible viewport. */
     <div className="relative flex min-h-[88svh] items-center overflow-hidden pt-24 pb-12 md:pt-0 md:pb-0">
       <Particles />
       <motion.div
@@ -71,7 +68,9 @@ export default function Hero() {
         transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
       />
 
-      {/* Large edge-bleed portrait, desktop only */}
+      {/* Large edge-bleed portrait, desktop only.
+          The mask-image creates a smooth left-edge fade so the portrait
+          blends into the background instead of showing a hard edge. */}
       <motion.div
         initial={reduce ? false : { opacity: 0, x: 40 }}
         animate={{ opacity: 1, x: 0 }}
@@ -81,18 +80,24 @@ export default function Hero() {
       >
         <Image
           src={src}
-          onError={() => setSrc('/profile-placeholder.svg')}
-          alt="Foto Yoga Daswara"
+          onError={() => setSrc(profile.photoFallback)}
+          alt={`${profile.name} portrait`}
           fill
           priority
           sizes="(max-width: 768px) 0vw, 46vw"
-          className="object-cover object-top [mask-image:linear-gradient(to_right,transparent,black_20%)]"
+          className="object-cover object-top"
+          style={{
+            maskImage: 'linear-gradient(to right, transparent 0%, black 25%)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 25%)',
+          }}
         />
       </motion.div>
 
+      {/* Content container: max-w-6xl + px-5/md:px-6 matches the navbar
+          and section-shell gutters so everything aligns on the same grid. */}
       <motion.div
         style={reduce ? undefined : { y: contentY, opacity: contentOpacity }}
-        className="relative z-10 mx-auto w-full max-w-6xl px-5"
+        className="relative z-10 mx-auto w-full max-w-6xl px-5 md:px-6"
       >
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 24 }}
@@ -100,15 +105,13 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="mx-auto max-w-xl text-center md:mx-0 md:max-w-[min(46%,36rem)] md:text-left"
         >
-          {/* Compact circular avatar on mobile. The old layout put a
-              220px portrait below the copy, which pushed the buttons
-              off screen and made the hero feel endless. */}
+          {/* Compact circular avatar on mobile */}
           <div className="mb-6 flex justify-center md:hidden">
             <div className="glow-ring">
               <Image
                 src={src}
-                onError={() => setSrc('/profile-placeholder.svg')}
-                alt="Foto Yoga Daswara"
+                onError={() => setSrc(profile.photoFallback)}
+                alt={`${profile.name} portrait`}
                 width={112}
                 height={112}
                 priority
@@ -123,8 +126,6 @@ export default function Hero() {
           <h1 className="mt-3 text-[clamp(1.9rem,7vw,3rem)] leading-[1.1] font-extrabold tracking-tight md:text-[clamp(2.5rem,5vw,4.5rem)]">
             <span className="grad-text">{profile.name}</span>
           </h1>
-          {/* min-h, not h: a long role string wraps on narrow screens
-              and a fixed height would clip it. */}
           <p className="mt-4 min-h-8 text-lg font-semibold text-white sm:text-xl md:text-2xl">
             {typed}
             <span className="animate-pulse text-[var(--cyan)]">|</span>

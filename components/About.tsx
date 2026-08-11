@@ -7,6 +7,7 @@ import { aiUseCases } from '@/content/aiUseCases'
 import { testimonials } from '@/content/testimonials'
 import { education } from '@/content/education'
 import { moments } from '@/content/moments'
+import { headings } from '@/content/site'
 import type { Stat } from '@/content/types'
 import Reveal from './Reveal'
 import RevealText from './RevealText'
@@ -25,15 +26,15 @@ export default function About() {
     <div>
       <Reveal>
         <h2 className="text-3xl font-extrabold md:text-4xl" id="about-heading">
-          <RevealText text={t({ id: 'Tentang Saya', en: 'About Me' })} /> <span className="grad-text">.</span>
+          <RevealText text={t(headings.about)} /> <span className="grad-text">.</span>
         </h2>
       </Reveal>
       <div className="mt-8 grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_1.2fr]">
         <Reveal delay={0.1}>
           <figure className="glass group relative overflow-hidden">
             <Image
-              src="/photos/yoga-presentasi.jpeg"
-              alt="Yoga membawakan sesi internal Secure by Design"
+              src={profile.featuredPhoto}
+              alt={t(profile.featuredPhotoCaption)}
               width={600}
               height={320}
               loading="lazy"
@@ -41,10 +42,7 @@ export default function About() {
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-transparent" />
             <figcaption className="absolute inset-x-0 bottom-0 p-4 text-xs text-[var(--muted)]">
-              {t({
-                id: 'Membawakan sesi internal "Secure by Design" untuk tim engineering.',
-                en: 'Leading an internal "Secure by Design" session for the engineering team.',
-              })}
+              {t(profile.featuredPhotoCaption)}
             </figcaption>
           </figure>
         </Reveal>

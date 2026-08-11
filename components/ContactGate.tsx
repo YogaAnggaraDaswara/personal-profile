@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { useLang } from '@/lib/i18n'
 import { PURPOSE_OPTIONS } from '@/lib/contact-validation'
+import { headings } from '@/content/site'
 import { trackEvent } from '@/lib/analytics'
 import Reveal from './Reveal'
 import RevealText from './RevealText'
@@ -79,7 +80,7 @@ export default function ContactGate() {
     <div className="relative">
       <Reveal>
         <h2 className="text-3xl font-extrabold md:text-4xl" id="contact-heading">
-          <RevealText text={t({ id: 'Hubungi Saya', en: 'Get In Touch' })} /> <span className="grad-text">.</span>
+          <RevealText text={t(headings.contact)} /> <span className="grad-text">.</span>
         </h2>
         <p className="mt-2 max-w-xl text-sm text-[var(--muted)]">
           {t({

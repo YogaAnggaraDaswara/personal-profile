@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { brand } from '@/content/site'
 
 export default function Intro() {
   const [show, setShow] = useState(true)
@@ -30,7 +31,7 @@ export default function Intro() {
             transition={{ duration: 0.4, ease: 'easeOut' }}
             className="grad-text text-4xl font-extrabold tracking-tight md:text-6xl"
           >
-            YAD
+            {brand.initials}
           </motion.h1>
         </motion.div>
       )}

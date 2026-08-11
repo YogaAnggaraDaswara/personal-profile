@@ -4,17 +4,13 @@ import Link from 'next/link'
 import { motion, useMotionValue, useTransform, useReducedMotion } from 'framer-motion'
 import { projects } from '@/content/projects'
 import type { Project, ProjectCategory } from '@/content/types'
+import { projectCategories, headings } from '@/content/site'
+import type { ProjectCategoryKey } from '@/content/site'
 import { useLang } from '@/lib/i18n'
 import { trackEvent } from '@/lib/analytics'
 import { useFinePointer } from '@/lib/use-fine-pointer'
 import Reveal from './Reveal'
 import RevealText from './RevealText'
-
-const COVER_STYLES: Record<ProjectCategory, string> = {
-  ai: 'from-fuchsia-600/40 to-cyan-500/30',
-  banking: 'from-violet-600/40 to-blue-500/30',
-  web: 'from-cyan-500/40 to-emerald-500/30',
-}
 
 function ProjectCard({ p }: { p: Project }) {
   const { t } = useLang()
@@ -25,8 +21,6 @@ function ProjectCard({ p }: { p: Project }) {
   const rotateX = useTransform(y, [-60, 60], [8, -8])
   const rotateY = useTransform(x, [-60, 60], [-8, 8])
 
-  // Tilt only makes sense with a real pointer. On touch there is no
-  // mousemove, so skip the transform and the springs entirely.
   const tilt = finePointer && !reduce
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
@@ -41,13 +35,9 @@ function ProjectCard({ p }: { p: Project }) {
     y.set(0)
   }
 
+  const coverGradient = projectCategories[p.category].coverGradient
+
   return (
-    /* next/link on the outside, motion.div on the inside.
-       A raw <a href="/projects/..."> would force a full page reload
-       instead of a client-side transition, and it trips the
-       @next/next/no-html-link-for-pages lint rule. Keeping Link as the
-       only interactive element also preserves valid HTML: this card was
-       previously a <button> with an <a> nested inside it. */
     <Link
       href={`/projects/${p.slug}`}
       onClick={() => trackEvent({ name: 'project_click', properties: { slug: p.slug, title: p.title } })}
@@ -61,7 +51,7 @@ function ProjectCard({ p }: { p: Project }) {
         className="glass flex h-full w-full flex-col overflow-hidden p-6 text-left transition-shadow hover:shadow-[0_0_30px_rgba(139,92,246,0.35)]"
       >
         <div
-          className={`-mx-6 -mt-6 mb-4 flex h-24 shrink-0 items-center justify-center bg-gradient-to-br ${COVER_STYLES[p.category]} text-3xl font-black tracking-widest text-white/25 uppercase`}
+          className={`-mx-6 -mt-6 mb-4 flex h-24 shrink-0 items-center justify-center bg-gradient-to-br ${coverGradient} text-3xl font-black tracking-widest text-white/25 uppercase`}
         >
           {p.category}
         </div>
@@ -71,7 +61,6 @@ function ProjectCard({ p }: { p: Project }) {
         <h3 className="mt-2 text-lg font-bold text-white">{p.title}</h3>
         <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{t(p.summary)}</p>
 
-        {/* Spacer keeps the footer row aligned across cards of differing text length */}
         <div className="flex-1" />
 
         <div className="mt-4 flex flex-wrap gap-1.5">
@@ -83,19 +72,16 @@ function ProjectCard({ p }: { p: Project }) {
         </div>
         <span className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-[var(--cyan)]">
           {t({ id: 'Lihat Detail', en: 'View Details' })}
-          <span aria-hidden>→</span>
+          <span aria-hidden>&rarr;</span>
         </span>
       </motion.div>
     </Link>
   )
 }
 
-const FILTERS: { key: ProjectCategory | 'all'; label: { id: string; en: string } }[] = [
-  { key: 'all', label: { id: 'Semua', en: 'All' } },
-  { key: 'ai', label: { id: 'AI', en: 'AI' } },
-  { key: 'banking', label: { id: 'Banking', en: 'Banking' } },
-  { key: 'web', label: { id: 'Web', en: 'Web' } },
-]
+// Derive filter buttons from projectCategories config — adding a new
+// category in site.ts automatically creates the filter button here.
+const categoryKeys = Object.keys(projectCategories) as ProjectCategoryKey[]
 
 export default function Projects() {
   const { t } = useLang()
@@ -107,7 +93,7 @@ export default function Projects() {
     <div>
       <Reveal>
         <h2 className="text-3xl font-extrabold md:text-4xl" id="projects-heading">
-          <RevealText text={t({ id: 'Project', en: 'Projects' })} /> <span className="grad-text">.</span>
+          <RevealText text={t(headings.projects)} /> <span className="grad-text">.</span>
         </h2>
         <p className="mt-2 max-w-2xl text-sm text-[var(--muted)]">
           {t({
@@ -122,18 +108,29 @@ export default function Projects() {
         aria-label={t({ id: 'Filter kategori project', en: 'Filter projects by category' })}
         className="mt-6 flex flex-wrap gap-2"
       >
-        {FILTERS.map((f) => (
+        <button
+          onClick={() => setFilter('all')}
+          aria-pressed={filter === 'all'}
+          className={`min-h-11 rounded-full px-4 text-xs font-bold transition-colors ${
+            filter === 'all'
+              ? 'bg-gradient-to-r from-[var(--violet)] to-[var(--cyan)] text-white'
+              : 'glass text-[var(--muted)] hover:text-white'
+          }`}
+        >
+          {t({ id: 'Semua', en: 'All' })}
+        </button>
+        {categoryKeys.map((key) => (
           <button
-            key={f.key}
-            onClick={() => setFilter(f.key)}
-            aria-pressed={filter === f.key}
+            key={key}
+            onClick={() => setFilter(key)}
+            aria-pressed={filter === key}
             className={`min-h-11 rounded-full px-4 text-xs font-bold transition-colors ${
-              filter === f.key
+              filter === key
                 ? 'bg-gradient-to-r from-[var(--violet)] to-[var(--cyan)] text-white'
                 : 'glass text-[var(--muted)] hover:text-white'
             }`}
           >
-            {t(f.label)}
+            {t(projectCategories[key].label)}
           </button>
         ))}
       </div>
