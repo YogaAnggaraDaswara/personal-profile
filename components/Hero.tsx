@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { useLang } from '@/lib/i18n'
 import { profile } from '@/content/profile'
 import Particles from './Particles'
@@ -44,6 +44,16 @@ export default function Hero() {
   const typed = useTypewriter(profile.typingRoles, !reduce)
   const [src, setSrc] = useState('/profile.png')
 
+  /* Parallax: the copy drifts up faster than the portrait, so the two
+     planes separate as you scroll away and the hero gains depth.
+     These drive `style`, while the entrance animations drive `animate`.
+     They are kept on different elements and different properties so the
+     two never fight over the same value. */
+  const { scrollY } = useScroll()
+  const contentY = useTransform(scrollY, [0, 600], [0, 70])
+  const contentOpacity = useTransform(scrollY, [120, 560], [1, 0])
+  const portraitY = useTransform(scrollY, [0, 600], [0, 32])
+
   return (
     /* svh instead of vh: on mobile Safari/Chrome, vh includes the area
        under the address bar, so a vh-sized hero gets visually clipped
@@ -66,6 +76,7 @@ export default function Hero() {
         initial={reduce ? false : { opacity: 0, x: 40 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.9, ease: 'easeOut' }}
+        style={reduce ? undefined : { y: portraitY }}
         className="pointer-events-none absolute inset-y-0 right-0 z-[1] hidden w-[46%] md:block"
       >
         <Image
@@ -79,7 +90,10 @@ export default function Hero() {
         />
       </motion.div>
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-5">
+      <motion.div
+        style={reduce ? undefined : { y: contentY, opacity: contentOpacity }}
+        className="relative z-10 mx-auto w-full max-w-6xl px-5"
+      >
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -141,7 +155,7 @@ export default function Hero() {
 
           <SocialLinks className="mt-6 flex justify-center gap-3 md:justify-start" />
         </motion.div>
-      </div>
+      </motion.div>
     </div>
   )
 }
