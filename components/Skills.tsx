@@ -1,4 +1,6 @@
 'use client'
+import { useRef } from 'react'
+import { motion, useInView, useReducedMotion } from 'framer-motion'
 import { useLang } from '@/lib/i18n'
 import { skillGroups, marqueeTech } from '@/content/skills'
 import { certifications } from '@/content/certifications'
@@ -15,6 +17,77 @@ const LEVEL_DOT: Record<string, string> = {
   expert: 'bg-[var(--cyan)]',
   advanced: 'bg-[var(--violet)]',
   intermediate: 'bg-white/30',
+}
+
+function TechScrollAnimation() {
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: false, margin: '-50px' })
+  const reduce = useReducedMotion()
+
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.06,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30, scale: 0.8, filter: 'blur(4px)' },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      filter: 'blur(0px)',
+      transition: {
+        type: 'spring',
+        stiffness: 100,
+        damping: 12,
+      },
+    },
+  }
+
+  if (reduce) {
+    return (
+      <div className="mt-10 flex flex-wrap justify-center gap-3">
+        {marqueeTech.map((tech) => (
+          <span
+            key={tech}
+            className="rounded-xl border border-[var(--violet)]/30 bg-[var(--violet)]/5 px-4 py-2 text-sm font-bold text-white/80"
+          >
+            {tech}
+          </span>
+        ))}
+      </div>
+    )
+  }
+
+  return (
+    <motion.div
+      ref={ref}
+      variants={containerVariants}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
+      className="mt-10 flex flex-wrap justify-center gap-3"
+    >
+      {marqueeTech.map((tech, i) => (
+        <motion.span
+          key={tech}
+          variants={itemVariants}
+          whileHover={{
+            scale: 1.15,
+            boxShadow: '0 0 20px rgba(124,58,237,0.5)',
+            borderColor: 'rgba(34,211,238,0.7)',
+          }}
+          className="cursor-default rounded-xl border border-[var(--violet)]/30 bg-gradient-to-br from-[var(--violet)]/10 to-[var(--cyan)]/5 px-4 py-2 text-sm font-bold text-white/80 backdrop-blur-sm transition-colors"
+          style={{ animationDelay: `${i * 60}ms` }}
+        >
+          {tech}
+        </motion.span>
+      ))}
+    </motion.div>
+  )
 }
 
 export default function Skills() {
@@ -63,15 +136,7 @@ export default function Skills() {
         ))}
       </div>
 
-      <div className="mt-10 overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_15%,black_85%,transparent)]">
-        <div className="marquee-track gap-10">
-          {[...marqueeTech, ...marqueeTech].map((tech, i) => (
-            <span key={i} className="text-2xl font-extrabold whitespace-nowrap text-white/10">
-              {tech}
-            </span>
-          ))}
-        </div>
-      </div>
+      <TechScrollAnimation />
 
       {certifications.length > 0 && (
         <div className="mt-12">
