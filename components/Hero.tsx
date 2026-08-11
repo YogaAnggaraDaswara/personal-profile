@@ -45,7 +45,10 @@ export default function Hero() {
   const [src, setSrc] = useState('/profile.png')
 
   return (
-    <div className="relative flex min-h-[85vh] items-center overflow-hidden pt-20 md:min-h-[92vh] md:pt-0">
+    /* svh instead of vh: on mobile Safari/Chrome, vh includes the area
+       under the address bar, so a vh-sized hero gets visually clipped
+       and jumps as the bar hides. svh measures the visible viewport. */
+    <div className="relative flex min-h-[88svh] items-center overflow-hidden pt-24 pb-12 md:pt-0 md:pb-0">
       <Particles />
       <motion.div
         className="pointer-events-none absolute -top-32 right-0 h-96 w-96 rounded-full bg-[var(--violet)]/25 blur-[120px]"
@@ -58,6 +61,7 @@ export default function Hero() {
         transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
       />
 
+      {/* Large edge-bleed portrait, desktop only */}
       <motion.div
         initial={reduce ? false : { opacity: 0, x: 40 }}
         animate={{ opacity: 1, x: 0 }}
@@ -75,61 +79,67 @@ export default function Hero() {
         />
       </motion.div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-6 px-5 md:flex-row md:items-center md:justify-start md:gap-10">
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-5">
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="max-w-xl text-center md:max-w-[min(44%,36rem)] md:text-left"
+          className="mx-auto max-w-xl text-center md:mx-0 md:max-w-[min(46%,36rem)] md:text-left"
         >
-          <p className="text-sm tracking-[0.3em] text-[var(--cyan)] uppercase">
+          {/* Compact circular avatar on mobile. The old layout put a
+              220px portrait below the copy, which pushed the buttons
+              off screen and made the hero feel endless. */}
+          <div className="mb-6 flex justify-center md:hidden">
+            <div className="glow-ring">
+              <Image
+                src={src}
+                onError={() => setSrc('/profile-placeholder.svg')}
+                alt="Foto Yoga Daswara"
+                width={112}
+                height={112}
+                priority
+                className="size-28 rounded-full bg-[var(--bg-soft)] object-cover object-top"
+              />
+            </div>
+          </div>
+
+          <p className="text-xs tracking-[0.3em] text-[var(--cyan)] uppercase sm:text-sm">
             {t({ id: 'Halo, saya', en: 'Hi, I am' })}
           </p>
-          <h1 className="mt-3 text-4xl font-extrabold tracking-tight md:text-7xl">
+          <h1 className="mt-3 text-[clamp(1.9rem,7vw,3rem)] leading-[1.1] font-extrabold tracking-tight md:text-[clamp(2.5rem,5vw,4.5rem)]">
             <span className="grad-text">{profile.name}</span>
           </h1>
-          <p className="mt-4 h-8 text-xl font-semibold text-white md:text-2xl">
+          {/* min-h, not h: a long role string wraps on narrow screens
+              and a fixed height would clip it. */}
+          <p className="mt-4 min-h-8 text-lg font-semibold text-white sm:text-xl md:text-2xl">
             {typed}
             <span className="animate-pulse text-[var(--cyan)]">|</span>
           </p>
-          <p className="mt-4 text-[var(--muted)]">{t(profile.tagline)}</p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4 md:justify-start">
-            <Magnetic className="inline-block">
+          <p className="mt-4 text-sm leading-relaxed text-[var(--muted)] sm:text-base">
+            {t(profile.tagline)}
+          </p>
+
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center md:justify-start">
+            <Magnetic className="w-full sm:w-auto">
               <a
                 href="#projects"
-                className="inline-block rounded-full bg-gradient-to-r from-[var(--violet)] to-[var(--cyan)] px-6 py-3 text-sm font-bold text-white transition-transform hover:scale-105"
+                className="flex min-h-12 w-full items-center justify-center rounded-full bg-gradient-to-r from-[var(--violet)] to-[var(--cyan)] px-6 text-sm font-bold text-white transition-transform hover:scale-105 sm:w-auto"
               >
                 {t({ id: 'Lihat Project', en: 'View Projects' })}
               </a>
             </Magnetic>
-            <Magnetic className="inline-block">
+            <Magnetic className="w-full sm:w-auto">
               <a
                 href="#contact"
-                className="glass inline-block px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-white/10"
+                className="glass flex min-h-12 w-full items-center justify-center px-6 text-sm font-bold text-white transition-colors hover:bg-white/10 sm:w-auto"
               >
                 {t({ id: 'Hubungi Saya', en: 'Contact Me' })}
               </a>
             </Magnetic>
             <CvGate />
           </div>
-          <SocialLinks className="mt-6 flex justify-center gap-3 md:justify-start" />
-        </motion.div>
 
-        <motion.div
-          initial={reduce ? false : { opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-          className="md:hidden"
-        >
-          <Image
-            src={src}
-            onError={() => setSrc('/profile-placeholder.svg')}
-            alt="Foto Yoga Daswara"
-            width={176}
-            height={220}
-            priority
-            className="h-[220px] w-[176px] rounded-3xl bg-[var(--bg-soft)] object-cover object-top"
-          />
+          <SocialLinks className="mt-6 flex justify-center gap-3 md:justify-start" />
         </motion.div>
       </div>
     </div>

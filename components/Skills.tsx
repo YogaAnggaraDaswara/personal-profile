@@ -115,9 +115,9 @@ export default function Skills() {
         </div>
       </Reveal>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+      <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {skillGroups.map((g, i) => (
-          <Reveal key={i} delay={0.1 * i}>
+          <Reveal key={i} delay={0.1 * i} className="h-full">
             <div className="glass h-full p-4 md:p-6">
               <h3 className="font-bold text-[var(--cyan)]">{t(g.title)}</h3>
               <div className="mt-4 flex flex-wrap gap-1.5 md:gap-2">
@@ -147,8 +147,8 @@ export default function Skills() {
           </Reveal>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {certifications.map((c, i) => (
-              <Reveal key={i} delay={0.05 * i}>
-                <div className="glass p-4">
+              <Reveal key={i} delay={0.05 * i} className="h-full">
+                <div className="glass h-full p-4">
                   {c.url ? (
                     <a href={c.url} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-white hover:text-[var(--cyan)] transition-colors">
                       {c.title} <span className="text-[var(--cyan)]">↗</span>

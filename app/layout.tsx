@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { LanguageProvider } from "@/lib/i18n";
@@ -18,6 +18,13 @@ const geistMono = Geist_Mono({
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||
   (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+
+/* Separate `viewport` export is the correct API in this Next version.
+   Putting themeColor inside `metadata` is deprecated and logs a warning. */
+export const viewport: Viewport = {
+  themeColor: "#05050d",
+  colorScheme: "dark",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

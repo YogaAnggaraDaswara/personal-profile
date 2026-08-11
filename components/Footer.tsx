@@ -5,7 +5,7 @@ import SocialLinks from './SocialLinks'
 export default function Footer() {
   const { t } = useLang()
   return (
-    <footer className="mt-24 border-t border-white/10 py-8 text-center text-xs text-[var(--muted)]" role="contentinfo">
+    <footer className="mt-16 border-t border-white/10 px-5 py-8 text-center text-xs text-[var(--muted)] md:mt-24" role="contentinfo">
       <SocialLinks className="mb-4 flex justify-center gap-3" />
       <p>
         © {new Date().getFullYear()} Yoga Daswara ·{' '}
