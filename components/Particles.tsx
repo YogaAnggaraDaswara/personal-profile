@@ -17,17 +17,22 @@ export default function Particles() {
 
     let raf = 0
     let dots: Dot[] = []
+    let isMobile = false
 
     const resize = () => {
       canvas.width = canvas.offsetWidth
       canvas.height = canvas.offsetHeight
-      const n = Math.min(70, Math.floor(canvas.width / 18))
+      isMobile = canvas.width < 768
+      // Fewer particles on mobile (max 30 vs 70 on desktop)
+      const n = isMobile
+        ? Math.min(30, Math.floor(canvas.width / 25))
+        : Math.min(70, Math.floor(canvas.width / 18))
       dots = Array.from({ length: n }, () => ({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        r: Math.random() * 1.8 + 0.6,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        r: Math.random() * 1.5 + 0.5,
         c: Math.random() > 0.5 ? '124,58,237' : '34,211,238',
       }))
     }
@@ -44,17 +49,20 @@ export default function Particles() {
         ctx.fillStyle = `rgba(${d.c},0.7)`
         ctx.fill()
       }
-      for (let i = 0; i < dots.length; i++) {
-        for (let j = i + 1; j < dots.length; j++) {
-          const dx = dots[i].x - dots[j].x
-          const dy = dots[i].y - dots[j].y
-          const dist = Math.hypot(dx, dy)
-          if (dist < 110) {
-            ctx.strokeStyle = `rgba(124,58,237,${0.12 * (1 - dist / 110)})`
-            ctx.beginPath()
-            ctx.moveTo(dots[i].x, dots[i].y)
-            ctx.lineTo(dots[j].x, dots[j].y)
-            ctx.stroke()
+      // Skip expensive line connections on mobile
+      if (!isMobile) {
+        for (let i = 0; i < dots.length; i++) {
+          for (let j = i + 1; j < dots.length; j++) {
+            const dx = dots[i].x - dots[j].x
+            const dy = dots[i].y - dots[j].y
+            const dist = Math.hypot(dx, dy)
+            if (dist < 110) {
+              ctx.strokeStyle = `rgba(124,58,237,${0.12 * (1 - dist / 110)})`
+              ctx.beginPath()
+              ctx.moveTo(dots[i].x, dots[i].y)
+              ctx.lineTo(dots[j].x, dots[j].y)
+              ctx.stroke()
+            }
           }
         }
       }
