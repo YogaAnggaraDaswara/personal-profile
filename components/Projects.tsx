@@ -118,7 +118,7 @@ export default function Projects() {
         ))}
       </div>
 
-      <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-8 grid gap-5 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
         {shown.map((p, i) => (
           <Reveal key={p.slug} delay={0.06 * i}>
             <ProjectCard p={p} onOpen={setActive} />
