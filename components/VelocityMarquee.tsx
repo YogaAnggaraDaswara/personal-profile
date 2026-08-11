@@ -28,20 +28,32 @@ type Props = {
   items: string[]
   /** Idle drift in % of track width per second. */
   baseVelocity?: number
+  /**
+   * Resting travel direction. -1 drifts left, which matches the original
+   * CSS marquee this replaced (translateX(0) -> translateX(-50%)).
+   * Scrolling up still reverses it, whichever way this is set.
+   */
+  direction?: 1 | -1
   className?: string
 }
 
 /**
  * Continuously scrolling text that reacts to page scroll:
  *
- * - scrolling down speeds it up, scrolling up reverses its direction
+ * - drifts left at rest; scrolling down accelerates it, scrolling up
+ *   reverses it
  * - scroll velocity skews the text, so it appears to lag under motion
  * - it keeps drifting when the page is still, so it never looks frozen
  *
  * Only `transform` is animated, so it stays on the compositor and does
  * not trigger layout or paint.
  */
-export default function VelocityMarquee({ items, baseVelocity = 2, className }: Props) {
+export default function VelocityMarquee({
+  items,
+  baseVelocity = 2,
+  direction = -1,
+  className,
+}: Props) {
   const reduce = useReducedMotion()
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -59,9 +71,13 @@ export default function VelocityMarquee({ items, baseVelocity = 2, className }: 
   // clamp:false lets fast scrolling push past the top of the range.
   const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 4], { clamp: false })
   // Skew stays clamped so violent scrolling cannot shear the text apart.
-  const skewX = useTransform(smoothVelocity, [-2500, 0, 2500], [-8, 0, 8], { clamp: true })
+  // Signs follow the leftward travel, so the shear trails the motion
+  // rather than leaning into it.
+  const skewX = useTransform(smoothVelocity, [-2500, 0, 2500], [8, 0, -8], { clamp: true })
 
-  const directionFactor = useRef(1)
+  // Typed as number, not 1 | -1: negating a 1 | -1 widens to number and
+  // would otherwise need a cast on every assignment below.
+  const directionFactor = useRef<number>(direction)
 
   // Four copies of the list are rendered, so wrapping over 25% of the
   // track lands exactly one full set further along: a seamless loop.
@@ -78,9 +94,10 @@ export default function VelocityMarquee({ items, baseVelocity = 2, className }: 
 
     let moveBy = directionFactor.current * baseVelocity * (delta / 1000)
 
+    // Scrolling down keeps the resting direction, scrolling up flips it.
     const factor = velocityFactor.get()
-    if (factor < 0) directionFactor.current = -1
-    else if (factor > 0) directionFactor.current = 1
+    if (factor < 0) directionFactor.current = -direction
+    else if (factor > 0) directionFactor.current = direction
 
     moveBy += directionFactor.current * moveBy * Math.abs(factor)
     baseX.set(baseX.get() + moveBy)
