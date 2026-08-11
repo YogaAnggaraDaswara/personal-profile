@@ -36,6 +36,7 @@ export default function About() {
               alt="Yoga membawakan sesi internal Secure by Design"
               width={600}
               height={320}
+              loading="lazy"
               className="h-64 w-full object-cover object-top opacity-70 transition-opacity duration-500 group-hover:opacity-100 md:h-80"
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-transparent" />
@@ -114,7 +115,7 @@ export default function About() {
             {moments.map((m, i) => (
               <Reveal key={i} delay={0.05 * i}>
                 <div className="glass overflow-hidden">
-                  <Image src={m.src} alt={t(m.caption)} width={300} height={128} className="h-32 w-full object-cover" />
+                  <Image src={m.src} alt={t(m.caption)} width={300} height={128} loading="lazy" className="h-32 w-full object-cover" />
                   <p className="p-2 text-xs text-[var(--muted)]">{t(m.caption)}</p>
                 </div>
               </Reveal>
