@@ -5,6 +5,7 @@ import Hero from '@/components/Hero'
 import Intro from '@/components/Intro'
 import ScrollProgress from '@/components/ScrollProgress'
 import SkipToContent from '@/components/SkipToContent'
+import ClientCursorGlow from '@/components/ClientCursorGlow'
 
 // Lazy-load below-fold components - won't block initial page render
 const About = dynamic(() => import('@/components/About'))
@@ -15,16 +16,13 @@ const AiUseCases = dynamic(() => import('@/components/AiUseCases'))
 const ContactGate = dynamic(() => import('@/components/ContactGate'))
 const ScrollTopButton = dynamic(() => import('@/components/ScrollTopButton'))
 
-// CursorGlow is desktop-only and non-essential
-const CursorGlow = dynamic(() => import('@/components/CursorGlow'), { ssr: false })
-
 export default function Home() {
   return (
     <main id="main-content" aria-label="Portfolio content">
       <SkipToContent />
       <Intro />
       <ScrollProgress />
-      <CursorGlow />
+      <ClientCursorGlow />
       <Navbar />
       <section id="top" aria-hidden="true" />
       <section id="hero" aria-label="Hero introduction">
