@@ -42,16 +42,16 @@ export default function Skills() {
         </div>
       </Reveal>
 
-      <div className="mt-8 grid gap-4 md:grid-cols-3">
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
         {skillGroups.map((g, i) => (
           <Reveal key={i} delay={0.1 * i}>
-            <div className="glass h-full p-6">
+            <div className="glass h-full p-4 md:p-6">
               <h3 className="font-bold text-[var(--cyan)]">{t(g.title)}</h3>
-              <div className="mt-4 flex flex-wrap gap-2">
+              <div className="mt-4 flex flex-wrap gap-1.5 md:gap-2">
                 {g.items.map((s) => (
                   <span
                     key={s.name}
-                    className={`rounded-full border px-3 py-1 text-xs transition-colors hover:border-[var(--cyan)] ${LEVEL_COLORS[s.level]}`}
+                    className={`rounded-full border px-2 py-0.5 text-[10px] md:px-3 md:py-1 md:text-xs transition-colors hover:border-[var(--cyan)] ${LEVEL_COLORS[s.level]}`}
                     title={s.level}
                   >
                     {s.name}

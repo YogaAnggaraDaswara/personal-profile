@@ -85,7 +85,7 @@ export default function CvGate() {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="glass inline-block px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-white/10"
+          className="inline-block rounded-full border-2 border-[var(--cyan)] bg-[var(--cyan)]/10 px-6 py-3 text-sm font-bold text-[var(--cyan)] transition-all hover:bg-[var(--cyan)]/20 hover:scale-105"
         >
           {t({ id: '📄 Unduh CV', en: '📄 Download CV' })}
         </button>

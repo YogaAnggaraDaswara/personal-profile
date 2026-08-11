@@ -45,7 +45,7 @@ export default function Hero() {
   const [src, setSrc] = useState('/profile.png')
 
   return (
-    <div className="relative flex min-h-[92vh] items-center overflow-hidden">
+    <div className="relative flex min-h-[85vh] items-center overflow-hidden pt-20 md:min-h-[92vh] md:pt-0">
       <Particles />
       <motion.div
         className="pointer-events-none absolute -top-32 right-0 h-96 w-96 rounded-full bg-[var(--violet)]/25 blur-[120px]"
@@ -75,7 +75,7 @@ export default function Hero() {
         />
       </motion.div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-10 px-5 md:flex-row md:items-center md:justify-start">
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-6 px-5 md:flex-row md:items-center md:justify-start md:gap-10">
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -85,7 +85,7 @@ export default function Hero() {
           <p className="text-sm tracking-[0.3em] text-[var(--cyan)] uppercase">
             {t({ id: 'Halo, saya', en: 'Hi, I am' })}
           </p>
-          <h1 className="mt-3 text-5xl font-extrabold tracking-tight md:text-7xl">
+          <h1 className="mt-3 text-4xl font-extrabold tracking-tight md:text-7xl">
             <span className="grad-text">{profile.name}</span>
           </h1>
           <p className="mt-4 h-8 text-xl font-semibold text-white md:text-2xl">
@@ -125,10 +125,10 @@ export default function Hero() {
             src={src}
             onError={() => setSrc('/profile-placeholder.svg')}
             alt="Foto Yoga Daswara"
-            width={224}
-            height={288}
+            width={176}
+            height={220}
             priority
-            className="rounded-3xl bg-[var(--bg-soft)] object-cover object-top"
+            className="h-[220px] w-[176px] rounded-3xl bg-[var(--bg-soft)] object-cover object-top"
           />
         </motion.div>
       </div>

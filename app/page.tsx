@@ -28,19 +28,19 @@ export default function Home() {
       <section id="about" className="section-shell" aria-labelledby="about-heading">
         <About />
       </section>
-      <section id="skills" className="section-shell" aria-labelledby="skills-heading">
+      <section id="skills" className="section-shell section-alt" aria-labelledby="skills-heading">
         <Skills />
       </section>
       <section id="experience" className="section-shell" aria-labelledby="experience-heading">
         <Experience />
       </section>
-      <section id="projects" className="section-shell" aria-labelledby="projects-heading">
+      <section id="projects" className="section-shell section-alt" aria-labelledby="projects-heading">
         <Projects />
       </section>
       <section id="ai" className="section-shell" aria-labelledby="ai-heading">
         <AiUseCases />
       </section>
-      <section id="contact" className="section-shell" aria-labelledby="contact-heading">
+      <section id="contact" className="section-shell section-alt" aria-labelledby="contact-heading">
         <ContactGate />
       </section>
       <Footer />
