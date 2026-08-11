@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import { motion, useReducedMotion } from 'framer-motion'
 import { useLang } from '@/lib/i18n'
 import { profile } from '@/content/profile'
@@ -63,11 +64,14 @@ export default function Hero() {
         transition={{ duration: 0.9, ease: 'easeOut' }}
         className="pointer-events-none absolute inset-y-0 right-0 z-[1] hidden w-[46%] md:block"
       >
-        <img
+        <Image
           src={src}
           onError={() => setSrc('/profile-placeholder.svg')}
           alt="Foto Yoga Daswara"
-          className="h-full w-full object-cover object-top [mask-image:linear-gradient(to_right,transparent,black_20%)]"
+          fill
+          priority
+          sizes="46vw"
+          className="object-cover object-top [mask-image:linear-gradient(to_right,transparent,black_20%)]"
         />
       </motion.div>
 
@@ -117,11 +121,14 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
           className="md:hidden"
         >
-          <img
+          <Image
             src={src}
             onError={() => setSrc('/profile-placeholder.svg')}
             alt="Foto Yoga Daswara"
-            className="h-72 w-56 rounded-3xl bg-[var(--bg-soft)] object-cover object-top"
+            width={224}
+            height={288}
+            priority
+            className="rounded-3xl bg-[var(--bg-soft)] object-cover object-top"
           />
         </motion.div>
       </div>

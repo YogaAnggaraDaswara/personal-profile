@@ -1,4 +1,5 @@
 'use client'
+import Image from 'next/image'
 import { useLang } from '@/lib/i18n'
 import { profile } from '@/content/profile'
 import { projects } from '@/content/projects'
@@ -23,16 +24,18 @@ export default function About() {
   return (
     <div>
       <Reveal>
-        <h2 className="text-3xl font-extrabold md:text-4xl">
+        <h2 className="text-3xl font-extrabold md:text-4xl" id="about-heading">
           <RevealText text={t({ id: 'Tentang Saya', en: 'About Me' })} /> <span className="grad-text">.</span>
         </h2>
       </Reveal>
       <div className="mt-8 grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_1.2fr]">
         <Reveal delay={0.1}>
           <figure className="glass group relative overflow-hidden">
-            <img
+            <Image
               src="/photos/yoga-presentasi.jpeg"
               alt="Yoga membawakan sesi internal Secure by Design"
+              width={600}
+              height={320}
               className="h-64 w-full object-cover object-top opacity-70 transition-opacity duration-500 group-hover:opacity-100 md:h-80"
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-transparent" />
@@ -111,7 +114,7 @@ export default function About() {
             {moments.map((m, i) => (
               <Reveal key={i} delay={0.05 * i}>
                 <div className="glass overflow-hidden">
-                  <img src={m.src} alt={t(m.caption)} className="h-32 w-full object-cover" />
+                  <Image src={m.src} alt={t(m.caption)} width={300} height={128} className="h-32 w-full object-cover" />
                   <p className="p-2 text-xs text-[var(--muted)]">{t(m.caption)}</p>
                 </div>
               </Reveal>

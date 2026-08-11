@@ -21,9 +21,56 @@ const siteUrl =
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Yoga Daswara",
+  title: {
+    default: "Yoga Daswara | IT Architecture & Systems Engineering",
+    template: "%s | Yoga Daswara",
+  },
   description:
-    "Portfolio Yoga Daswara: IT engineer di industri perbankan, membangun aplikasi dan use case AI.",
+    "Portfolio Yoga Daswara: IT Architecture & Systems Engineering leader in banking, driving digital transformation with scalable and secure solutions.",
+  keywords: [
+    "Yoga Daswara",
+    "IT Architecture",
+    "Systems Engineering",
+    "Digital Banking",
+    "Microservices",
+    "Cloud Architecture",
+    "GCP",
+    "AWS",
+    "Portfolio",
+  ],
+  authors: [{ name: "Yoga Anggara Daswara", url: siteUrl }],
+  creator: "Yoga Anggara Daswara",
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    alternateLocale: "en_US",
+    url: siteUrl,
+    siteName: "Yoga Daswara Portfolio",
+    title: "Yoga Daswara | IT Architecture & Systems Engineering",
+    description:
+      "IT Architecture & Systems Engineering leader in banking, driving digital transformation with scalable and secure solutions.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Yoga Daswara | IT Architecture & Systems Engineering",
+    description:
+      "IT Architecture & Systems Engineering leader in banking, driving digital transformation with scalable and secure solutions.",
+    creator: "@yogadaswara",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: siteUrl,
+  },
 };
 
 const personJsonLd = {
@@ -34,6 +81,29 @@ const personJsonLd = {
   description: profile.tagline.en,
   url: siteUrl,
   sameAs: socials.map((s) => s.url),
+  worksFor: {
+    "@type": "Organization",
+    name: "Bank Sahabat Sampoerna",
+  },
+  knowsAbout: [
+    "Enterprise Architecture",
+    "Microservices",
+    "Cloud Computing",
+    "Digital Banking",
+    "AI-assisted Development",
+  ],
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Yoga Daswara Portfolio",
+  url: siteUrl,
+  description: profile.tagline.en,
+  author: {
+    "@type": "Person",
+    name: profile.name,
+  },
 };
 
 export default function RootLayout({
@@ -50,6 +120,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         <LanguageProvider>{children}</LanguageProvider>
         <Analytics />

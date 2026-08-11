@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { useLang } from '@/lib/i18n'
 import { PURPOSE_OPTIONS } from '@/lib/contact-validation'
+import { trackEvent } from '@/lib/analytics'
 import Reveal from './Reveal'
 import RevealText from './RevealText'
 import Magnetic from './Magnetic'
@@ -55,6 +56,7 @@ export default function ContactGate() {
         if (json.contact) {
           setContact(json.contact)
           setStatus('revealed')
+          trackEvent({ name: 'contact_submit', properties: { purpose: form.purpose } })
         } else {
           setStatus('thanks')
         }
@@ -76,7 +78,7 @@ export default function ContactGate() {
   return (
     <div className="relative">
       <Reveal>
-        <h2 className="text-3xl font-extrabold md:text-4xl">
+        <h2 className="text-3xl font-extrabold md:text-4xl" id="contact-heading">
           <RevealText text={t({ id: 'Hubungi Saya', en: 'Get In Touch' })} /> <span className="grad-text">.</span>
         </h2>
         <p className="mt-2 max-w-xl text-sm text-[var(--muted)]">

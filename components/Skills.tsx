@@ -5,15 +5,41 @@ import { certifications } from '@/content/certifications'
 import Reveal from './Reveal'
 import RevealText from './RevealText'
 
+const LEVEL_COLORS: Record<string, string> = {
+  expert: 'border-[var(--cyan)] bg-[var(--cyan)]/10 text-[var(--cyan)]',
+  advanced: 'border-[var(--violet)] bg-[var(--violet)]/10 text-[#c4b5fd]',
+  intermediate: 'border-white/20 bg-white/5 text-[var(--muted)]',
+}
+
+const LEVEL_DOT: Record<string, string> = {
+  expert: 'bg-[var(--cyan)]',
+  advanced: 'bg-[var(--violet)]',
+  intermediate: 'bg-white/30',
+}
+
 export default function Skills() {
   const { t } = useLang()
   return (
     <div>
       <Reveal>
-        <h2 className="text-3xl font-extrabold md:text-4xl">
+        <h2 className="text-3xl font-extrabold md:text-4xl" id="skills-heading">
           <RevealText text={t({ id: 'Skill & Teknologi', en: 'Skills & Technologies' })} />{' '}
           <span className="grad-text">.</span>
         </h2>
+        <div className="mt-3 flex flex-wrap items-center gap-4 text-xs text-[var(--muted)]">
+          <span className="flex items-center gap-1.5">
+            <span className={`inline-block h-2 w-2 rounded-full ${LEVEL_DOT.expert}`} />
+            Expert
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className={`inline-block h-2 w-2 rounded-full ${LEVEL_DOT.advanced}`} />
+            Advanced
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className={`inline-block h-2 w-2 rounded-full ${LEVEL_DOT.intermediate}`} />
+            Intermediate
+          </span>
+        </div>
       </Reveal>
 
       <div className="mt-8 grid gap-4 md:grid-cols-3">
@@ -24,10 +50,11 @@ export default function Skills() {
               <div className="mt-4 flex flex-wrap gap-2">
                 {g.items.map((s) => (
                   <span
-                    key={s}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-[var(--text)] transition-colors hover:border-[var(--violet)]"
+                    key={s.name}
+                    className={`rounded-full border px-3 py-1 text-xs transition-colors hover:border-[var(--cyan)] ${LEVEL_COLORS[s.level]}`}
+                    title={s.level}
                   >
-                    {s}
+                    {s.name}
                   </span>
                 ))}
               </div>
@@ -57,7 +84,13 @@ export default function Skills() {
             {certifications.map((c, i) => (
               <Reveal key={i} delay={0.05 * i}>
                 <div className="glass p-4">
-                  <p className="text-sm font-semibold text-white">{c.title}</p>
+                  {c.url ? (
+                    <a href={c.url} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-white hover:text-[var(--cyan)] transition-colors">
+                      {c.title} <span className="text-[var(--cyan)]">↗</span>
+                    </a>
+                  ) : (
+                    <p className="text-sm font-semibold text-white">{c.title}</p>
+                  )}
                   <p className="mt-1 text-xs text-[var(--muted)]">
                     {c.issuer}
                     {c.year ? ` · ${c.year}` : ''}

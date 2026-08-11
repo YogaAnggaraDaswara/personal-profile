@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/lib/i18n'
 import { PURPOSE_OPTIONS } from '@/lib/contact-validation'
 import { profile } from '@/content/profile'
+import { trackEvent } from '@/lib/analytics'
 import Magnetic from './Magnetic'
 import Turnstile from './Turnstile'
 
@@ -62,6 +63,7 @@ export default function CvGate() {
       } else if (res.ok && json.ok) {
         setDownloadUrl(json.downloadUrl || profile.cvFile)
         setStatus('ready')
+        trackEvent({ name: 'cv_download', properties: { source: 'hero_gate' } })
       } else {
         setStatus('error')
       }

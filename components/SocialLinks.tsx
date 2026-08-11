@@ -1,5 +1,6 @@
 'use client'
 import { socials } from '@/content/profile'
+import { trackEvent } from '@/lib/analytics'
 import Magnetic from './Magnetic'
 
 const ICONS: Record<string, React.ReactNode> = {
@@ -31,6 +32,7 @@ export default function SocialLinks({ className }: { className?: string }) {
             rel="noopener noreferrer"
             aria-label={s.label}
             title={s.label}
+            onClick={() => trackEvent({ name: 'social_click', properties: { platform: s.label } })}
             className="glass flex h-10 w-10 items-center justify-center rounded-full text-[var(--muted)] transition-colors hover:text-[var(--cyan)]"
           >
             {ICONS[s.icon]}
