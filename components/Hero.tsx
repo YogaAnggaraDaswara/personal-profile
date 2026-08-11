@@ -70,7 +70,7 @@ export default function Hero() {
           alt="Foto Yoga Daswara"
           fill
           priority
-          sizes="46vw"
+          sizes="(max-width: 768px) 0vw, 46vw"
           className="object-cover object-top [mask-image:linear-gradient(to_right,transparent,black_20%)]"
         />
       </motion.div>

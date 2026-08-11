@@ -32,6 +32,7 @@ export default function Experience() {
                   alt={`${e.company} logo`}
                   width={36}
                   height={36}
+                  loading="lazy"
                   className="h-full w-full object-contain"
                 />
               </div>

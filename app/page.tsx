@@ -1,17 +1,22 @@
+import dynamic from 'next/dynamic'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import Hero from '@/components/Hero'
-import About from '@/components/About'
-import Skills from '@/components/Skills'
-import Experience from '@/components/Experience'
-import Projects from '@/components/Projects'
-import AiUseCases from '@/components/AiUseCases'
-import ContactGate from '@/components/ContactGate'
 import Intro from '@/components/Intro'
 import ScrollProgress from '@/components/ScrollProgress'
-import CursorGlow from '@/components/CursorGlow'
-import ScrollTopButton from '@/components/ScrollTopButton'
 import SkipToContent from '@/components/SkipToContent'
+
+// Lazy-load below-fold components - won't block initial page render
+const About = dynamic(() => import('@/components/About'))
+const Skills = dynamic(() => import('@/components/Skills'))
+const Experience = dynamic(() => import('@/components/Experience'))
+const Projects = dynamic(() => import('@/components/Projects'))
+const AiUseCases = dynamic(() => import('@/components/AiUseCases'))
+const ContactGate = dynamic(() => import('@/components/ContactGate'))
+const ScrollTopButton = dynamic(() => import('@/components/ScrollTopButton'))
+
+// CursorGlow is desktop-only and non-essential
+const CursorGlow = dynamic(() => import('@/components/CursorGlow'), { ssr: false })
 
 export default function Home() {
   return (
