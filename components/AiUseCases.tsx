@@ -20,9 +20,9 @@ export default function AiUseCases() {
           })}
         </p>
       </Reveal>
-      <div className="mt-8 grid gap-5 md:grid-cols-3">
+      <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {aiUseCases.map((u, i) => (
-          <Reveal key={i} delay={0.1 * i}>
+          <Reveal key={i} delay={0.1 * i} className="h-full">
             <div className="glass relative h-full overflow-hidden p-6">
               <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-[var(--violet)] to-[var(--cyan)]" />
               <h3 className="font-bold text-white">{t(u.title)}</h3>

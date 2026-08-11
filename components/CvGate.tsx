@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/lib/i18n'
 import { PURPOSE_OPTIONS } from '@/lib/contact-validation'
@@ -44,6 +44,22 @@ export default function CvGate() {
     setForm(INITIAL_FORM)
   }
 
+  // A dialog must be dismissible with Escape, and the page behind it
+  // should not scroll while it is open.
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') close()
+    }
+    window.addEventListener('keydown', onKey)
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.body.style.overflow = prevOverflow
+    }
+  }, [open])
+
   async function submit(e: React.FormEvent) {
     e.preventDefault()
     setStatus('submitting')
@@ -81,11 +97,11 @@ export default function CvGate() {
 
   return (
     <>
-      <Magnetic className="inline-block" strength={0.3}>
+      <Magnetic className="w-full sm:w-auto" strength={0.3}>
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="inline-block rounded-full border-2 border-[var(--cyan)] bg-[var(--cyan)]/10 px-6 py-3 text-sm font-bold text-[var(--cyan)] transition-all hover:bg-[var(--cyan)]/20 hover:scale-105"
+          className="flex min-h-12 w-full items-center justify-center rounded-full border-2 border-[var(--cyan)] bg-[var(--cyan)]/10 px-6 text-sm font-bold text-[var(--cyan)] transition-all hover:scale-105 hover:bg-[var(--cyan)]/20 sm:w-auto"
         >
           {t({ id: '📄 Unduh CV', en: '📄 Download CV' })}
         </button>
@@ -106,16 +122,22 @@ export default function CvGate() {
               exit={{ y: 30, opacity: 0 }}
               transition={{ type: 'spring', damping: 24, stiffness: 300 }}
               onClick={(e) => e.stopPropagation()}
-              className="glass w-full max-w-md p-6 md:p-8"
+              role="dialog"
+              aria-modal="true"
+              aria-label={t({ id: 'Unduh CV Saya', en: 'Download My CV' })}
+              /* The form is taller than a short viewport (5 fields plus a
+                 select). Without max-height and scroll, the submit button
+                 was unreachable on small screens. */
+              className="glass max-h-[90svh] w-full max-w-md overflow-y-auto p-6 md:p-8"
             >
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex items-start justify-between gap-3">
                 <h3 className="text-xl font-extrabold text-white">
                   {t({ id: 'Unduh CV Saya', en: 'Download My CV' })}
                 </h3>
                 <button
                   onClick={close}
-                  className="text-2xl text-[var(--muted)] hover:text-white"
-                  aria-label="Close"
+                  className="-mt-1 -mr-1 flex size-11 shrink-0 items-center justify-center rounded-lg text-2xl text-[var(--muted)] transition-colors hover:bg-white/10 hover:text-white"
+                  aria-label={t({ id: 'Tutup', en: 'Close' })}
                 >
                   ✕
                 </button>

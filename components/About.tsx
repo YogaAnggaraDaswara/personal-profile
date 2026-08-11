@@ -55,8 +55,8 @@ export default function About() {
 
       <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
         {stats.map((s, i) => (
-          <Reveal key={i} delay={0.1 * i}>
-            <div className="glass p-6 text-center">
+          <Reveal key={i} delay={0.1 * i} className="h-full">
+            <div className="glass h-full p-6 text-center">
               <Counter to={s.value} suffix={s.suffix} />
               <p className="mt-2 text-sm text-[var(--muted)]">{t(s.label)}</p>
             </div>
@@ -91,8 +91,8 @@ export default function About() {
           </Reveal>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {education.map((e, i) => (
-              <Reveal key={i} delay={0.05 * i}>
-                <div className="glass p-4">
+              <Reveal key={i} delay={0.05 * i} className="h-full">
+                <div className="glass h-full p-4">
                   <p className="text-sm font-semibold text-white">{e.school}</p>
                   <p className="mt-1 text-xs text-[var(--muted)]">
                     {e.degree} · {e.period}

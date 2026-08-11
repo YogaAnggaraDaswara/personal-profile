@@ -1,20 +1,38 @@
 @import "tailwindcss";
 
 :root {
+  /* Surfaces */
   --bg: #05050d;
-  --bg-soft: #0a0a14;
-  --violet: #7c3aed;
+  --bg-soft: #0b0b16;
+  --bg-raised: #12121f;
+
+  /* Brand */
+  --violet: #8b5cf6;
   --cyan: #22d3ee;
-  --text: #e2e8f0;
-  --muted: #94a3b8;
+
+  /* Text */
+  --text: #e8edf5;
+  --muted: #9aa7bd;
+
+  /* Lines */
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  /* Tells the browser to render native controls (select, scrollbar,
+     date pickers, autofill) in dark mode. Without this, the native
+     select dropdown renders light-on-light and is unreadable. */
+  color-scheme: dark;
 }
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
@@ -23,18 +41,36 @@ body {
   overflow-x: hidden;
 }
 
+/* Visible keyboard focus everywhere. Previously there was no focus
+   indicator at all, so keyboard users could not see where they were. */
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Never let a long unbroken string (URL, long title) force the page wider. */
+h1,
+h2,
+h3,
+p,
+a,
+span {
+  overflow-wrap: break-word;
+}
+
 .glass {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid var(--border);
   backdrop-filter: blur(12px);
   border-radius: 1rem;
 }
 
-/* Navbar needs a much more opaque background so page content
-   does not bleed through and look broken while scrolling. */
+/* Navbar needs a mostly opaque background so page content does not
+   bleed through and look broken while scrolling. */
 .glass-nav {
-  background: rgba(10, 10, 20, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(9, 9, 18, 0.94);
+  border: 1px solid var(--border);
   backdrop-filter: blur(16px) saturate(160%);
   border-radius: 1rem;
 }
@@ -46,74 +82,53 @@ body {
   color: transparent;
 }
 
+/* Gradient ring around the mobile hero avatar */
+.glow-ring {
+  background: conic-gradient(from 180deg, var(--violet), var(--cyan), var(--violet));
+  padding: 3px;
+  border-radius: 9999px;
+  line-height: 0;
+}
+
 .section-shell {
   max-width: 72rem;
-  margin: 0 auto;
-  padding: 5rem 1.25rem 0;
-  scroll-margin-top: 5rem;
+  /* margin-inline must stay auto so the section stays centred.
+     Do not replace this with a shorthand that resets the inline axis. */
+  margin-inline: auto;
+  padding: 4.5rem 1.25rem 0;
+  scroll-margin-top: 5.5rem;
 }
 
 @media (min-width: 768px) {
   .section-shell {
-    padding-top: 6rem;
+    padding: 6rem 1.5rem 0;
   }
 }
 
 .section-shell + .section-shell {
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
-  margin-top: 3rem;
+  margin-top: 2.5rem;
 }
 
 @media (min-width: 768px) {
   .section-shell + .section-shell {
-    margin-top: 4rem;
+    margin-top: 3.5rem;
   }
 }
 
-/* Alternate soft background for even sections */
+/* Alternating surface for every other section.
+   Only padding/background/radius here. Setting margin-left/right
+   would override margin-inline:auto above and knock the whole
+   section off-centre, which also caused horizontal overflow. */
 .section-alt {
   background: var(--bg-soft);
-  border-radius: 2rem;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 1.5rem;
   padding-bottom: 3rem;
-  margin-left: -0.25rem;
-  margin-right: -0.25rem;
 }
 
 @media (min-width: 768px) {
   .section-alt {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
+    border-radius: 2rem;
     padding-bottom: 4rem;
-    margin-left: 0;
-    margin-right: 0;
   }
-}
-
-.glow-ring {
-  background: conic-gradient(from 180deg, var(--violet), var(--cyan), var(--violet));
-  padding: 4px;
-  border-radius: 9999px;
-}
-
-.glow-frame {
-  background: conic-gradient(from 180deg, var(--violet), var(--cyan), var(--violet));
-  padding: 4px;
-  border-radius: 1.75rem;
-}
-
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee 28s linear infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track { animation: none; }
 }
