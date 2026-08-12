@@ -7,17 +7,17 @@ export default function Intro() {
   const reduce = useReducedMotion()
 
   useEffect(() => {
-    if (reduce) {
-      setShow(false)
-      return
-    }
+    if (reduce) return
     const timer = setTimeout(() => setShow(false), 800)
     return () => clearTimeout(timer)
   }, [reduce])
 
+  // Reduced motion skips the splash entirely rather than fading it out.
+  const visible = show && !reduce
+
   return (
     <AnimatePresence>
-      {show && (
+      {visible && (
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}

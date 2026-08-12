@@ -1,5 +1,16 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useSyncExternalStore } from 'react'
+
+const QUERY = '(hover: hover) and (pointer: fine)'
+
+function subscribe(onStoreChange: () => void) {
+  const mq = window.matchMedia(QUERY)
+  mq.addEventListener('change', onStoreChange)
+  return () => mq.removeEventListener('change', onStoreChange)
+}
+
+const getSnapshot = () => window.matchMedia(QUERY).matches
+const getServerSnapshot = () => false
 
 /**
  * True only on devices with a precise pointer (mouse / trackpad).
@@ -8,20 +19,10 @@ import { useEffect, useState } from 'react'
  * magnetic hover, and 3D tilt. On touch devices those effects never
  * fire anyway, so running their springs and listeners is wasted work.
  *
- * Starts as false so server and first client render agree (no hydration
- * mismatch), then flips on after mount if the device qualifies.
+ * The server snapshot is false so server and first client render agree
+ * (no hydration mismatch), then it flips on after hydration if the
+ * device qualifies.
  */
 export function useFinePointer(): boolean {
-  const [fine, setFine] = useState(false)
-
-  useEffect(() => {
-    const mq = window.matchMedia('(hover: hover) and (pointer: fine)')
-    setFine(mq.matches)
-
-    const onChange = (e: MediaQueryListEvent) => setFine(e.matches)
-    mq.addEventListener('change', onChange)
-    return () => mq.removeEventListener('change', onChange)
-  }, [])
-
-  return fine
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 }

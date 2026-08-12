@@ -1,23 +1,22 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
+import { useFinePointer } from '@/lib/use-fine-pointer'
 
 export default function CursorGlow() {
   const reduce = useReducedMotion()
-  const [enabled, setEnabled] = useState(false)
+  const fine = useFinePointer()
+  const enabled = !reduce && fine
   const [pos, setPos] = useState({ x: -100, y: -100 })
 
   useEffect(() => {
-    if (reduce) return
-    const fine = window.matchMedia('(pointer: fine)').matches
-    setEnabled(fine)
-    if (!fine) return
+    if (!enabled) return
     const move = (e: MouseEvent) => setPos({ x: e.clientX, y: e.clientY })
     window.addEventListener('mousemove', move)
     return () => window.removeEventListener('mousemove', move)
-  }, [reduce])
+  }, [enabled])
 
-  if (reduce || !enabled) return null
+  if (!enabled) return null
 
   return (
     <motion.div

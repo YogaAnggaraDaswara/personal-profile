@@ -9,11 +9,7 @@ export default function Counter({ to, suffix = '' }: { to: number; suffix?: stri
   const [n, setN] = useState(0)
 
   useEffect(() => {
-    if (!inView) return
-    if (reduce) {
-      setN(to)
-      return
-    }
+    if (!inView || reduce) return
     const controls = animate(0, to, {
       duration: 1.6,
       ease: 'easeOut',
@@ -22,9 +18,13 @@ export default function Counter({ to, suffix = '' }: { to: number; suffix?: stri
     return () => controls.stop()
   }, [inView, to, reduce])
 
+  // With reduced motion there is no tween to read from, so jump straight to
+  // the target once the counter scrolls into view.
+  const shown = reduce ? (inView ? to : 0) : n
+
   return (
     <span ref={ref} className="grad-text text-4xl font-extrabold md:text-5xl">
-      {n}
+      {shown}
       {suffix}
     </span>
   )
