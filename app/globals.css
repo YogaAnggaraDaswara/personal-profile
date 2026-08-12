@@ -406,3 +406,24 @@ span {
     clip-path: inset(50%);
   }
 }
+
+/* Mirrors SkipToContent: off-canvas until focused. The world has no in-page
+   heading to jump to, so this one leaves for /text instead. */
+.world-skip {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 300;
+  translate: 0 -5rem;
+  border-radius: 0.5rem;
+  background: var(--violet);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #fff;
+  transition: translate 200ms;
+}
+
+.world-skip:focus {
+  translate: 0 0;
+}

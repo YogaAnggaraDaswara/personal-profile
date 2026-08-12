@@ -1,5 +1,14 @@
 # Panduan Update Konten
 
+> **Situs ini punya dua tampilan, satu sumber konten.** `/` menampilkan dunia 3D
+> kalau perangkat pengunjung mampu, dan `/text` selalu menampilkan versi teks
+> biasa. Keduanya membaca file yang sama di `content/` - edit sekali, dua-duanya
+> ikut berubah. Tidak ada konten yang perlu ditulis dua kali.
+>
+> Pengunjung otomatis dapat versi teks kalau: mengaktifkan *reduce motion* di OS,
+> browsernya tanpa WebGL2, atau perangkatnya tidak sanggup 30fps. Aturan lengkap
+> ada di `lib/webgl/capability.ts`.
+
 Semua isi web ini (teks, foto, project, sosial media, CV) ada di file-file dalam folder `content/`. Edit file, simpan, `git push` - Vercel deploy ulang otomatis. Tidak perlu sentuh kode React sama sekali.
 
 Format teks dua bahasa selalu begini:

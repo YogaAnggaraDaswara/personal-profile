@@ -67,7 +67,12 @@ function Scene({ tier }: { tier: Exclude<Tier, 'dom'> }) {
 
 export default function WorldCanvas({ tier }: { tier: Exclude<Tier, 'dom'> }) {
   return (
-    <div className="world-canvas" role="presentation">
+    /* This container is the world's main landmark. drei renders the content
+       panels into it, so they belong inside <main>; an empty canvas carries no
+       semantics of its own and needs no hiding. Marking the container
+       presentational instead would have stripped the only content on screen out
+       of the accessibility tree. */
+    <main className="world-canvas" id="main-content" aria-label="Portfolio world">
       <Canvas
         dpr={BUDGET[tier].dpr}
         camera={{ position: [0, 0, 6], fov: 62, near: 0.1, far: 200 }}
@@ -80,6 +85,6 @@ export default function WorldCanvas({ tier }: { tier: Exclude<Tier, 'dom'> }) {
           <Scene tier={tier} />
         </Suspense>
       </Canvas>
-    </div>
+    </main>
   )
 }

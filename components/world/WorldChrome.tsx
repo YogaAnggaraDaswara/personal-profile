@@ -52,6 +52,14 @@ export default function WorldChrome() {
 
   return (
     <>
+      {/* The world replaces the DOM page, and with it the page's only main
+          landmark and skip link. Both are restored here, but the skip target is
+          the text version: a screen reader user reaching this point wants the
+          document, not a camera. */}
+      <a href="/text" className="world-skip">
+        {t({ id: 'Lewati ke versi teks', en: 'Skip to the text version' })}
+      </a>
+
       <header className="world-chrome-top" role="banner">
         <Link href="/" className="grad-text world-mark">
           YAD
