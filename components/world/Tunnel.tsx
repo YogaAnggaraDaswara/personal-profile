@@ -17,9 +17,16 @@ import { TunnelPool } from '@/lib/webgl/tunnel-pool'
 export default function Tunnel({ layers }: { layers: number }) {
   const [pool] = useState(() => new TunnelPool(layers))
 
-  // Shader programs and geometries live in GPU memory, which is not garbage
-  // collected. Without this, every remount leaks one geometry and N programs.
-  useEffect(() => () => pool.dispose(), [pool])
+  /**
+   * Build on mount, tear down on unmount, and survive being cycled: React runs
+   * effect cleanup once on mount in development, so a pool that could only be
+   * disposed would end up alive but empty - which is exactly what happened, and
+   * it rendered an empty corridor with no error anywhere.
+   */
+  useEffect(() => {
+    pool.build()
+    return () => pool.teardown()
+  }, [pool])
 
   useFrame((state, delta) => {
     // Clamp: a tab returning from the background reports a huge delta, which

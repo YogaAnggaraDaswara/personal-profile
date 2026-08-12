@@ -9,8 +9,22 @@ import type { Tier } from '@/lib/webgl/capability'
  * touching any zone.
  */
 
-/** World units between one place and the next. */
-export const SPACING = 26
+/**
+ * World units between one place and the next. Wide enough that a place has left
+ * the frustum before the next one enters it - at 26 with a 62 degree camera,
+ * three places were on screen at once and the corridor read as a pile.
+ */
+export const SPACING = 38
+
+/**
+ * How far ahead of its scroll anchor a place's content sits.
+ *
+ * The camera settles exactly on the anchor, so content placed at the anchor ends
+ * up inside the camera and never appears. This offset is what the zones' lateral
+ * positions are framed against: at 16 units with a 62 degree camera, roughly 9
+ * units either side of centre is on screen.
+ */
+export const VIEW_DISTANCE = 16
 
 /** Mirrors --cyan / --violet / --emerald in globals.css. */
 export const ACCENT = {

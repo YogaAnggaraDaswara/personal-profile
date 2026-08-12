@@ -3,7 +3,7 @@ import { profile } from '@/content/profile'
 import { projects } from '@/content/projects'
 import { aiUseCases } from '@/content/aiUseCases'
 import { useLang } from '@/lib/i18n'
-import { ACCENT, SPACING } from '../theme'
+import { ACCENT } from '../theme'
 import Panel from '../Panel'
 
 /**
@@ -13,7 +13,7 @@ import Panel from '../Panel'
  * Project and use-case counts are derived from the content files, matching how
  * the DOM route computes them - one source of truth, two presentations.
  */
-export default function About({ depth }: { depth: number }) {
+export default function About() {
   const { t } = useLang()
 
   const stats = [
@@ -22,7 +22,6 @@ export default function About({ depth }: { depth: number }) {
     { value: aiUseCases.length, label: { id: 'Use Case AI', en: 'AI Use Cases' } },
   ]
 
-  const z = -depth * SPACING
   const tallest = Math.max(...stats.map((s) => s.value))
 
   return (
@@ -32,7 +31,7 @@ export default function About({ depth }: { depth: number }) {
         // compare against each other rather than against an absolute scale.
         const h = 1.6 + (s.value / tallest) * 6
         return (
-          <group key={i} position={[4.4 + i * 2.6, -4 + h / 2, z - 3]}>
+          <group key={i} position={[4.4 + i * 2.6, -4 + h / 2, -3]}>
             <mesh>
               <boxGeometry args={[1.1, h, 1.1]} />
               <meshBasicMaterial color={ACCENT.cyan} transparent opacity={0.13} />
@@ -46,7 +45,7 @@ export default function About({ depth }: { depth: number }) {
         )
       })}
 
-      <Panel depth={depth} position={[-6.6, 0.6, -1]} width={560}>
+      <Panel position={[-5.0, 0.6, -1]} width={400}>
         <h2 className="world-heading">{t({ id: 'Tentang Saya', en: 'About Me' })}</h2>
         <p className="world-body world-body-long">{t(profile.about)}</p>
         <ul className="world-stat-row">

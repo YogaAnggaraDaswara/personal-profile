@@ -175,8 +175,8 @@ span {
   text-shadow: 0 2px 18px rgba(5, 5, 13, 0.9);
   /* Nothing behind a panel should be readable through the type. A blurred
      backdrop is cheaper here than a solid card and keeps the space visible. */
-  background: linear-gradient(180deg, rgba(5, 5, 13, 0.72), rgba(5, 5, 13, 0.45));
-  backdrop-filter: blur(6px);
+  background: linear-gradient(180deg, rgba(5, 5, 13, 0.92), rgba(5, 5, 13, 0.78));
+  backdrop-filter: blur(10px);
   border: 1px solid var(--border);
   border-radius: 1rem;
   padding: 1.25rem 1.4rem;

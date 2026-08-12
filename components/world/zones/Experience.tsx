@@ -1,7 +1,7 @@
 'use client'
 import { experiences } from '@/content/experience'
 import { useLang } from '@/lib/i18n'
-import { ACCENT, SPACING } from '../theme'
+import { ACCENT } from '../theme'
 import Panel from '../Panel'
 
 /**
@@ -12,14 +12,13 @@ import Panel from '../Panel'
  * between them is one long thin box rather than a line primitive, because
  * WebGL line width is capped at 1px on most drivers and would vanish.
  */
-export default function Experience({ depth }: { depth: number }) {
+export default function Experience() {
   const { t } = useLang()
-  const z = -depth * SPACING
   const step = 3.1
   const railLength = Math.max(experiences.length - 1, 1) * step + 2
 
   return (
-    <group position={[6, -1, z - 4]}>
+    <group position={[6, -1, -4]}>
       <mesh position={[0, 0, -railLength / 2 + 1]} rotation={[Math.PI / 2, 0, 0]}>
         <boxGeometry args={[0.05, railLength, 0.05]} />
         <meshBasicMaterial color={ACCENT.violet} transparent opacity={0.45} />
@@ -43,7 +42,7 @@ export default function Experience({ depth }: { depth: number }) {
         </group>
       ))}
 
-      <Panel depth={0} position={[-12.6, 1.4, 0]} width={560}>
+      <Panel position={[-11.0, 1.2, 0]} width={400}>
         <h2 className="world-heading">{t({ id: 'Pengalaman', en: 'Experience' })}</h2>
         <ol className="world-timeline">
           {experiences.map((exp, i) => (

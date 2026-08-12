@@ -5,6 +5,7 @@ import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import type { BloomEffect } from 'postprocessing'
 import type { Tier } from '@/lib/webgl/capability'
 import { BUDGET, placeById } from './theme'
+import Place from './Place'
 import Rig from './Rig'
 import Tunnel from './Tunnel'
 import Arrival from './zones/Arrival'
@@ -43,6 +44,8 @@ function Scene({ tier }: { tier: Exclude<Tier, 'dom'> }) {
 
   return (
     <>
+      {/* Matches --bg, so the world and the DOM route sit on the same black. */}
+      <color attach="background" args={['#05050d']} />
       <Rig bloomFlash={budget.bloom ? flash : undefined} />
       {/* Keyed by layer count: the pool is built once per mount, so a tier change
           has to produce a fresh component rather than mutate the old pool. */}
@@ -51,7 +54,11 @@ function Scene({ tier }: { tier: Exclude<Tier, 'dom'> }) {
       {ZONES.map(({ id, Component }) => {
         const place = placeById(id)
         if (!place) return null
-        return <Component key={id} depth={place.depth} />
+        return (
+          <Place key={id} depth={place.depth}>
+            <Component />
+          </Place>
+        )
       })}
 
       {budget.bloom && (
@@ -79,7 +86,11 @@ export default function WorldCanvas({ tier }: { tier: Exclude<Tier, 'dom'> }) {
         // The canvas is a fixed backdrop; the page below it owns scrolling, so
         // the canvas must never swallow wheel or touch events.
         style={{ pointerEvents: 'none' }}
-        gl={{ antialias: tier === 'full', powerPreference: 'high-performance' }}
+        /* Opaque canvas. With alpha on, every additive fragment in the corridor
+           was composited against a transparent backdrop and then against the
+           page, which washed the tunnel out to nothing. An opaque buffer is also
+           cheaper - the compositor stops blending a full-screen layer per frame. */
+        gl={{ antialias: tier === 'full', powerPreference: 'high-performance', alpha: false }}
       >
         <Suspense fallback={null}>
           <Scene tier={tier} />

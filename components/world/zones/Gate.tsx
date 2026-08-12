@@ -1,6 +1,6 @@
 'use client'
 import ContactGate from '@/components/ContactGate'
-import { ACCENT, SPACING } from '../theme'
+import { ACCENT } from '../theme'
 import Panel from '../Panel'
 
 /**
@@ -11,20 +11,19 @@ import Panel from '../Panel'
  * in 3D would mean rebuilding its accessibility too, and there is nothing to
  * gain from that.
  */
-export default function Gate({ depth }: { depth: number }) {
-  const z = -depth * SPACING
+export default function Gate() {
 
   return (
     <group>
       {/* Concentric gate rings, receding, to mark the end of the corridor. */}
       {[0, 1, 2].map((i) => (
-        <mesh key={i} position={[0, 0, z - 6 - i * 3.2]}>
+        <mesh key={i} position={[0, 0, -6 - i * 3.2]}>
           <torusGeometry args={[7.4 - i * 0.9, 0.06, 8, 48]} />
           <meshBasicMaterial color={ACCENT.emerald} transparent opacity={0.5 - i * 0.13} />
         </mesh>
       ))}
 
-      <Panel depth={depth} position={[0, 0, -1]} width={620} className="world-panel-wide">
+      <Panel position={[0, 0, -1]} width={440} className="world-panel-wide">
         <ContactGate />
       </Panel>
     </group>

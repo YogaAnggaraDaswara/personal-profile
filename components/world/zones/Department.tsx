@@ -4,7 +4,7 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { department, orgUnits } from '@/content/organization'
 import { useLang } from '@/lib/i18n'
-import { ACCENT, SPACING } from '../theme'
+import { ACCENT } from '../theme'
 import Panel from '../Panel'
 
 /**
@@ -17,7 +17,7 @@ import Panel from '../Panel'
  *
  * Headcount only. Names stay out of the repo; see content/organization.ts.
  */
-export default function Department({ depth }: { depth: number }) {
+export default function Department() {
   const { t } = useLang()
   const group = useRef<THREE.Group>(null)
 
@@ -28,7 +28,6 @@ export default function Department({ depth }: { depth: number }) {
     group.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.16) * 0.22
   })
 
-  const z = -depth * SPACING
   const spread = 3.4
   // A unit with an unpublished headcount still needs a visible tower, so the
   // height floor is what stands in for "not disclosed".
@@ -36,7 +35,7 @@ export default function Department({ depth }: { depth: number }) {
 
   return (
     <group>
-      <group ref={group} position={[5.2, -3.4, z - 3]}>
+      <group ref={group} position={[5.2, -3.4, -3]}>
         {orgUnits.map((unit, i) => {
           const h = heightOf(unit.headcount)
           const x = (i - (orgUnits.length - 1) / 2) * spread
@@ -72,7 +71,7 @@ export default function Department({ depth }: { depth: number }) {
         </mesh>
       </group>
 
-      <Panel depth={depth} position={[-6.8, 0.8, -1]} width={560}>
+      <Panel position={[-5.0, 0.8, -1]} width={400}>
         <p className="world-eyebrow">{t(department.role)}</p>
         <h2 className="world-heading">{t(department.name)}</h2>
         <p className="world-body">{t(department.summary)}</p>

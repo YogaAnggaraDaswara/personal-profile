@@ -1,7 +1,7 @@
 'use client'
 import { aiUseCases } from '@/content/aiUseCases'
 import { useLang } from '@/lib/i18n'
-import { ACCENT, SPACING } from '../theme'
+import { ACCENT } from '../theme'
 import Panel from '../Panel'
 
 /**
@@ -10,9 +10,8 @@ import Panel from '../Panel'
  * Connections are drawn as thin boxes between consecutive nodes rather than
  * lines, for the same driver-imposed line-width reason as the career rail.
  */
-export default function AiUseCases({ depth }: { depth: number }) {
+export default function AiUseCases() {
   const { t } = useLang()
-  const z = -depth * SPACING
 
   const nodes = aiUseCases.map((_, i) => {
     const angle = (i / Math.max(aiUseCases.length, 1)) * Math.PI * 2
@@ -21,7 +20,7 @@ export default function AiUseCases({ depth }: { depth: number }) {
 
   return (
     <group>
-      <group position={[5.8, -0.2, z - 3]}>
+      <group position={[5.8, -0.2, -3]}>
         {nodes.map((n, i) => (
           <mesh key={i} position={[n[0], n[1], n[2]]}>
             <tetrahedronGeometry args={[0.42, 0]} />
@@ -54,7 +53,7 @@ export default function AiUseCases({ depth }: { depth: number }) {
         })}
       </group>
 
-      <Panel depth={depth} position={[-6.8, 0.7, -1]} width={560}>
+      <Panel position={[-5.0, 0.7, -1]} width={400}>
         <h2 className="world-heading">{t({ id: 'Use Case AI', en: 'AI Use Cases' })}</h2>
         <ul className="world-usecase-list">
           {aiUseCases.map((u, i) => (

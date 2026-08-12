@@ -5,7 +5,7 @@ import { useTexture } from '@react-three/drei'
 import * as THREE from 'three'
 import { profile } from '@/content/profile'
 import { useLang } from '@/lib/i18n'
-import { ACCENT, SPACING } from '../theme'
+import { ACCENT } from '../theme'
 import Panel from '../Panel'
 
 /**
@@ -16,7 +16,7 @@ import Panel from '../Panel'
  * edges and drifts with the camera, so the person is part of the world instead
  * of pasted over it.
  */
-export default function Arrival({ depth }: { depth: number }) {
+export default function Arrival() {
   const { t } = useLang()
   const texture = useTexture('/profile.png')
   const frame = useRef<THREE.Mesh>(null)
@@ -37,24 +37,30 @@ export default function Arrival({ depth }: { depth: number }) {
     frame.current.rotation.x = Math.sin(t * 0.27) * 0.03
   })
 
-  const z = -depth * SPACING
 
   return (
     <group>
-      <mesh ref={frame} position={[6.2, -0.4, z - 2]}>
+      <mesh ref={frame} position={[6.2, -0.4, -2]}>
         <planeGeometry args={[width, height]} />
         {/* Basic material: the photo is already lit, and adding a light rig here
             would only muddy it. Tone mapping is off so it stays true to the file. */}
         <meshBasicMaterial map={texture} toneMapped={false} transparent />
       </mesh>
 
-      {/* Rim glow behind the photo, tinted with the arrival accent. */}
-      <mesh position={[6.2, -0.4, z - 2.4]}>
-        <planeGeometry args={[width * 1.14, height * 1.1]} />
-        <meshBasicMaterial color={ACCENT.cyan} transparent opacity={0.16} />
+      {/* Rim glow behind the photo. Additive and faint on purpose: as a normal
+          blended plane at 0.16 it read as a solid teal card behind the person
+          rather than light coming off the edges. */}
+      <mesh position={[6.2, -0.4, -2.6]} rotation={[0, -0.28, 0]}>
+        <planeGeometry args={[width * 1.06, height * 1.04]} />
+        <meshBasicMaterial
+          color={ACCENT.cyan}
+          transparent
+          opacity={0.28}
+          blending={THREE.AdditiveBlending}
+        />
       </mesh>
 
-      <Panel depth={depth} position={[-7.4, 1.4, -1]} width={520}>
+      <Panel position={[-5.0, 1.2, -1]} width={400}>
         <p className="world-eyebrow">{t({ id: 'Halo, saya', en: 'Hello, I am' })}</p>
         <h1 className="world-title">{profile.name}</h1>
         <p className="world-body">{t(profile.tagline)}</p>

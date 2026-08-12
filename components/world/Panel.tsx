@@ -1,7 +1,6 @@
 'use client'
 import type { ReactNode } from 'react'
 import { Html } from '@react-three/drei'
-import { SPACING } from './theme'
 
 /**
  * Text inside the world.
@@ -14,16 +13,15 @@ import { SPACING } from './theme'
  *
  * The trade-off is honest: these panels are DOM, so they do not occlude behind
  * geometry. Places are laid out so nothing needs to pass in front of them.
+ *
+ * Coordinates are local to the enclosing Place, which owns corridor placement.
  */
 export default function Panel({
-  depth,
   position = [0, 0, 0],
-  width = 460,
+  width = 380,
   children,
   className = '',
 }: {
-  /** Which place this panel belongs to; multiplied into world Z. */
-  depth: number
   /** Offset from the place's centre, in world units. */
   position?: [number, number, number]
   /** CSS pixel width of the panel before the 3D scale is applied. */
@@ -31,14 +29,14 @@ export default function Panel({
   children: ReactNode
   className?: string
 }) {
-  const [x, y, z] = position
   return (
     <Html
       transform
-      // A distance factor keeps the panel's apparent size stable as the camera
-      // approaches, so text does not balloon on the way past.
-      distanceFactor={14}
-      position={[x, y, -depth * SPACING + z]}
+      /* Apparent size scales with this, and it is easy to get wrong: at 14 the
+         About panel grew past the viewport and clipped on both sides. 7 puts a
+         380px panel at roughly half the screen width on a desktop. */
+      distanceFactor={7}
+      position={position}
       // Panels are content, not decoration, so they stay in the a11y tree.
       wrapperClass="world-panel-wrapper"
     >

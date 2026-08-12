@@ -35,8 +35,14 @@ export default function WorldChrome() {
       setActive(Math.round(progress * (PLACES.length - 1)))
     }
     onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    /**
+     * Captured on document, not bound to window: the layout makes <body> the
+     * scrolling element, and scroll events do not bubble, so a window listener
+     * never fired and the rail stayed stuck on the first place while the camera
+     * moved. Capture catches the event whichever element scrolls.
+     */
+    document.addEventListener('scroll', onScroll, { passive: true, capture: true })
+    return () => document.removeEventListener('scroll', onScroll, { capture: true })
   }, [])
 
   function goTo(index: number) {

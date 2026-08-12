@@ -4,7 +4,7 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { skillGroups } from '@/content/skills'
 import { useLang } from '@/lib/i18n'
-import { ACCENT, SPACING } from '../theme'
+import { ACCENT } from '../theme'
 import Panel from '../Panel'
 
 /**
@@ -19,7 +19,7 @@ const RADIUS_BY_LEVEL: Record<string, number> = {
   intermediate: 2.1,
 }
 
-export default function Skills({ depth }: { depth: number }) {
+export default function Skills() {
   const { t } = useLang()
   const group = useRef<THREE.Group>(null)
 
@@ -58,7 +58,7 @@ export default function Skills({ depth }: { depth: number }) {
 
   return (
     <group>
-      <group ref={group} position={[5.6, -0.4, -depth * SPACING - 4]}>
+      <group ref={group} position={[5.6, -0.4, -4]}>
         {clusters.map((cluster, gi) => (
           <group key={gi} position={cluster.centre}>
             {/* Shell hints at the group's boundary without enclosing the points. */}
@@ -76,7 +76,7 @@ export default function Skills({ depth }: { depth: number }) {
         ))}
       </group>
 
-      <Panel depth={depth} position={[-6.8, 0.6, -1]} width={540}>
+      <Panel position={[-5.0, 0.6, -1]} width={400}>
         <h2 className="world-heading">{t({ id: 'Skill & Teknologi', en: 'Skills & Technologies' })}</h2>
         <ul className="world-chip-groups">
           {skillGroups.map((g, i) => (
