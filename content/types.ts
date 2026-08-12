@@ -29,3 +29,22 @@ export type Project = {
 }
 
 export type AiUseCase = { title: Bi; description: Bi; tech: string[] }
+
+/** Which visual identity an org unit gets in the Organization section. */
+export type OrgAccent = 'cyan' | 'violet' | 'emerald'
+
+export type OrgUnit = {
+  /** Stable id, also used as the React key and the motif pattern id. */
+  key: string
+  name: Bi
+  accent: OrgAccent
+  /**
+   * Number of people in the unit. Headcount only, never names - the site is
+   * public, and staff names are internal data. Set to 0 to hide the number.
+   */
+  headcount: number
+  /** Short line describing what the unit owns. */
+  focus: Bi
+  /** What the unit is accountable for, 2-4 items reads best. */
+  scope: Bi[]
+}

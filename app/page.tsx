@@ -9,6 +9,7 @@ import ClientCursorGlow from '@/components/ClientCursorGlow'
 
 // Lazy-load below-fold components - won't block initial page render
 const About = dynamic(() => import('@/components/About'))
+const OrgStructure = dynamic(() => import('@/components/OrgStructure'))
 const Skills = dynamic(() => import('@/components/Skills'))
 const Experience = dynamic(() => import('@/components/Experience'))
 const Projects = dynamic(() => import('@/components/Projects'))
@@ -31,19 +32,24 @@ export default function Home() {
       <section id="about" className="section-shell" aria-labelledby="about-heading">
         <About />
       </section>
-      <section id="skills" className="section-shell section-alt" aria-labelledby="skills-heading">
+      {/* Inserting the org section shifts the light/dark alternation of every
+          section below it, hence the flipped section-alt classes. */}
+      <section id="org" className="section-shell section-alt" aria-labelledby="org-heading">
+        <OrgStructure />
+      </section>
+      <section id="skills" className="section-shell" aria-labelledby="skills-heading">
         <Skills />
       </section>
-      <section id="experience" className="section-shell" aria-labelledby="experience-heading">
+      <section id="experience" className="section-shell section-alt" aria-labelledby="experience-heading">
         <Experience />
       </section>
-      <section id="projects" className="section-shell section-alt" aria-labelledby="projects-heading">
+      <section id="projects" className="section-shell" aria-labelledby="projects-heading">
         <Projects />
       </section>
-      <section id="ai" className="section-shell" aria-labelledby="ai-heading">
+      <section id="ai" className="section-shell section-alt" aria-labelledby="ai-heading">
         <AiUseCases />
       </section>
-      <section id="contact" className="section-shell section-alt" aria-labelledby="contact-heading">
+      <section id="contact" className="section-shell" aria-labelledby="contact-heading">
         <ContactGate />
       </section>
       <Footer />

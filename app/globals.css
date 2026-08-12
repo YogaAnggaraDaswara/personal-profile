@@ -9,6 +9,10 @@
   /* Brand */
   --violet: #8b5cf6;
   --cyan: #22d3ee;
+  /* Third accent, used by the Organization section so each of the three
+     units reads as its own discipline. Green carries "passed the gate",
+     which is what quality assurance does. */
+  --emerald: #34d399;
 
   /* Text */
   --text: #e8edf5;

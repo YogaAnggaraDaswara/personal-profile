@@ -6,6 +6,9 @@ import { trackEvent } from '@/lib/analytics'
 
 const LINKS = [
   { href: '#about', label: { id: 'Tentang', en: 'About' } },
+  // Short labels on purpose - the desktop nav is a single row and a longer
+  // word here ("Organisasi") pushes the language toggle off the pill at md.
+  { href: '#org', label: { id: 'Tim', en: 'Team' } },
   { href: '#skills', label: { id: 'Skill', en: 'Skills' } },
   { href: '#experience', label: { id: 'Pengalaman', en: 'Experience' } },
   { href: '#projects', label: { id: 'Project', en: 'Projects' } },

@@ -275,7 +275,52 @@ tulis path-nya mulai dari `/photos/...`.
 
 ---
 
-## 10. Foto profil
+## 10. `content/organization.ts` - Struktur departemen
+
+Tampil di section "Tim" (`#org`), antara About dan Skill. Dua bagian: `department`
+(kotak departemen paling atas) dan `orgUnits` (bagian-bagian di bawahnya).
+
+```ts
+export const department = {
+  name: { id: 'IT Architecture & Engineering', en: '...' },
+  role: { id: 'Department Head', en: '...' },
+  summary: { id: 'Paragraf pembuka section', en: '...' },
+}
+
+export const orgUnits = [
+  {
+    key: 'system-engineer',          // id unik, jangan diubah sembarangan
+    name: { id: 'IT System Engineer', en: '...' },
+    accent: 'cyan',                  // 'cyan' | 'violet' | 'emerald'
+    headcount: 3,                    // jumlah orang; 0 = angka disembunyikan
+    focus: { id: 'Satu kalimat: bagian ini pegang apa', en: '...' },
+    scope: [                         // 2-4 item paling enak dibaca
+      { id: 'Tanggung jawab pertama', en: '...' },
+    ],
+  },
+]
+```
+
+**Aturan penting - jangan tulis nama orang di file ini.** Situs ini publik.
+Nama karyawan adalah data internal, dan jumlah posisi kosong (*vacant*)
+membocorkan kondisi headcount ke luar. Cukup `headcount`. Ada test otomatis
+(`lib/__tests__/organization.test.ts`) yang gagal kalau kata "vacant" masuk atau
+ada field baru di luar daftar di atas.
+
+`accent` menentukan warna dan motif background bagian itu, dan urutannya
+menentukan pergeseran tema saat halaman di-scroll. Tiap bagian harus pakai
+`accent` yang berbeda - kalau kembar, test gagal.
+
+Kalau menambah bagian keempat, warna yang tersedia habis. Tambah dulu variabel
+warna baru di `app/globals.css`, lalu daftarkan di `OrgAccent`
+(`content/types.ts`) dan `ACCENT_HEX` (`components/OrgStructure.tsx`).
+
+Ubah jumlah orang di sini juga otomatis mengubah total "engineer" di kotak
+departemen - tidak ada angka total yang diisi manual.
+
+---
+
+## 11. Foto profil
 
 Ganti file `public/profile.png`. Tidak perlu ubah kode - nama file harus tetap
 `profile.png`.
@@ -289,7 +334,7 @@ Karena versi mobile dipotong bulat dari atas, pastikan wajah ada di area atas
 foto. Foto full badan dengan wajah kecil di tengah akan terlihat aneh saat
 dipotong jadi bulat. Background gelap paling nyatu ke tema.
 
-## 11. File CV
+## 12. File CV
 
 Ganti file `public/cv/yoga-daswara-cv.pdf` dengan CV versi terbaru. Nama file harus tetap sama persis (`yoga-daswara-cv.pdf`), karena direferensikan langsung di `content/profile.ts` (`cvFile`) dan `app/api/cv-lead/route.ts` (`downloadUrl`). Kalau mau ganti nama file, dua tempat itu juga harus diubah.
 
@@ -307,6 +352,7 @@ Ganti file `public/cv/yoga-daswara-cv.pdf` dengan CV versi terbaru. Nama file ha
 | Project showcase | `content/projects.ts` |
 | Use case AI | `content/aiUseCases.ts` |
 | Riwayat pendidikan | `content/education.ts` |
+| Struktur departemen & jumlah anggota | `content/organization.ts` |
 | Foto momen/aktivitas | `content/moments.ts` |
 | Foto profil | `public/profile.png` |
 | Logo perusahaan | `public/logos/` |
